@@ -1,0 +1,25 @@
+{% extends 'shell.html' %}
+
+{% block content %}
+    <div class='container mb-3'>
+      <h3 class='text-center mb-3'>Let's Practise Spanish!</h3>
+      <img class='rounded mx-auto d-block img-fluid' src='{{ pic_url }}' alt='{{ fname }}' id='fcard'>
+
+        <form method='POST' action='' class='my-3'>
+            <div class='form-group'>
+                <label class='d-block'>Part of Speech</label>
+                <input type='text' class='custom-control custom-control-inline mr-0' id='user_answer' placeholder="Your answer..."/>
+                <button id='send_answer_btn' type='button' class='btn btn-info rounded-circle ml-0'><i class="material-icons">send</i></button>
+            </div>
+
+        </form>
+
+
+
+        <div class='form-control'>
+            <p class='mb-1'><strong>Answer:</strong></p>
+            <p class='mb-1'>{{ fname }}</p>
+        </div>
+    </div>
+{% endblock content %}
+baseline-send-24px
