@@ -19,7 +19,9 @@ def home_pic(fname):
 @app.route("/", methods=['GET', 'POST'])
 def home():
     pic_url = url_for('static', filename='pics/101.jpg')
-    return render_template('home.html', fname='101', pic_url=pic_url)
+    audio_url = url_for('static', filename='audio/polish/sto.ogg')
+    return render_template('home.html', fname='101', pic_url=pic_url,
+                            audio_url=audio_url)
 
 
 @app.route('/user-answer', methods=['POST'])
@@ -27,3 +29,8 @@ def user_answer():
     return request.form['user_answer']
     # return f"your name is: {request.form['name']} and your city is {request.form['city']}"
     # return request.form['name']
+
+
+@app.route('/login')
+def login():
+    return request.form['login-page']
