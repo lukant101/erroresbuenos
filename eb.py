@@ -1,7 +1,16 @@
 from flask import Flask, render_template, url_for, request
+from flask_mongoengine import MongoEngine
 import os
 
 app = Flask(__name__)
+# app.config.from_pyfile('the-config.cfg')
+db = MongoEngine(app)
+
+app.config['MONGODB_SETTINGS'] = {
+    'db': 'mongoengine_test',
+    'host': 'localhost',
+    'port': 27017
+}
 
 
 @app.route("/<string:fname>")
@@ -21,7 +30,7 @@ def home():
     pic_url = url_for('static', filename='pics/101.jpg')
     audio_url = url_for('static', filename='audio/polish/sto.ogg')
     return render_template('home.html', fname='101', pic_url=pic_url,
-                            audio_url=audio_url)
+                           audio_url=audio_url)
 
 
 @app.route('/user-answer', methods=['POST'])
