@@ -1,60 +1,48 @@
-from flask_mongoengine import MongoEngine
-from eb import db
-import csv
+import mongoengine
 
 
-class Question(db.Document):
-    description = db.StringField(default="word flashcard", max_length=20)
-    skill = db.StringField(required=True, max_length=20)
-    language = db.StringField(required=True, max_length=20)
-    word = db.StringField(max_length=30)
-    part_of_speech = db.StringField(max_length=25)
-    audio_files = db.ListField(field=db.StringField(max_length=50))
-    image_files = db.ListField(db.StringField(max_length=50))
+class Question(mongoengine.Document):
+    # MongoDB will use this class name as the collection name
+    description = mongoengine.StringField(default="word flashcard",
+                                          max_length=20)
+    skill = mongoengine.StringField(required=True, max_length=20)
+    language = mongoengine.StringField(required=True, max_length=20)
+    word = mongoengine.StringField(max_length=30)
+    part_of_speech = mongoengine.StringField(max_length=25)
+    audio_files = mongoengine.StringField(max_length=200)
+    image_files = mongoengine.StringField(max_length=200)
 
 
-class Student(db.Document):
-    email = db.EmailField(required=True)
-    username = db.StringField(unique=True, max_length=20)
-    first_name = db.StringField(max_length=30)
-    last_name = db.StringField(max_length=30)
+class TestData(mongoengine.Document):
+    # MongoDB will use this class name as the collection name
+    description = mongoengine.StringField(default="word flashcard",
+                                          max_length=20)
+    skill = mongoengine.StringField(required=True, max_length=20)
+    language = mongoengine.StringField(required=True, max_length=20)
+    word = mongoengine.StringField(max_length=30)
+    part_of_speech = mongoengine.StringField(max_length=25)
+    audio_files = mongoengine.StringField(max_length=200)
+    image_files = mongoengine.StringField(max_length=200)
+
+
+class Student(mongoengine.Document):
+    email = mongoengine.EmailField(required=True)
+    username = mongoengine.StringField(unique=True, max_length=20)
+    first_name = mongoengine.StringField(max_length=30)
+    last_name = mongoengine.StringField(max_length=30)
     # make sure to store hashed password in the database
-    password = db.StringField(max_length=30)
-    app_language = db.StringField(required=True, max_length=20)
+    password = mongoengine.StringField(max_length=30)
+    app_language = mongoengine.StringField(required=True, max_length=20)
     # student's proficiency in each language, expressed as a percentage
-    language_proficiency = db.DictField()
+    language_proficiency = mongoengine.DictField()
     # pairs of: language, sequence of questions
-    study_streams = db.DictField()
+    study_streams = mongoengine.DictField()
 
 
-class StudentHistory(db.Document):
-    student_id = db.ObjectIdField()
-    answer = db.StringField()
-    answer_correct = db.BooleanField()
-    audio_answer_correct = db.BooleanField()
-    attempts_count = db.IntField(default=0)
-    last_attempted = db.DateTimeField()
-
-
-csv_file_name = input("Enter the csv file name, including the full path:")
-language = input("Enter the language of the data:")
-
-Question.description = "word flashcard"
-Question.skill = "Vocabulary"
-Question.language = language
-
-with open(csv_file_name) as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter=",")
-    column_names = next(csv_reader)
-
-with open(csv_file_name) as csv_file:
-    csv_reader = csv.DictReader(csv_file, delimiter=",")
-    for row in csv_reader:
-        Question.word = row[column_names[0]]
-        Question.part_of_speech = row[column_names[1]]
-        Question.audio_files = row[column_names[2]]
-        Question.image_files = row[column_names[3]]
-        print(Question.word)
-        print(Question.part_of_speech)
-        print(Question.audio_files)
-        print(Question.image_files)
+class StudentHistory(mongoengine.Document):
+    student_id = mongoengine.ObjectIdField()
+    answer = mongoengine.StringField()
+    answer_correct = mongoengine.BooleanField()
+    audio_answer_correct = mongoengine.BooleanField()
+    attempts_count = mongoengine.IntField(default=0)
+    last_attempted = mongoengine.DateTimeField()
