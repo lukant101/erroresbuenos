@@ -12,6 +12,9 @@ class Question(mongoengine.Document):
     audio_files = mongoengine.StringField(max_length=200)
     image_files = mongoengine.StringField(max_length=200)
 
+    def output_field(self, fld):
+        print(self.fld)
+
 
 class TestData(mongoengine.Document):
     # MongoDB will use this class name as the collection name
