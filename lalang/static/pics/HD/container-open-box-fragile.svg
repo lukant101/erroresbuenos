@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 550 440" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="a">
+   <stop offset="0"/>
+   <stop stop-opacity="0" offset="1"/>
+  </linearGradient>
+  <linearGradient id="d" x1="201.83" x2="106.34" y1="361.5" y2="228.76" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
+  <linearGradient id="c" x1="310.71" x2="227.88" y1="390.8" y2="432.04" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
+  <linearGradient id="b" x1="171.81" x2="99.108" y1="258.42" y2="358.97" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
+ </defs>
+ <g transform="matrix(1.3862 0 0 1.3862 -23.038 -255.22)">
+  <path d="m176.7 337.08 89.955 33.317-38.869 38.592-111.89-44.145 60.803-27.764z" fill="#916648" fill-rule="evenodd"/>
+  <path d="m23.169 237.96-1.9435 3.054 23.877 34.983 4.7199-9.995-26.653-28.042z" fill="#bcac91" fill-rule="evenodd"/>
+  <path d="m185.87 258.23-42.479-66.078-120.22 46.366 24.71 37.204 41.368 37.481 93.842-44.422 2.7764-10.55z" fill="#ddb376" fill-rule="evenodd"/>
+  <path d="m186.14 258.78-91.621 44.145 63.579 78.294 31.929-41.368v-80.793l-3.887-0.27764z" fill="#9b7347" fill-rule="evenodd"/>
+  <path d="m186.14 258.78-91.621 44.145 63.579 78.294 31.929-41.368v-80.793l-3.887-0.27764z" fill="url(#d)" fill-rule="evenodd"/>
+  <path d="m186.14 259.06-5.8304 86.068 67.189 32.484 76.906-62.191-138.26-56.361z" fill="#b38a63" fill-rule="evenodd"/>
+  <path d="m221.44 398.91-12.243 94.232-132.82-85.699-1.855-90.893 146.91 82.36z" fill="#916648" fill-rule="evenodd"/>
+  <path d="m222.36 399.08 1.9188-2.3288-34.751-47.559-158.78-89.038v4.0809l191.62 134.84z" fill="#b99877" fill-rule="evenodd"/>
+  <path d="m221.44 398.54-33.018-46.374-157.67-89.038 44.148 53.794 146.54 81.618z" fill="#826045" fill-rule="evenodd"/>
+  <path d="m209.19 493.51 95.716-87.554-83.473-8.1618-12.243 95.716z" fill="#744e36" fill-rule="evenodd"/>
+  <path d="m209.19 493.51 95.716-87.554-83.539-7.5679-12.177 95.122z" fill="url(#c)" fill-rule="evenodd"/>
+  <path d="m405.82 328.05 2.9679 1.484-89.038 92.748-98.754-23.978 2.7822-2.742 182.04-67.512z" fill="#c1ac89" fill-rule="evenodd"/>
+  <path d="m406.56 328.42-83.844-11.501-99.055 78.65 94.603 23.372 88.296-90.522z" fill="#e6c182" fill-rule="evenodd"/>
+  <path d="m361.67 262.75 1.484 1.484-39.696 52.681-2.5969-2.226 40.809-51.939z" fill="#bcac91" fill-rule="evenodd"/>
+  <path d="m362.04 263.12-39.696 52.681-136.15-56.762 45.261-46.745 130.59 50.826z" fill="#ecc98f" fill-rule="evenodd"/>
+  <path d="m221.44 398.54-33.018-46.374-157.67-89.038 44.148 53.794 146.54 81.618z" fill="url(#b)" fill-rule="evenodd"/>
+  <path d="m196.78 442.09-10.342 6.9043 4.9553 2.9487-3.0163 21.099 6.4635 3.818 3.2317-21.036 4.0935 1.8364-5.3862-15.57z" fill-rule="evenodd" stroke="#000" stroke-width=".57716"/>
+  <path d="m95.614 377.51-10.342 6.9043 4.9553 2.9487-3.0163 21.099 6.4635 3.818 3.2317-21.036 4.0935 1.8364-5.3862-15.57z" fill-rule="evenodd" stroke="#000" stroke-width=".57716"/>
+  <text transform="matrix(.69666 .38506 0 1.4354 0 0)" x="132.62077" y="217.2558" font-family="Aharoni" font-size="33.454" font-weight="bold">
+   <tspan x="132.62077" y="217.2558">CUIDADO</tspan>
+  </text>
+  <text transform="matrix(.80083 .49851 0 1.2487 0 0)" x="131.88144" y="269.87802" font-family="Arial Black" font-size="23.898" font-weight="900">
+   <tspan x="131.88144" y="269.87802">FR  GIL</tspan>
+  </text>
+ </g>
+</svg>

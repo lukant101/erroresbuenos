@@ -1,0 +1,509 @@
+Word,Part_of_Speech,Audio,Photos
+bella,adjective,bella.ogg,"beautiful-woman.jpg, beautiful-nature.jpg"
+grande,adjective,grande.ogg,"big-elephants.jpg, big-wave.jpg"
+negro,adjective,negro.ogg,"black-swan.jpg, black-cat.jpg"
+ciego,adjective,ciego.ogg,blind-person.jpg
+azul,adjective,azul.ogg,"woman-with-blue-hair.jpg, cat-with-blue-eyes.png"
+marrón,adjective,marron.ogg,"brown-dog.jpg, brown-wooden-floor.jpg"
+barato,adjective,barato.ogg,"80-percent-off-sale.jpg, old-Toyota-Corolla.jpg"
+limpio,adjective,limpio.ogg,"girl-with-mop-spray.jpg, clean-dining-room.jpg"
+frío,adjective,frio.ogg,"blizzard-snow-woman-winter-clothes.jpg, chihuahua-dog-blanket-cold-winter.jpg"
+curvado,adjective,curvado.ogg,"road-bend-curve-highway-hilly.jpg, road-winding-street-bridge.jpg"
+oscuro,adjective,oscuro.ogg,"woman-gothic-dark-girl-female.jpg, smoking-lighter-dark-cigarette.jpg"
+muerto,adjective,muerto.ogg,"skull-art-demon-abstract-death.jpg, death-valley-scrubs-sand-dunes.jpg"
+sordo,adjective,sordo.ogg,"hearing-aid-deaf.png, deaf-alphabet-sign-language.png"
+profundo,adjective,profundo.ogg,"scuba-diver-diver-diving-underwater.jpg, cave-pit-waterfall.jpg"
+sucio,adjective,sucio.ogg,"cave-tour-dirty-clothing.jpg, dirty-car-nature-field-4-x-4.jpg"
+seco,adjective,seco.ogg,"earth-drought-ground-dehydrated.jpg, hairdryer.jpg"
+caro,adjective,caro.ogg,"wristwatch-gold.jpg, car-mercedes-benz.jpg"
+famoso,adjective,famoso.ogg,"saint-basils-cathedral-moscow.jpg, bob-marley-reggae-artist-face.png"
+plano,adjective,plano.ogg,"world-earth-flat.jpg, mirroring-salt-lake-water.jpg"
+verde,adjective,verde.ogg,"leaf-green-plants.jpg, peas-vegetables-green-food.jpg"
+gris,adjective,gris.ogg,grey-icon.svg
+feliz,adjective,feliz.ogg,happy.png
+duro,adjective,duro.ogg,"crystal-rock-mineral-hard.jpg, hard-disk-storage-computer.png"
+sano,adjective,sano.ogg,"vegetables-carrot-food-healthy.jpg, yoga-fitness-exercise.jpg"
+pesado,adjective,pesado.ogg,"lifting-box-wood-heavy-crate.jpg, sports-fitness-body-building-iron-weights.jpg"
+caliente,adjective,caliente.ogg,"fire-flame-carbon-burn.jpg, coffee-hot-drinks.jpg"
+ligero,adjective,ligero.ogg,"feather.jpg, balance-scale.jpg"
+largo,adjective,largo.ogg,"asphalt-countryside-road.jpg, swan-water-bird-lake-white.jpg"
+flojo,adjective,flojo.ogg,loose-waist.jpg
+ruidoso,adjective,ruidoso.ogg,loudspeaker-man-boy-holding.png
+bajo,adjective,bajo.ogg,low-tide-beach-sunrise.jpg
+estrecho,adjective,estrecho.ogg,narrow-passage-narrow-path.jpg
+nuevo,adjective,nuevo.ogg,"new-home-construction.jpg, car-bmw-x3-suv.jpg"
+viejo,adjective,viejo.ogg,"car-vintage-classic-retro.jpg, old-farm-house-decay.jpg"
+rosado,adjective,rosado.ogg,pink.png
+pobre,adjective,pobre.ogg,"kid-child-portrait-sad-poor.jpg, people-homeless-male-poverty.jpg"
+callado,adjective,callado.ogg,emoticon-quiet-shoo.png
+rojo,adjective,rojo.ogg,red.png
+rico,adjective,rico.ogg,car-red-driver-gentleman-affluence.png
+triste,adjective,triste.ogg,"sad.jpg, dollar-bills-flying.jpg"
+poco profundo,adjective,poco-profundo.ogg,shallow-sea-turquoise.jpg
+corto,adjective,corto.ogg,"woman-short-hair-face.png, shorts-legs-torso-person-girl.jpg"
+enfermo,adjective,enfermo.ogg,"allergy-cold-disease-flu-girl.jpg, sick-woman-in-bed-thermometer.png"
+plateado,adjective,plateado.ogg,"silver-background.jpg, ring-wedding-silver-jewelery.png"
+lento,adjective,lento.ogg,"amphibian-turtle.jpg, snail-shell-slow-animal.jpg"
+pequeño,adjective,pequenxo.ogg,"little-girl-wildflowers-meadow.jpg, mouse-cute.jpg"
+suave,adjective,suave.ogg,"wool-ball-knitting-craft.jpg, white-cotton-texture-fabric.jpg"
+fuerte,adjective,fuerte.ogg,muscles-man-biceps.jpg
+alto,adjective,alto.ogg,"eiffel-tower-paris-tower.jpg, palm-trees-upward-tropical-blue-sky.jpg"
+grueso,adjective,grueso.ogg,"book-green-thick.png, Ikat_cloth_from_Sumba.jpg"
+apretado,adjective,apretado.ogg,"knot-rope.jpg, girl-woman-tight-black-dress.jpg"
+feo,adjective,feo.ogg,grotesque-old-woman.jpg
+caliente,adjective,caliente.ogg,staying-warm.jpg
+débil,adjective,debil.ogg,caricature-man-weak-effort.jpg
+mojado,adjective,mojado.ogg,"rain-raindrop-floor.jpg, golden-retriever-retrieve-lake-play.jpg"
+blanco,adjective,blanco.ogg,background-texture-brick-wall.jpg
+amarillo,adjective,amarillo.ogg,yellow.jpg
+joven,adjective,joven.ogg,beautiful-girl-woman-young.jpg
+detrás,adverb  ,detras.ogg,citroen-back.jpg
+abajo,adverb  ,abajo.ogg,arrow-down.png
+rápido,adverb  ,rapido.ogg,motorcycle-speed-helmet.jpg
+al frente,adverb  ,al-frente.ogg,man-woman-relaxing-front-boat.jpg
+alto,adverb  ,alto.ogg,view-high-above-top-feet.jpg
+a la izquierda,adverb  ,a-la-izquierda.ogg,road-sign-left-turn.png
+a la derecha,adverb  ,a-la-derecha.ogg,right-turn.png
+todo recto,adverb  ,todo-recto.ogg,traffic-sign-straight-ahead.png
+arriba,adverb  ,arriba.ogg,green-arrow-up.png
+cinco,cardinal number,cinco.ogg,five.jpg
+cuatro,cardinal number,cuatro.ogg,four.jpg
+uno,cardinal number,uno.ogg,one.png
+cien,cardinal number,cien.ogg,one-hundred.png
+million,cardinal number,million.ogg,one-million.jpg
+mil  ,cardinal number,mil  .ogg,one-thousand-banknote-polish.png
+tres,cardinal number,tres.ogg,three.png
+dos,cardinal number,dos.ogg,two.png
+cero,cardinal number,cero.ogg,zero.png
+direccíon,noun,direccion.ogg,four-arrows.png
+actor,noun,actor.ogg,actor-man-film-actor-cary-grant.jpg
+adulto,noun,adulto.ogg,"portrait-man-male-black.jpg, beautiful-smile-girl-woman-happy.jpg"
+tarde,noun,tarde.ogg,man-solitude-tree-leaning-resting.jpg
+aeropuerto,noun,aeropuerto.ogg,airport.jpg
+animal,noun,animal.ogg,bull-cattle-livestock.jpg
+departamento,noun,departamento.ogg,living-room-chair-sofa-couch.jpg
+manzana,noun,manzana.ogg,apple.jpg
+brazo,noun,brazo.ogg,arm.jpg
+fuerzas armadas,noun,fuerzas-armadas.ogg,soldiers.jpg
+arte,noun,arte.ogg,wall-art-spray-graffiti-woman.jpg
+artista,noun,artista.ogg,artist.jpg
+autor,noun,autor.ogg,writer-typewriter-author-blogging.jpg
+bebé,noun,bebe.ogg,baby.jpg
+espalda,noun,espalda.ogg,sea-ocean-water-wave-nature-beach.jpg
+bolsa,noun,bolsa.ogg,bag-classic-leather-messenger.jpg
+pelota,noun,pelota.ogg,beach-ball.svg
+banano,noun,banano.ogg,banana.png
+banda,noun,banda.ogg,Lake-Malawi-music-band.jpg
+banco,noun,banco.ogg,bank-building.jpg
+bar  ,noun,bar  .ogg,alcoholic-beverages-bar.jpg
+baño,noun,banxo.ogg,bathroom.jpg
+playa,noun,playa.ogg,beach-dominican-republic-caribbean.jpg
+barba,noun,barba.ogg,beard-face-man-model-mustache.jpg
+cama,noun,cama.ogg,bed.png
+dormitorio,noun,dormitorio.ogg,bedroom.jpg
+carne de res,noun,carne de res.ogg,meat-beef.jpg
+cerveza,noun,cerveza.ogg,craft-beer
+bebida,noun,bebida.ogg,beach-beverage.jpg
+bicicleta,noun,bicicleta.ogg,old-bicycle.jpg
+factura,noun,factura.ogg,pay-bill-restaurant.jpg
+pájaro,noun,pajaro.ogg,bird-spring-robin.jpg
+sangre,noun,sangre.ogg,blood-cells-red.jpg
+barco,noun,barco.ogg,sunrise-boat-rowing.jpg
+cuerpo,noun,cuerpo.ogg,anatomy-man-human-body.jpg
+hueso,noun,hueso.ogg,bone-dog.svg
+libro,noun,libro.ogg,book-old.jpg
+botella,noun,botella.ogg,water-bottle.jpg
+fondo,noun,fondo.ogg,"beer-bottle-bottom.jpg, sea-bottom.jpg"
+caja,noun,caja.ogg,container-open-box-fragile.svg
+chico,noun,chico.ogg,cap-boy-smile.jpg
+celebro,noun,celebro.ogg,brain-anatomy.png
+pan,noun,pan.ogg,bread-multigrain.jpg
+desayuno,noun,desayuno.ogg,breakfast-hotel-buffet.jpg
+puente,noun,puente.ogg,golden-gate-bridge.jpg
+hermano,noun,hermano.ogg,brothers-family-siblings.jpg
+edificio,noun,edificio.ogg,appartment-building.jpg
+bus,noun,bus.ogg,london-britain-bus-red-city.jpg
+pastel,noun,pastel.ogg,piece-of-cake.jpg
+cámera,noun,camera.ogg,camera-vintage.jpg
+campamento,noun,campamento.ogg,camping-tent-fire-summer-outdoors.jpg
+carro,noun,carro.ogg,car-audi-auto.jpg
+carta,noun,carta.ogg,"playing-cards.jpg, credit-card.jpg"
+gato,noun,gato.ogg,cat-sweet-kitty.jpg
+techo (raso),noun,techo.ogg,church-ceiling.jpg
+teléfono celular,noun,teléfono celular.ogg,iphone-smartphone.jpg
+centimetro,noun,centimetro.ogg,measure-centimeter.jpg
+silla,noun,silla.ogg,chair-furniture-seat.png
+queso,noun,queso.ogg,cheese.jpg
+pollo,noun,pollo.ogg,"chicken-poultry.jpg, fried-chicken.jpg"
+niño,noun,ninxo.ogg,"boy-red-hair-freckles-portrait.jpg, child-portrait-girl.jpg"
+iglesia,noun,iglesia.ogg,church-snow-winter.jpg
+círculo,noun,circulo.ogg,circle-color.png
+ciudad,noun,ciudad.ogg,new-york-city-skyline.jpg
+arcilla,noun,arcilla.ogg,"pottery-handmade-cup.jpg, clay-hands-sculpting-art.jpg"
+reloj,noun,reloj.ogg,alarm-clock.jpg
+ropa,noun,ropa.ogg,store-clothing.jpg
+club,noun,club.ogg,"dance-party-disco.jpg, golf-club.jpg, club-weapon.svg"
+abrigo,noun,abrigo.ogg,coat-clothing-long.svg
+café,noun,cafe.ogg,coffee-cup-beans.jpg
+color,noun,color.ogg,beaded-colour-pencils.jpg
+computadora,noun,computadora.ogg,computer-desktop-workstation.svg
+contrato,noun,contrato.ogg,business-signature-contract.jpg
+cobre,noun,cobre.ogg,copper-cookware.jpg
+maíz,noun,maiz.ogg,corn.jpg
+esquina,noun,esquina.ogg,"wall-corner.svg, football-corner.jpg"
+país,noun,pais.ogg,"europe-map-country.jpg, canada-national-flag.jpg"
+tribunal,noun,tribunal.ogg,"supreme-court-building-court.jpg, gavel-law.jpg"
+vaca,noun,vaca.ogg,cow.jpg
+gentilla,noun,gentilla.ogg,city-crowd.jpg
+taza,noun,taza.ogg,tea-cup.jpg
+fecha,noun,fecha.ogg,calendar-date.jpg
+hija,noun,hija.ogg,father-daughter-smile.jpg
+día,noun,dixa.ogg,"day-blue-sky.jpg, day-of-week.png"
+muerte,noun,muerte.ogg,man-skull-death.jpg
+dimante,noun,dimante.ogg,diamond.jpg
+cena,noun,cena.ogg,dinner-table.jpg
+enfermedad,noun,enfermedad.ogg,"virus-infection-cell-bacterium.jpg, sad-sick.svg"
+médico,noun,medico.ogg,doctor-gray-hair.jpg
+perro,noun,perro.ogg,dog-beach-pet-black.jpg
+puerta,noun,puerta.ogg,door.jpg
+punto,noun,punto.ogg,"dot.png, background-bow-color-dot.jpg"
+vestido,noun,vestido.ogg,dress.svg
+droga,noun,droga.ogg,"syringe-pill-capsule-morphine.jpg, seedling-cannabis-marijuana.jpg"
+polvo,noun,polvo.ogg,"horse-herd-dust.jpg, construction-worker-saw-concrete-dust.jpg"
+oído,noun,oído.ogg,ear.jpg
+tierra,noun,tierra.ogg,"planet-earth.jpg, onion-arable-field-earth.jpg"
+Este,noun,Este.ogg,"compass-gold.png, arrow-right-direction-east.svg"
+bordillo,noun,bordillo.ogg,edge-height-depth.jpg
+huevo,noun,huevo.ogg,egg.svg
+energía,noun,energia.ogg,"flash-thunderstorm.jpg, wind-farm-wind-energy.jpg"
+motor,noun,motor.ogg,restored-air-cool-engine.jpg
+tarde,noun,tarde.ogg,dult-mother-daughter-beach.jpg
+ejercicio,noun,ejercicio.ogg,gym-room-fitness-equipment.jpg
+ojo,noun,ojo.ogg,blue-eye-iris-pupil.jpg
+cara,noun,cara.ogg,woman-portrait-face-skin-make-up.jpg
+otoño,noun,otonxo.ogg,"forest-season-autumn-fall.jpg, season-winter-spring-summer-fall.png"
+familia,noun,familia.ogg,family-kids-baby-newborn-together.jpg
+hincha,noun,hincha.ogg,sport-ice-hockey-fan.jpg
+ventilador,noun,ventilador.ogg,appliance-cool-electric-fan.svg
+granja,noun,granja.ogg,wisconsin-farm-country-rural.jpg
+padre,noun,padre.ogg,people-father-daughter-smile-happy.jpg
+dedo,noun,dedo.ogg,hand-finger.png
+fuego,noun,fuego.ogg,wood-fire-flame-burn.jpg
+pez,noun,pez.ogg,discus-fish-fauna.jpg
+piso,noun,piso.ogg,floor-wood-hardwood.jpg
+flor,noun,flor.ogg,flower-nature-flora-petal.jpg
+comida,noun,comida.ogg,healthy-food.jpg
+pie,noun,pie.ogg,foot-baby.jpg
+bosque,noun,bosque.ogg,green-park-season-nature.jpg
+tenedor,noun,tenedor.ogg,fork-eat-metal.jpg
+amigo,noun,amigo.ogg,girls-lying-classic-car-young.jpg
+juego,noun,juego.ogg,board-game.jpg
+jardin,noun,jardin.ogg,garden-flower.jpg
+gasolina,noun,gasolina.ogg,petrol-stations-gasoline.jpg
+regalo,noun,regalo.ogg,present-package-gift.jpg
+chica,noun,chica.ogg,little-girl-child-portrait.jpg
+vidrio,noun,vidrio.ogg,glass-drink-water.jpg
+Dios,noun,Dios.ogg,"poseidon-sea.jpg, fantasy-light.jpg"
+helados,noun,helados.ogg,"ice_cream_1, ice_cream_2"
+oro,noun,oro.ogg,gold-ingots.jpg
+abuelo,noun,abuelo.ogg,grandfather-granddaughter.jpg
+abuela,noun,abuela.ogg,grandma-granny.png
+hierba,noun,hierba.ogg,ew-morning-meadow-grass.jpg
+piso,noun,piso.ogg,ground-cobblestone-manhole.jpg
+arma,noun,arma.ogg,handgun-weapon.svg
+pelo,noun,,beautiful-woman-hair-blond.jpg
+mano,noun,mano.ogg,hand-photography-palm.jpg
+sombrero,noun,sombrero.ogg,sun-hat.jpg
+cabeza,noun,cabeza.ogg,actress-beauty-face-girl-head.svg
+corazón,noun,corazon.ogg,heart-love-red.svg
+calor,noun,calor.ogg,firewood-fire.jpg
+cielo,noun,cielo.ogg,clouds-landscape-beyond-sky.jpg
+inferno,noun,inferno.ogg,hell-demons-devil.jpg
+colina,noun,colina.ogg,tree-grass-landscape-panorama.jpg
+hueco,noun,hueco.ogg,hole-sinkhole.jpg
+hogar,noun,hogar.ogg,house-cottage-residence.png
+caballo,noun,caballo.ogg,horse-mold-thoroughbred.jpg
+hospital,noun,hospital.ogg,hospital_Japan.jpg
+hotel,noun,hotel.ogg,"hotel-pool-evening.jpg, hotelroom.jpg"
+hora,noun,hora.ogg,clock-analog-time-watch.svg
+casa,noun,casa.ogg,architecture-family-house.jpg
+ser húmano,noun,ser-humano.ogg,first-human.jpg
+marido,noun,marido.ogg,couple-man-woman-relationship.svg
+hielo,noun,hielo.ogg,ice.jpg
+imagen,noun,imagen.ogg,"mona-lisa-painting-art.jpg, smartphone-face-woman-eyes.jpg"
+hérida,noun,herida.ogg,kermit-injured-patch.jpg
+idea,noun,idea.ogg,think-thinking-hand-reflect-idea.png
+instrumento,noun,instrumento.ogg,guitar-violin-bow.svg
+isla,noun,isla.ogg,island.jpg
+jugo,noun,jugo.ogg,orange-juice.jpg
+lleve,noun,lleve.ogg,key.jpg
+rey,noun,rey.ogg,king-crown-beard.svg
+cocina ,noun,cocina .ogg,kitchen-real-estate-interior-design.jpg
+rodilla,noun,rodilla.ogg,knee.jpg
+cuchillo,noun,cuchillo.ogg,knife-kitchen-sharp.svg
+lago,noun,lago.ogg,lake-irene-colorado-water.jpg
+lámpara,noun,lampara.ogg,table-lamp.png
+portátil,noun,portatil.ogg,mac-freelancer-laptop.jpg
+abógado,noun,abogado.ogg,lawyer-attorney.svg
+hoja,noun,hoja.ogg,leaf-autumn-maple.jpg
+pierna,noun,pierna.ogg,leg-long.jpg
+limon,noun,limon.ogg,lemon.jpg
+mango,noun,mango.ogg,mango-fruit.png
+carta,noun,carta.ogg,letter-love-mail.svg
+biblioteca,noun,biblioteca.ogg,library-stuttgart-city.jpg
+luz,noun,,lamp-light.jpg
+labio,noun,labio.ogg,lips.jpg
+cierre,noun,cierre.ogg,padlock-metal.svg
+almuerzo,noun,almuerzo.ogg,restaurant-people-men-women-eating.jpg
+revista,noun,revista.ogg,magazine-open.jpg
+hombre,noun,hombre.ogg,people-portrait-man-male.jpg
+gerente,noun,gerente.ogg,man-businessmen.jpg
+mapa,noun,mapa.ogg,map-berlin.jpg
+mercado,noun,mercado.ogg,afghanistan-town-city.jpg
+matrimonio,noun,matrimonio.ogg,marriage-couple-park.jpg
+medicina,noun,medicina.ogg,pill-capsule-medicine.jpg
+metal,noun,metal.ogg,iron-rods-reinforcing-bars.jpg
+leche,noun,leche.ogg,milk-glass.jpg
+dinero,noun,dinero.ogg,coins-banknotes-money.jpg
+mes,noun,mes.ogg,calender-icon-pictogram.png
+mañana,noun,manxana.ogg,"morning-bedroom-bed-door-girl.jpg, breakfast.jpg"
+madre,noun,madre.ogg,mother-baby-happy-smiling.jpg
+montaña,noun,montanxa.ogg,ama-dablam-himalaya-mountain.jpg
+ratón,noun,raton.ogg,mouse.jpg
+boca,noun,boca.ogg,mouth-smile-teeth.jpg
+película,noun,pelicula.ogg,bollywood-movie-cinema.jpg
+asesino,noun,asesino.ogg,potatoes-ketchup-murder.jpg
+música,noun,musica.ogg,cd-music-audio-notes.png
+naturaleza,noun,naturaleza.ogg,yellowstone-national-park.jpg
+cuello,noun,cuello.ogg,neck-woman.jpg
+aguja,noun,aguja.ogg,needle.png
+vecino,noun,vecino.ogg,man-face-grim-evil-neighbor-fence.jpg
+red,noun,red.ogg,network-mobile-communication.jpg
+periódico,noun,periodico.ogg,old-newspaper.jpg
+noche,noun,noche.ogg,night-town.jpg
+norte,noun,norte.ogg,"compass-gold.png, arrow-black-directions.svg"
+nariz,noun,nariz.ogg,nose-hairs.jpg
+nota,noun,nota.ogg,post-it-notes.jpg
+número,noun,numero.ogg,digit-number.jpg
+océano,noun,océano.ogg,waves-dawn-ocean.jpg
+oficina,noun,oficina.ogg,office-space.jpg
+aceite,noun,aceite.ogg,olive-oil.jpg
+naranja,noun,naranja.ogg,orange.jpg
+página,noun,pagina.ogg,page.png
+dolor,noun,dolor.ogg,backpain-back-pain.png
+pintura,noun,pintura.ogg,paint-art-paintbox.jpg
+pantalones,noun,pantalones.ogg,jeans-pants.png
+papel,noun,papel.ogg,paper-parchment-roll.png
+parque,noun,parque.ogg,city-park.jpg
+paciente,noun,paciente.ogg,doctor-patient-hospital-child.jpg
+patrón,noun,patron.ogg,pattern-indian-cute.png
+paz,noun,paz.ogg,decorative-peace-sign.png
+pluma,noun,pluma.ogg,fountain-pen.jpg
+lápiz,noun,lapiz.ogg,pencil-green.png
+persona,noun,persona.ogg,person-icon.png
+gente,noun,gente.ogg,people-icon.png
+fotografía,noun,fotografia.ogg,old-photos.jpg
+pieza,noun,pieza.ogg,"piece-of-cheese.png, piece-of-cake.jpg, puzzle-piece.png"
+cerdo,noun,cerdo.ogg,pig-cartoon.png
+avion,noun,avion.ogg,airplane-aircraft-commercial.jpg
+planta,noun,planta.ogg,green-plant-in-pot.pgn
+plástico,noun,plastico.ogg,eco-friendly-plastic-star.jpg
+plato,noun,plato.ogg,porcelain-plate.jpg
+jugador,noun,jugador.ogg,american-football-player.jpg
+bolsillo,noun,bolsillo.ogg,jeans-pocket.jpg
+veneno,noun,veneno.ogg,poison.jgp
+policía,noun,policia.ogg,cop-policewoman-colleagues.jpg
+piscina,noun,piscina.ogg,swimming-pool-water.jpg
+cerdo,noun,cerdo.ogg,pork-cuts.png
+presidente,noun,presidente.ogg,monument-president-landmark.jpg
+precio,noun,precio.ogg,gasoline-prices-petrol.jpg
+cura,noun,cura.ogg,pastor-priest-christian-cartoon.png
+cárcel,noun,carcel.ogg,prison-cell-slammer.jpg
+reina,noun,reina.ogg,"queen-royalty-crown.png, chess-piece-queen.png, queen-elizabeth-i-england.jpg"
+carrera,noun,carrera.ogg,relay-race-competition.jpg
+radio,noun,radio.ogg,old-radio-electronic-antique.png
+lluvia,noun,lluvia.ogg,cloud-weather-rain-rainfall.png
+reportero,noun,reportero.ogg,woman-talk-live-reporter.png
+restaurante,noun,restaurante.ogg,restaurant-people-eating.jpg
+arroz,noun,arroz.ogg,rice.jpg
+anillo,noun,anillo.ogg,ring-jewelry.png
+río,noun,rixo.ogg,yellowstone-national-park-sunset-river.jpg
+techo,noun,techo.ogg,tilted-roof.jpg
+cuarto,noun,cuarto.ogg,living-room.jpg
+raíz,noun,raiz.ogg,bed-bedroom.jpg
+sal,noun,sal.ogg,salt-shaker.png
+arena,noun,arena.ogg,sand-africa-namibia.jpg
+escuela,noun,escuela.ogg,"school-icon.png, classroom.jpg"
+ciencia,noun,ciencia.ogg,"chemical-science.png, sketch-cute-child-funny-science.jpg"
+pantalla,noun,pantalla.ogg,screen-monitor-tv.png
+mar  ,noun,mar  .ogg,"geography-map-mediterranean-sea.jpg, sea-ocean-water-wave-nature-beach.jpg"
+temporada,noun,temporada.ogg,autumn-four-seasons-spring-summer.jpg
+segundo,noun,segundo.ogg,time-watch-seconds.jpg
+secretaria,noun,secretaria.ogg,secretary.jpg
+nave,noun,,boat-sea-ship.jpg
+camisa,noun,camisa.ogg,dress-shirt-office.png
+zapato,noun,zapato.ogg,shoe-brown.png
+hombro,noun,hombro.ogg,female-long-hair-back-shoulder.jpg
+lado,noun,lado.ogg,sides-game-luck-chance.png
+señal,noun,senxal.ogg,traffic-signs-man-at-work.png
+hermana,noun,hermana.ogg,two-sisters.jpg
+piel,noun,piel.ogg,skin-hair-arm.jpg
+falda,noun,falda.ogg,skirt-pleated.png
+cielo,noun,cielo.ogg,atmosphere-blue-sky-clouds.jpg
+nieve,noun,nieve.ogg,cold-snow-white.jpg
+jabón,noun,jabon.ogg,soap-bar.jpg
+tierra,noun,tierra.ogg,field-soil-agriculture.png
+soldado,noun,soldado.ogg,isolated-soldier.png
+hijo,noun,hijo.ogg,father-son-hammock-boy.jpg
+canción,noun,cancion.ogg,notes-lyrics-song.png
+sonido,noun,sonido.ogg,"sound-music-audio-icon.png, audio-aural-wave.png"
+sopa,noun,sopa.ogg,soup-carrot-ginger-food.jpg
+sur,noun,sur.ogg,"compass-gold.png, arrow-directions-downwards-south.svg"
+cuchara,noun,cuchara.ogg,spoon-cutlery-metal.jpg
+deporte,noun,deporte.ogg,"silhouette-sports-basketball.png, tennis-icon.png, sport-shooting-football-soccer.png"
+primavera,noun,primavera.ogg,"cherry-tree-flowering-tree-blooming-spring.jpg, season-winter-spring-summer-fall.png"
+cuadrado,noun,cuadrado.ogg,square-orange.png
+mancha,noun,mancha.ogg,stain-t-shirt.png
+estrella,noun,estrella.ogg,star-yellow-symbol.png
+piedra,noun,piedra.ogg,rocks-stone-nature.png
+alto,noun,alto.ogg,stop-sign-hand.png
+tienda,noun,tienda.ogg,"shopping-supermarket.jpg, store-clothing-shop-bouique.jpg"
+calle,noun,calle.ogg,architecture-buildings-street.jpg
+estudiante,noun,estudiante.ogg,students-classroom.jpg
+azúcar,noun,azúcar.ogg,sugar-spoon.jpg
+traje,noun,traje.ogg,business-suit.jpg
+verano,noun,verano.ogg,"beach-family-fun-leisure.jpg, season-winter-spring-summer-fall.png, straw-bales-stubble-agriculture.jpg"
+sol ,noun,sol .ogg,sun-happy-sunshine.png
+sudor,noun,sudor.ogg,"sweat-body-fitness.jpg, sweat-sweaty-shirt-back.jpg"
+camiseta,noun,camiseta.ogg,tshirt-green.png
+mesa,noun,mesa.ogg,table-grey-silver-flat.png
+té,noun,tex.ogg,tea-hot-cup.jpg
+maestro,noun,maestro.ogg,school-chemistry-uganda-teacher.jpg
+equipo,noun,equipo.ogg,"team-basketball.jpg, indian-hockey-team-berlin-1936.jpg"
+lágrima,noun,largrima.ogg,tear-drop.jpg
+teléfono,noun,telefono.ogg,phone-dial-old.jpg
+television,noun,television.ogg,television-icon.png
+temperatura,noun,temperatura.ogg,thermometer-summer.jpg
+teatro,noun,teatro.ogg,"metz-france-opera-theatre.jpg, theater-comedy-tragedy-masks.png"
+billete,noun,billete.ogg,drink-ticket.png
+llanta,noun,llanta.ogg,tire-wheel-car.png
+dedo (de pierna),noun,dedo.ogg,pedicure-toes-foot.png
+tomate,noun,tomate.ogg,tomato.png
+lengua,noun,lengua.ogg,mouth-open-female-tongue.png
+herramienta,noun,herramienta.ogg,tools-spanners-hammers.png
+diente,noun,diente.ogg,dental-care-dental-mascot.png
+pueblo,noun,,old-town.jpg
+tren,noun,tren.ogg,railway-bernina-train.jpg
+estación de trenes,noun,estacion-de-trenes.ogg,train station.jpg
+arbol,noun,arbol.ogg,tree.png
+camión,noun,camion.ogg,truck-box-car.png
+universidad,noun,universidad.ogg,"university-of-toronto.jpg, university-lecture-hall.jpg, graduation-cap-hat.png"
+valle,noun,valle.ogg,vietnam-mountains-valley.jpg
+víctima,noun,victima.ogg,accident-victim.png
+voz,noun,voz.ogg,speech-icon-voice.png
+mesero,noun,mesero.ogg,cartoon-character-waiter.jpg
+muralla,noun,muralla.ogg,"brick-wall.jpg, great-wall-chinese.jpg"
+palabra,noun,palabra.ogg,"learn-word.jpg, dream-word-letters.jpg"
+guerra,noun,guerra.ogg,"vickers-machine-gun-passchendaele.jpg, Korean-War-bombing-Wonsan.jpg"
+agua,noun,agua.ogg,"faucet-fountain-water.jpg, clean-drop-of-water.jpg"
+ola,noun,ola.ogg,wave-water-surf-ocean.jpg
+boda,noun,boda.ogg,wedding-couple-wedding-party.jpg
+semana,noun,semana.ogg,days-week.jpg
+peso,noun,peso.ogg,weight-kg.png
+oeste,noun,oeste.ogg,"compass-gold.png, arrow-left-west.svg"
+esposa,noun,esposa.ogg,family-love-wife.jpg
+viento,noun,viento.ogg,"air-bag-wind-sock.jpg, wind-power-energy.jpg"
+ventana,noun,ventana.ogg,window-wooden.png
+vino,noun,vino.ogg,red-wine.jpg
+ala,noun,ala.ogg,"wing-angel.png, gray-plane-wing.jpg"
+invierno,noun,invierno.ogg,"snow-woman-winter.jpg, season-winter-spring-summer-fall.png"
+mujer,noun,mujer.ogg,"woman-wearing-pink.jpg, woman-in-black-scoop-neck-shirt.jpg"
+madera,noun,madera.ogg,wood-board-batten.png
+mundo,noun,mundo.ogg,map-of-the-world.jpg
+jardín,noun,jardin.ogg,garden-summer-front-yard.jpg
+año,noun,anxo.ogg,new-year-clip-art.jpg
+vegetal,noun,vegetal.ogg,vegetable-basket.jpg
+fruta,noun,fruta.ogg,fruit-bowl.jpg
+primero,ordinal number,primero.ogg,first.png
+segundo,ordinal number,segundo.ogg,second-ordinal.png
+tercero,ordinal number,tercero.ogg,third.png
+frutilla,noun,frutilla.ogg,strawberry.jpg
+ir,verb ,ir.ogg,"woman-away-nature-forest.jpg, this-way-confuse-where-to-go.png"
+firmar,verb ,firmar.ogg,writing-pen-man.jpg
+golpear,verb ,golpear.ogg,policeman-riot-police-baton.png
+doblar,verb ,doblar.ogg,bend-bent-over-heaving-human.png
+quebrar,verb ,quebrar.ogg,"chain-breaking-link.png, broken-heart-love.jpg"
+construir,verb ,construir.ogg,construction-workers-craftsmen-build.png
+quemar,verb ,quemar.ogg,fire-burning-house-flame.jpg
+comprar,verb ,comprar.ogg,"woman-holding-card-while-operating-silver-laptop.jpg, assorted-business-desserts-display.jpg"
+llamar,verb ,llamar.ogg,smiling-woman-holding-gold-iphone.jpg
+llevar,verb ,llevar.ogg,deliver-men-carrying-boxes-cartoon.png
+agarrar,verb ,agarrar.ogg,"football-catch-players.jpg, fisherman-caught-fish-fishing.png"
+limpiar,verb ,limpiar.ogg,"bucket-cleaning-rags.jpg, bucket-cleaning-supplies-housework.png"
+cerrar,verb ,cerrar.ogg,door-handle-ball.jpg
+contar,verb ,contar.ogg,learn-school-nursery-count.jpg
+llorar,verb ,llorar.ogg,sad-cry-tear-emotion-mood-face.jpg
+cortar,verb ,cortar.ogg,scissors-cutting-cut.png
+bailar,verb ,bailar.ogg,couple-dance-dancer-dancing.png
+morir,verb ,morir.ogg,"beyond-death-faith.jpg, scythe-death-skeleton.jpg"
+cavar,verb ,cavar.ogg,shovel-trowel-digging.png
+dibujar,verb ,dibujar.ogg,kids-girl-pencil-drawing.jpg
+tomar,verb ,tomar.ogg,drinking-water-woman-bottle.png
+manejar,verb ,manejar.ogg,old-man-drive-vintage-car.png
+comer,verb ,comer.ogg,cuisine-food-italian-antipasti.jpg
+explotar,verb ,explotar.ogg,explosion.png
+caer,verb ,caer.ogg,fall-falling.png
+alimentar,verb ,alimentar.ogg,"kid-feeding-antelope.jpg, baby-eating-firsts-food.jpg"
+pelear,verb ,pelear.ogg,fighting-arguing.jpg
+encontrar,verb ,encontrar.ogg,needle-in-a-haystack.jpg
+volar,verb ,volar.ogg,geese-birds-flock-wildlife-flying.jpg
+seguir,verb ,seguir.ogg,couple-in-love-stand-hand-hand.jpg
+crecer,verb ,crecer.ogg,sapling-plant-growing.png
+colgar,verb ,colgar.ogg,laundry-clothes-drying.jpg
+oír,verb ,oixr.ogg,close-up-communication-deaf-ear.jpg
+pegar,verb ,pegar.ogg,anger-fight-male.png
+saltar,verb ,saltar.ogg,fitness-jump.jpg
+matar,verb ,matar.ogg,killing-someone.jpg
+besar,verb ,besar.ogg,sunset-kiss-couple.jpg
+reír,verb ,reixr.ogg,man-laughing.jpg
+acostar,verb ,acostar.ogg,man-lying-floor.jpg
+alzar,verb ,alzar.ogg,weightlifting-clean-jerk.png
+escuchar,verb ,escuchar.ogg,headphones-listen.png
+vivir,verb ,vivir.ogg,girl-freedom-happy-sun.jpg
+amar,verb ,amar.ogg,love-heart-kiss-hearts-kissing.jpg
+casar,verb ,casar.ogg,marriage-wedding-bride-groom.jpg
+derretir,verb ,derretir.ogg,ice-cube-melting.png
+abrir,verb ,abrir.ogg,open-door.png
+pagar,verb ,pagar.ogg,euro-money-pay-cash.jpg
+jugar,verb ,jugar.ogg,"girls-kid-children-playing.jpg, basketball-team-play-scoring.jpg"
+rezar,verb ,rezar.ogg,woman-praying.jpg
+jalar,verb ,jalar.ogg,wagon-pet-logos-pull-boy.jpg
+empujar,verb ,empujar.ogg,push-pushing-move.png
+correr,verb ,correr.ogg,running-woman-man-together.png
+decir,verb ,decir.ogg,something-to-say.jpg
+ver,verb ,,view-eyes-by-looking-woman.jpg
+vender,verb ,vender.ogg,street-vendor-selling-rural-market.jpg
+agitar,verb ,agitar.ogg,dog-golden-retriever-wet-shake.jpg
+tirar,verb ,tirar.ogg,"submachine-gun-rifle.jpg, football-player-sport-shooting.png, man-sports-aim-archer-arrow-bow.png"
+cantar,verb ,cantar.ogg,singing-kids-child-group.png
+sentar,verb ,sentar.ogg,pretty-woman-face-femininity-pose-sit.jpg
+dormir,verb ,dormir.ogg,dream-sleep-pillow-blanket.png
+holer,verb ,holer.ogg,women-fragrant-flowers-smell.png
+sonreír,verb ,sonreixr.ogg,smiley-face-smile-happy.png
+hablar,verb ,hablar.ogg,conference-public-speaking.jpg
+parar,verb ,parar.ogg,sundress-summer-dress-girl-stand.jpg
+revolver,verb ,revolver.ogg,hand-mechanic-coffee-break-stir.jpg
+nadar,verb ,nadar.ogg,swim-swimmer-crawl-lake.jpg
+enseñar,verb ,ensenxar.ogg,male-teacher-cartoon.jpg
+pensar,verb ,pensar.ogg,think-women-head.png
+arrojar,verb ,arrojar.ogg,water-balloon-throwing.png
+tocar,verb ,tocar.ogg,michelangelo-abstract-boy-child-touch.jpg
+girar,verb ,girar.ogg,arrow-turn-left-blue-handdrawn.png
+despertar,verb ,despertar.ogg,wake-up-morning-bed-sleeping.png
+marchar,verb ,marchar.ogg,shoes-walking-railroad-tracks.jpg
+lavar,verb ,lavar.ogg,washing-dishes.jpg
+mirar,verb ,mirar.ogg,watching-tv-kid.png
+ganar,verb ,ganar.ogg,boxing-winner-looser-sport-fighter.jpg
+trabajar,verb ,trabajar.ogg,railroad-workers.jpg
+escribir,verb ,escribir.ogg,writing-write-fountain-pen.jpg
+cocinar,verb ,cocinar.ogg,woman-kitchen-man-everyday-life.jpg
