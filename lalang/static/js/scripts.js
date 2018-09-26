@@ -1,70 +1,43 @@
+// plays audio when user clicks the audio button
 function playAudioOut() {
     var audio_out=document.getElementById('card_audio');
     audio_out.play();
 }
 
+// ask for a new question when user changes language in dropdown menu
 $(document).ready(function() {
     $("#lang_select").change( function() {
-        $.get("/change-language",
+        $.get("/next-question",
                 {
                     language : $("#lang_select").val()
                 },
-                function(data) {
-                    alert(data);
-                }
+                load_question
         );
-
     });
-
 });
 
+// sends user's answer and asks for a new question when user clicks the submit button
+$(document).ready(function() {
+    $("#send_answer_btn").click( function() {
+        $.post("/next-question",
+                {
+                    user_answer : $("#user_answer").val()
+                },
+                load_question
+        );
+    });
+});
 
-// submit user's answer and go to next picture
-// $(document).ready(function(){
-//   $("#send_answer_btn").click(function(){
-//       $.post("/",
-//       {
-//         user_answer: $('#user_answer').val()
-//       },
-//       function(data,status){
-//         $('#fcard').attr('src', 'static/pics/HD/actress-beauty-face-girl-head.svg')
-//       });
-//   });
-// });
-
-// submit user's answer and go to next picture
-// $(document).ready(function(){
-//   $("#send_answer_btn").click(function(){
-//       $.post("/",
-//       {
-//         user_answer: $('#user_answer').val()
-//     });
-//   });
-// });
-
-//the pure JS implementation for getting the next flashcard picture
-//currently, i'ts not used -- the jquery implementation is used instead
-// function new_pic() {
-//     var pic=document.getElementById('fcard');
-//     pic.setAttribute('src', 'static/pics/HD/apple.jpg');
-// }
-
-// updating current_language
-// $(document).ready(function(){
-//     var language = $('#lang_select').val()
-//     $("#lang_select").change(function(){
-//         $.post("/",
-//         {
-//           current_language: language
-//         },
-//         function(){
-//             // update the title with the new langauge choice
-//             language = language.charAt(0).toUpperCase() + language.substr(1)
-//             document.getElementById("title_practice").innerHTML=default_title + " " + language + "!"
-//         });
-//     });
-// });
-
+// callbback function - loads a new question
+function load_question(new_question)  {
+    var quest_obj = JSON.parse(new_question);
+    $("#fcard").attr("src", "../static/pics/" + quest_obj.image_files.split(",")[0]);
+    $("#audio_src").attr("src", "../static/audio/" + quest_obj.language.toLowerCase() + "/" + quest_obj.audio_files);
+    // reload the audio source in the audio element; jQuery doesn't implement $().load(), so use JavaScript
+    document.getElementById('card_audio').load();
+    $("#part_of_speech_elem").text(quest_obj.part_of_speech);
+    $("#word_elem").text(quest_obj.word);
+}
 
 var default_title="Let's Practice";
 

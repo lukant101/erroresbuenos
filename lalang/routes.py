@@ -2,60 +2,48 @@ from lalang import app
 from lalang.helpers.default_questions import get_default_questions
 from flask import render_template, url_for, request
 import os
+import json
+import mongoengine
 
 supported_languages = ["english", "spanish", "polish"]
 
-current_language = "spanish"    # i.e. spanish is the default language
+default_language = "spanish"
 
-current_question = dict(zip(supported_languages,
-                            (0 for x in supported_languages)))
+current_language = default_language
+
+current_question_dict = dict(zip(supported_languages,
+                                 (0 for x in supported_languages)))
 
 questions = get_default_questions(supported_languages)
 
 
-@app.route("/<lang>/<int:qnum>", methods=['GET', "POST"])
-def home(lang, qnum):
-
-    # current_language = lang
-    # if qnum > 4:
-    #     current_question[current_language] = 0
-    # else:
-    #     current_question[current_language] = qnum
-    #
-    # # if request.method == "POST" and current_question[current_language] == 3:
-    # #     # current_question[current_language] += 1
-    # #     return f"I got your answer. It was {request.form.get('user_answer')}"
-    # # return render_template('home.html', curr_lang=current_language,
-    # #                        question=questions[current_language][current_question[current_language]],
-    # #                        curr_q_num=current_question[current_language])
-    # return render_template('home.html', curr_lang=current_language,
-    #                        question=questions[current_language][current_question[current_language]],
-    #                        curr_q_num=current_question[current_language])
-
-
 @app.route("/", methods=['GET', "POST"])
 def home():
-    return "I'm home"
+    global current_language
+    current_language = default_language
+
+    global current_question_dict
+    for k, v in current_question_dict.items():
+        current_question_dict[k] = 0
+    return render_template('home.html', curr_lang=current_language,
+                           question=questions[current_language][current_question_dict[current_language]])
 
 
-@app.route('/user-answer', methods=['GET', "POST"])
-def user_answer():
-    return request.form['user_answer']
-    # return f"your name is: {request.form['name']} and your city is {request.form['city']}"
-    # return request.form['name']
-    # return f"Hi there. Your answer was {request.form['user_answer']}"
-
-
-@app.route('/login', methods=['GET', "POST"])
-def login():
-    if request.method == "POST":
-        return "post method used"
+@app.route('/next-question', methods=['GET', "POST"])
+def load_question():
+    if request.args.get('language'):
+        global current_language
+        current_language = request.args.get('language')
     else:
-        return render_template('login.html')
+        current_question_dict[current_language] += 1
 
+    if current_question_dict[current_language] > 4:
+        current_question_dict[current_language] = 0
 
-@app.route('/change-language', methods=['GET'])
-def switch_language():
-    if current_question[current_language] > 4:
-        current_question[current_language] = 0
-    return f"You requested to switch to: {request.form.args['language']}"
+    current_quest_obj = questions[current_language][current_question_dict[current_language]]
+
+    q_json = {}
+    q_json_iter = current_quest_obj._fields.keys()
+    for k in q_json_iter:
+        q_json[k] = getattr(current_quest_obj, k)
+    return json.dumps(q_json)
