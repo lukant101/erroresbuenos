@@ -1,0 +1,19 @@
+# Pictures #
+############
+# this is a comment
+*.jpg
+*.png
+*.svg
+
+# Audio #
+############
+*.ogg
+
+# Miscellaneous #
+############
+venv/
+temp/
+snippets.txt
+__pycache__/
+assets/
+lalang/myTests/
