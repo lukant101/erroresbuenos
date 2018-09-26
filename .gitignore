@@ -15,5 +15,7 @@ venv/
 temp/
 snippets.txt
 __pycache__/
+lalang/helpers/__pycache__/
 assets/
 lalang/myTests/
+
