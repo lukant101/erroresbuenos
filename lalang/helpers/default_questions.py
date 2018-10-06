@@ -14,10 +14,10 @@ def get_default_questions(supp_lang_list):
 
     Argument:
 
-    supp_lang_list -- list[str] -- supported languages
+    supp_lang_list: list[str] -- supported languages
 
     Return:
-    dictionary{key: list[Question]}
+    dictionary{language: list[Question]}
     """
 
     questions_dict_all_lang = {}
@@ -26,7 +26,7 @@ def get_default_questions(supp_lang_list):
     os.chdir("C:/Users/Lukasz/Python/ErroresBuenos/lalang/questions/default")
 
     for lang in supp_lang_list:
-        with open(f"stream_default_{lang.lower()}.txt", "r") as f:
+        with open(f"stream_default_{lang.lower()}.json", "r", encoding="utf8") as f:
             question_list = f.readlines()
 
             # convert strings to Question objects
@@ -40,13 +40,19 @@ def get_default_questions(supp_lang_list):
                     setattr(question, k, v)
 
                 question_list[i] = question
-                # question_list.append(question)
 
             questions_dict_all_lang[lang.lower()] = question_list
 
     return questions_dict_all_lang
 
+
 # DELETE THE CODE BELOW ONCE THE HOME PAGE IMPLEMENTED IN PHASE 1
+if __name__ == "__main__":
+    sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos\\lalang")
+    from helpers.make_question_dictionary import str_to_dict
+
+    print(questions_dict_all_lang["spanish"][0])
+
 # the_stuff = get_template_questions()
 # print(the_stuff)
 #

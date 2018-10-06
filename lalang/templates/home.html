@@ -10,10 +10,14 @@
 
             <div class='form-group'>
                 <label class='d-block'>Part of Speech: <span id="part_of_speech_elem" class="font-weight-bold">{{ question.part_of_speech }}</span></label>
-                <input type='text' class='custom-control custom-control-inline mr-0' name="user_answer" id='user_answer' placeholder="Your answer..."/>
+                <input type='text' class='custom-control custom-control-inline mr-0' name="user_answer" id='user_answer' />
                 <button id='send_answer_btn' type='button' class='btn btn-info rounded-circle ml-0'><i class="fas fa-arrow-right"></i></button>
+                <input type="hidden" name="question_id" id="question_id" value={{ question.id }}>
+                <input type="hidden" name="student_id" id="student_id" value={{ student_id }}>
+                <input type="hidden" name="answer_correct" id="answer_correct" value="false">
+                <input type="hidden" name="audio_answer_correct" id="audio_answer_correct" value="false">
             </div>
-        
+
 
         <div class='form-control'>
             <p class='mb-1'>Answer: <span id="word_elem" class="font-weight-bold">{{ question.word }}</span></p>

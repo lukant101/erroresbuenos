@@ -18,33 +18,30 @@ class Question(db.Document):
     image_files = db.StringField(max_length=200)
 
     # allow subclasses for other question types
-    # meta = {'allow_inheritance': True}
-
-
-class LanguageProgress(db.EmbeddedDocument):
-    language = db.StringField(required=True, max_length=20,
-                              choices=supported_languages)
-    # student's proficiency in each language, expressed as a percentage
-    language_proficiency = db.DecimalField(min_value=0, max_value=100, default=0)
-    last_studied = db.DateTimeField(default=datetime.datetime.now(tz=pytz.UTC))
-    question_queue = db.ListField(field=db.ObjectIdField())
-    answered_wrong_stack = db.ListField(field=db.ObjectIdField())
-    answered_corr_stack = db.ListField(field=db.ObjectIdField())
+    meta = {'allow_inheritance': True}
 
 
 class Student(db.Document):
-    # should require either email or username, but not both
-    # if email provided, use it as  the username
-    email = db.EmailField(unique=True)
-    username = db.StringField(required=True, unique=True, max_length=20)
+    email = db.EmailField(required=True, unique=True)
+    username = db.StringField(unique=True, max_length=20)
     first_name = db.StringField(max_length=30)
     last_name = db.StringField(max_length=30)
     # make sure to store  password hash in the database
     password = db.StringField(max_length=30)
     app_language = db.StringField(required=True,
                                   default="english", max_length=20)
-    language_progress = db.EmbeddedDocumentListField(LanguageProgress)
-    temp = db.BooleanField(default=True)
+    # student's proficiency in each language, expressed as a percentage
+    language_proficiency = db.DictField(field=db.DecimalField(
+        min_value=0, max_value=100))
+    last_studied = db.DictField(field=db.DateTimeField(
+        default=datetime.datetime.now(tz=pytz.UTC)))
+    # pairs of: language, list of questions
+    question_queue = db.DictField(field=db.ListField(
+        field=db.ObjectIdField()))
+    answered_wrong_stack = db.DictField(field=db.ListField(
+        field=db.ObjectIdField()))
+    answered_corr_stack = db.DictField(field=db.ListField(
+        field=db.ObjectIdField()))
 
 
 class StudentHistory(db.Document):
@@ -52,7 +49,7 @@ class StudentHistory(db.Document):
     question_id = db.ObjectIdField()
     language = db.StringField(required=True, max_length=20,
                               choices=supported_languages)
-    answer = db.ListField(field=db.StringField())
+    answer = db.StringField()
     # need to see how to pass boolean from jquery to back-end
     # answer_correct = db.BooleanField(default=False)
     answer_correct = db.BooleanField(default=False)

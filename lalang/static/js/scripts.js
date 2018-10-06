@@ -21,7 +21,12 @@ $(document).ready(function() {
     $("#send_answer_btn").click( function() {
         $.post("/next-question",
                 {
-                    user_answer : $("#user_answer").val()
+                    user_answer : $("#user_answer").val(),
+                    question_id : $("#question_id").val(),
+                    student_id : $("#student_id").val(),
+                    answer_correct : $("#answer_correct").val(),
+                    audio_answer_correct : $("#audio_answer_correct").val(),
+                    language : $("#lang_select").val()
                 },
                 load_question
         );
@@ -37,6 +42,8 @@ function load_question(new_question)  {
     document.getElementById('card_audio').load();
     $("#part_of_speech_elem").text(quest_obj.part_of_speech);
     $("#word_elem").text(quest_obj.word);
+    $("#user_answer").val("");
+    $("#question_id").attr("value", quest_obj.id);
 }
 
 var default_title="Let's Practice";
