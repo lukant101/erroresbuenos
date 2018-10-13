@@ -1,3 +1,4 @@
+"""Export function: create_stud_hist_coll."""
 import mongoengine
 import sys
 from bson.objectid import ObjectId
@@ -10,7 +11,7 @@ from lalang.db_model import StudentHistory, Question
 
 
 def create_stud_hist_coll():
-
+    """If the StudentHistory collection does not exist, create it."""
     mongoengine.connect("lalang_db", host="localhost", port=27017)
 
     # default student - lukasz:

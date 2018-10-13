@@ -1,30 +1,21 @@
-"""Exports function: save_answer."""
-
 import mongoengine
 import sys
 import datetime
 import pytz
 from bson.objectid import ObjectId
-
+import os
 
 sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos")
 
-from lalang.db_model import StudentHistory, Student
-from lalang.constants import NUM_QUESTIONS_TO_LOAD, MIN_QUESTIONS_IN_QUEUE
+from lalang.db_model import (StudentHistory, Student, LanguageProgress,
+                             NUM_QUESTIONS_TO_LOAD)
 from lalang.helpers.create_stud_hist_coll import create_stud_hist_coll
-from lalang.helpers.more_questions import prep_questions
 
 
 def save_answer(*, student_id, language,
                 question_id, user_answer, answer_correct,
                 audio_answer_correct):
-    """
-    Save user's answer in StudentHistory and Student documents.
 
-    Return:
-    a list of new questions, if the question queue has been replenished;
-    otherwise, return None
-    """
     mongoengine.connect("lalang_db", host="localhost", port=27017)
 
     # if no Student History collection in database, create one
@@ -74,33 +65,47 @@ def save_answer(*, student_id, language,
         stud_hist.save()
 
     # update the question queue and answer stacks in Student document
+    # no queue implemented yet, but once working, pop first question:
 
     # get embedded document for this student for this language
     language_embed_doc = Student.objects(
         id=student_id[0]).first().language_progress.filter(
         language=stud_hist.language)
 
-    # update the embedded document for this language
-    language_embed_doc[0].last_studied = datetime.datetime.now(tz=pytz.UTC)
+    if language_embed_doc:
+        # if there is an existing emb. document, i.e. student has studied
+        # this langauge before, update the emb. document for this language
+        language_embed_doc[0].last_studied = datetime.datetime.now(tz=pytz.UTC)
+        # remove the answered question from the queue
+        assert language_embed_doc[0].question_queue[0] == stud_hist.question_id
+        language_embed_doc[0].question_queue.pop(0)
 
-    if stud_hist.answer_correct:
-        language_embed_doc[0].answered_corr_stack.append(
-            stud_hist.question_id)
+        if stud_hist.answer_correct:
+            language_embed_doc[0].answered_corr_stack.append(
+                stud_hist.question_id)
+        else:
+            language_embed_doc[0].answered_wrong_stack.append(
+                stud_hist.question_id)
+
+        language_embed_doc.save()
+
     else:
-        language_embed_doc[0].answered_wrong_stack.append(
-            stud_hist.question_id)
+        # student has never studied  this langauge, so create
+        # an embedded document in Student document for this language
+        student = Student.objects(id=student_id[0]).first()
 
-    # remove the answered question from the queue
-    # assert language_embed_doc[0].question_queue[0] == stud_hist.question_id
-    language_embed_doc[0].question_queue.pop(0)
+        lang_prog = LanguageProgress(
+            language=language[0],
+            last_studied=datetime.datetime.now(tz=pytz.UTC)
+        )
+        # check if written answer is correct
+        # will implement checking of audio answer later
+        if stud_hist.answer_correct:
+            lang_prog.answered_corr_stack = [stud_hist.question_id]
+        else:
+            lang_prog.answered_wrong_stack = [stud_hist.question_id]
 
-    language_embed_doc.save()
+        # add new embedded document to list of all studied languages
+        student.update(push__language_progress=lang_prog)
 
-    # if queue doesn't have enough questions, add more questions
-    if len(language_embed_doc[0].question_queue) < MIN_QUESTIONS_IN_QUEUE:
-        new_questions = prep_questions(language[0],
-                                       student_id[0], NUM_QUESTIONS_TO_LOAD)
-    else:
-        new_questions = None
-
-    return new_questions
+        student.save()

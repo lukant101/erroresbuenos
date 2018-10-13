@@ -1,17 +1,20 @@
-"""Create a series of default questions, to be presented to students."""
+"""Create a series of default questions, to be presented to students.
 
-"""Get questions from database and save in a text file"""
+Get questions from database and save them in a json file.
+The file stores a list of json strings representing the questions.
+"""
 
 import mongoengine
 import csv
 import sys
 import os
 import random
+import json
 
 sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos")
-# sys.path.append("C:\\Users\\Lukasz\\Python")
 
-from db_model import Question
+from lalang.db_model import Question
+from lalang.helpers.utils import question_obj_to_json
 
 
 mongoengine.connect("lalang_db", host="localhost", port=27017)
@@ -58,11 +61,24 @@ print("Questions added: ")
 os.chdir("C:/Users/Lukasz/Python/ErroresBuenos/lalang/questions/default")
 
 
-with open(f"stream_default_{language_in.lower()}.txt", "w") as f:
+with open(f"stream_default_{language_in.lower()}.json", "w") as f:
+    f.write("[")
 
     for question in questions:
-        for fld in fields_list:
-            question_dict[fld] = getattr(question, fld)
+        # q_json = {}
+        # q_json_iter = question._fields.keys()
+        # for k in q_json_iter:
+        #     q_json[k] = str(getattr(question, k))
+        q_json = question_obj_to_json(question)
 
-        f.write(str(question_dict)+"\n")
-        print(question_dict.get("word"))
+        json.dump(q_json, f, ensure_ascii=False)
+
+        # separate the question documents in the list
+        f.write(", ")
+
+        print(question.word)
+
+    # move cursor back to the end of last question document, so we can
+    # overwrite the last comma and close the list
+    f.seek(f.tell()-2)
+    f.write("]")

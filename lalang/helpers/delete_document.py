@@ -15,8 +15,8 @@ import os
 sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos")
 # sys.path.append("C:\\Users\\Lukasz\\Python")
 
-from db_model import Question
-# from ErroresBuenos.db_model import Question
+from lalang.db_model import Question
+
 
 db_in = input("Which database should the questions be deleted from? ")
 mongoengine.connect(db_in, host="localhost", port=27017)
