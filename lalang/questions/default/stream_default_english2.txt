@@ -1,5 +1,0 @@
-{'description': 'word flashcard', 'skill': 'Vocabulary', 'language': 'English', 'word': 'bank', 'part_of_speech': 'noun', 'audio_files': 'bank.ogg', 'image_files': 'bank-building.jpg', 'id': ObjectId('5ba13cd3fde08a0ce818563d')}
-{'description': 'word flashcard', 'skill': 'Vocabulary', 'language': 'English', 'word': 'energy', 'part_of_speech': 'noun', 'audio_files': '', 'image_files': 'flash-thunderstorm.jpg, wind-farm-wind-energy.jpg', 'id': ObjectId('5ba13cd3fde08a0ce818568e')}
-{'description': 'word flashcard', 'skill': 'Vocabulary', 'language': 'English', 'word': 'island', 'part_of_speech': 'noun', 'audio_files': '', 'image_files': 'island.jpg', 'id': ObjectId('5ba13cd3fde08a0ce81856c9')}
-{'description': 'word flashcard', 'skill': 'Vocabulary', 'language': 'English', 'word': 'market', 'part_of_speech': 'noun', 'audio_files': '', 'image_files': 'afghanistan-town-city.jpg', 'id': ObjectId('5ba13cd3fde08a0ce81856e2')}
-{'description': 'word flashcard', 'skill': 'Vocabulary', 'language': 'English', 'word': 'wave', 'part_of_speech': 'noun', 'audio_files': '', 'image_files': 'wave-water-surf-ocean.jpg', 'id': ObjectId('5ba13cd3fde08a0ce8185777')}

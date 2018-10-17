@@ -12,21 +12,25 @@ import copy
 
 sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos")
 
-from lalang.db_model import Question
+from lalang.db_model import Question, Student
 
 
 def question_obj_to_json(question_obj):
     """Take Question object and return it in json representation."""
     q_json = {}
-    q_json_iter = question_obj._fields.keys()
-    for k in q_json_iter:
-        q_json[k] = str(getattr(question_obj, k))
-    return json.dumps(q_json)
+    q_fields_iter = question_obj._fields.keys()
+    for f in q_fields_iter:
+        if f == "id":
+            # cast ObjectId as string so we get the hexidecimal string
+            q_json[f] = str(getattr(question_obj, f))
+        else:
+            q_json[f] = getattr(question_obj, f)
+    return json.dumps(q_json, ensure_ascii=False)
+    # return question_obj.word
 
 
 def dict_to_question_obj(question_as_dict):
     """Take question represented as dictionary and return Question object."""
-    # making a copy in order to not lose email key in dict passed as argument
     q_obj = Question()
     for k, v in question_as_dict.items():
         setattr(q_obj, k, v)
@@ -46,7 +50,11 @@ def dict_to_student_obj(student_as_dict):
 
 
 if __name__ == "__main__":
-    question_id = ObjectId("5ba13cd3fde08a0ce81856b5")
+    # question_id = ObjectId("5ba13cd3fde08a0ce81856b5")
+    # skakać
+    # question_id = ObjectId("5ba13d2cfde08a6a948a701f")
+    # spaść
+    question_id = ObjectId("5ba13d2cfde08a6a948a7015")
     question = Question.objects(id=question_id).first()
     q_as_json = question_obj_to_json(question)
     print(q_as_json)

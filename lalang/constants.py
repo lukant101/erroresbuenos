@@ -8,4 +8,15 @@ MIN_QUESTIONS_IN_QUEUE = 3
 
 DEFAULT_LANGUAGE = "spanish"
 
-student_id = "5bc1734ffde08a5b8c9a283c"
+MAXLEN_ANSWERED_WRONG_STACK = 50
+
+# in order not be always at the maximum length, delete extra elements
+# whenever the stack gets filled up
+MAXLEN_SLACK_ANSWERED_WRONG_STACK = 10
+
+
+# lukasz
+student_id = "5bc56cb8fde08a2fe809e796"
+
+# denise
+# student_id = "5bc56d35fde08a62b029112e"

@@ -1,6 +1,6 @@
 Word,Part_of_Speech,Audio,Photos
 beautiful,adjective,beautiful.ogg,"beautiful-woman.jpg, beautiful-nature.jpg"
-big,adjective,,"big-elephants.jpg, big-wave.jpg"
+big,adjective,big.ogg,"big-elephants.jpg, big-wave.jpg"
 black,adjective,black.ogg,"black-swan.jpg, black-cat.jpg"
 blind,adjective,blind.ogg,blind-person.jpg
 blue,adjective,blue.ogg,"woman-with-blue-hair.jpg, cat-with-blue-eyes.png"
@@ -51,7 +51,7 @@ strawberry,noun,strawberry.ogg,strawberry.jpg
 tall,adjective,tall.ogg,"eiffel-tower-paris-tower.jpg, palm-trees-upward-tropical-blue-sky.jpg"
 thick,adjective,thick.ogg,"book-green-thick.png, Ikat_cloth_from_Sumba.jpg"
 tight,adjective,tight.ogg,"knot-rope.jpg, girl-woman-tight-black-dress.jpg"
-to cook,verb,to cook.ogg,woman-kitchen-man-everyday-life.jpg
+to cook,verb,to-cook.ogg,woman-kitchen-man-everyday-life.jpg
 ugly,adjective,ugly.ogg,grotesque-old-woman.jpg
 warm,adjective,warm.ogg,staying-warm.jpg
 weak,adjective,weak.ogg,caricature-man-weak-effort.jpg
@@ -72,9 +72,9 @@ up,adverb,up.ogg,green-arrow-up.png
 five,cardinal number,five.ogg,five.jpg
 four,cardinal number,four.ogg,four.jpg
 one,cardinal number,one.ogg,one.png
-one hundred,cardinal number,one hundred.ogg,one-hundred.png
-one million,cardinal number,one million.ogg,one-million.jpg
-one thousand,cardinal number,one thousand.ogg,one-thousand-banknote-polish.png
+one hundred,cardinal number,one-hundred.ogg,one-hundred.png
+one million,cardinal number,one-million.ogg,one-million.jpg
+one thousand,cardinal number,one-thousand.ogg,one-thousand-banknote-polish.png
 three,cardinal number,three.ogg,three.png
 two,cardinal number,two.ogg,two.png
 zero,cardinal number,zero.ogg,zero.png
@@ -85,7 +85,7 @@ airport,noun,airport.ogg,airport.jpg
 animal,noun,animal.ogg,bull-cattle-livestock.jpg
 apartment,noun,apartment.ogg,living-room-chair-sofa-couch.jpg
 apple,noun,apple.ogg,apple.jpg
-arm  ,noun,arm  .ogg,arm.jpg
+arm  ,noun,arm.ogg,arm.jpg
 army,noun,army.ogg,soldiers.jpg
 art,noun,art.ogg,wall-art-spray-graffiti-woman.jpg
 artist,noun,artist.ogg,artist.jpg
@@ -104,7 +104,7 @@ beard,noun,beard.ogg,beard-face-man-model-mustache.jpg
 bed,noun,bed.ogg,bed.png
 bedroom,noun,bedroom.ogg,bedroom.jpg
 beef,noun,beef.ogg,meat-beef.jpg
-beer,noun,beer.ogg,craft-beer
+beer,noun,beer.ogg,craft-beer.jpg
 beverage,noun,beverage.ogg,beach-beverage.jpg
 bicycle,noun,bicycle.ogg,old-bicycle.jpg
 bill,noun,bill.ogg,pay-bill-restaurant.jpg
@@ -125,387 +125,387 @@ bridge,noun,bridge.ogg,golden-gate-bridge.jpg
 brother,noun,brother.ogg,brothers-family-siblings.jpg
 building,noun,building.ogg,appartment-building.jpg
 bus,noun,bus.ogg,london-britain-bus-red-city.jpg
-cake,noun,,piece-of-cake.jpg
-camera,noun,,camera-vintage.jpg
-camp,noun,,camping-tent-fire-summer-outdoors.jpg
-car ,noun,,car-audi-auto.jpg
-card,noun,,"playing-cards.jpg, credit-card.jpg"
-cat,noun,,cat-sweet-kitty.jpg
-ceiling,noun,,church-ceiling.jpg
-cell phone,noun,,iphone-smartphone.jpg
-centimeter,noun,,measure-centimeter.jpg
-chair,noun,,chair-furniture-seat.png
-cheese,noun,,cheese.jpg
-chicken,noun,,"chicken-poultry.jpg, fried-chicken.jpg"
-child,noun,,"boy-red-hair-freckles-portrait.jpg, child-portrait-girl.jpg"
-church,noun,,church-snow-winter.jpg
-circle,noun,,circle-color.png
-city,noun,,new-york-city-skyline.jpg
-clay,noun,,"pottery-handmade-cup.jpg, clay-hands-sculpting-art.jpg"
-clock,noun,,alarm-clock.jpg
-clothing,noun,,store-clothing.jpg
-club,noun,,"dance-party-disco.jpg, golf-club.jpg, club-weapon.svg"
-coat,noun,,coat-clothing-long.svg
-coffee,noun,,coffee-cup-beans.jpg
-colour,noun,,beaded-colour-pencils.jpg
-computer,noun,,computer-desktop-workstation.svg
-contract,noun,,business-signature-contract.jpg
-copper,noun,,copper-cookware.jpg
-corn,noun,,corn.jpg
-corner,noun,,"wall-corner.svg, football-corner.jpg"
-country,noun,,"europe-map-country.jpg, canada-national-flag.jpg"
-court,noun,,"supreme-court-building-court.jpg, gavel-law.jpg"
-cow,noun,,cow.jpg
-crowd ,noun,,city-crowd.jpg
-cup,noun,,tea-cup.jpg
-date,noun,,calendar-date.jpg
-daughter,noun,,father-daughter-smile.jpg
-day,noun,,"day-blue-sky.jpg, day-of-week.png"
-death,noun,,man-skull-death.jpg
-diamond,noun,,diamond.jpg
-dinner,noun,,dinner-table.jpg
-disease,noun,,"virus-infection-cell-bacterium.jpg, sad-sick.svg"
-doctor,noun,,doctor-gray-hair.jpg
-dog,noun,,dog-beach-pet-black.jpg
-door,noun,,door.jpg
-dot,noun,,"dot.png, background-bow-color-dot.jpg"
-dress,noun,,dress.svg
-drug,noun,,"syringe-pill-capsule-morphine.jpg, seedling-cannabis-marijuana.jpg"
-dust,noun,,"horse-herd-dust.jpg, construction-worker-saw-concrete-dust.jpg"
-ear,noun,,ear.jpg
-earth,noun,,"planet-earth.jpg, onion-arable-field-earth.jpg"
-East,noun,,"compass-gold.png, arrow-right-direction-east.svg"
-edge,noun,,edge-height-depth.jpg
-egg,noun,,egg.svg
-energy,noun,,"flash-thunderstorm.jpg, wind-farm-wind-energy.jpg"
-engine,noun,,restored-air-cool-engine.jpg
-evening,noun,,dult-mother-daughter-beach.jpg
-exercise,noun,,gym-room-fitness-equipment.jpg
-eye,noun,,blue-eye-iris-pupil.jpg
-face,noun,,woman-portrait-face-skin-make-up.jpg
-fall,noun,,"forest-season-autumn-fall.jpg, season-winter-spring-summer-fall.png"
-family,noun,,family-kids-baby-newborn-together.jpg
-fan,noun,,sport-ice-hockey-fan.jpg
-fan,noun,,appliance-cool-electric-fan.svg
-farm,noun,,wisconsin-farm-country-rural.jpg
-father,noun,,people-father-daughter-smile-happy.jpg
-finger,noun,,hand-finger.png
-fire,noun,,wood-fire-flame-burn.jpg
-fish,noun,,discus-fish-fauna.jpg
-floor,noun,,floor-wood-hardwood.jpg
-flower,noun,,flower-nature-flora-petal.jpg
-food,noun,,healthy-food.jpg
-foot,noun,,foot-baby.jpg
-forest,noun,,green-park-season-nature.jpg
-fork,noun,,fork-eat-metal.jpg
-friend,noun,,girls-lying-classic-car-young.jpg
-game,noun,,board-game.jpg
-garden,noun,,garden-flower.jpg
-gasoline,noun,,petrol-stations-gasoline.jpg
-gift,noun,,present-package-gift.jpg
-girl,noun,,little-girl-child-portrait.jpg
-glass,noun,,glass-drink-water.jpg
-God,noun,,"poseidon-sea.jpg, fantasy-light.jpg"
-ice cream,noun,,"ice_cream_1, ice_cream_2"
-gold,noun,,gold-ingots.jpg
-grandfather,noun,,grandfather-granddaughter.jpg
-grandmother,noun,,grandma-granny.png
-grass,noun,,ew-morning-meadow-grass.jpg
-ground,noun,,ground-cobblestone-manhole.jpg
-gun,noun,,handgun-weapon.svg
-hair,noun,,beautiful-woman-hair-blond.jpg
-hand,noun,,hand-photography-palm.jpg
-hat,noun,,sun-hat.jpg
-head,noun,,actress-beauty-face-girl-head.svg
-heart,noun,,heart-love-red.svg
-heat,noun,,firewood-fire.jpg
-heaven,noun,,clouds-landscape-beyond-sky.jpg
-hell,noun,,hell-demons-devil.jpg
-hill,noun,,tree-grass-landscape-panorama.jpg
-hole,noun,,hole-sinkhole.jpg
-home,noun,,house-cottage-residence.png
-horse,noun,,horse-mold-thoroughbred.jpg
-hospital,noun,,hospital_Japan.jpg
-hotel,noun,,"hotel-pool-evening.jpg, hotelroom.jpg"
-hour,noun,,clock-analog-time-watch.svg
-house,noun,,architecture-family-house.jpg
-human,noun,,first-human.jpg
-husband,noun,,couple-man-woman-relationship.svg
-ice,noun,,ice.jpg
-image,noun,,"mona-lisa-painting-art.jpg, smartphone-face-woman-eyes.jpg"
-injury,noun,,kermit-injured-patch.jpg
-idea,noun,,think-thinking-hand-reflect-idea.png
-instrument,noun,,guitar-violin-bow.svg
-island,noun,,island.jpg
-juice,noun,,orange-juice.jpg
-key,noun,,key.jpg
-king,noun,,king-crown-beard.svg
-kitchen,noun,,kitchen-real-estate-interior-design.jpg
-knee,noun,,knee.jpg
-knife,noun,,knife-kitchen-sharp.svg
-lake,noun,,lake-irene-colorado-water.jpg
-lamp,noun,,table-lamp.png
-laptop,noun,,mac-freelancer-laptop.jpg
-lawyer,noun,,lawyer-attorney.svg
-leaf,noun,,leaf-autumn-maple.jpg
-leg,noun,,leg-long.jpg
-lemon,noun,,lemon.jpg
-mango,noun,,mango-fruit.png
-letter,noun,,letter-love-mail.svg
-library,noun,,library-stuttgart-city.jpg
-light,noun,,lamp-light.jpg
-lip,noun,,lips.jpg
-lock,noun,,padlock-metal.svg
-lunch,noun,,restaurant-people-men-women-eating.jpg
-magazine,noun,,magazine-open.jpg
-man ,noun,,people-portrait-man-male.jpg
-manager,noun,,man-businessmen.jpg
-map,noun,,map-berlin.jpg
-market,noun,,afghanistan-town-city.jpg
-marriage,noun,,marriage-couple-park.jpg
-medicine,noun,,pill-capsule-medicine.jpg
-metal,noun,,iron-rods-reinforcing-bars.jpg
-milk,noun,,milk-glass.jpg
-money,noun,,coins-banknotes-money.jpg
-month,noun,,calender-icon-pictogram.png
-morning,noun,,"morning-bedroom-bed-door-girl.jpg, breakfast.jpg"
-mother,noun,,mother-baby-happy-smiling.jpg
-mountain,noun,,ama-dablam-himalaya-mountain.jpg
-mouse,noun,,mouse.jpg
-mouth,noun,,mouth-smile-teeth.jpg
-movie,noun,,bollywood-movie-cinema.jpg
-murder,noun,,potatoes-ketchup-murder.jpg
-music,noun,,cd-music-audio-notes.png
-nature,noun,,yellowstone-national-park.jpg
-neck,noun,,neck-woman.jpg
-needle,noun,,needle.png
-neighbour,noun,,man-face-grim-evil-neighbor-fence.jpg
-network,noun,,network-mobile-communication.jpg
-newspaper,noun,,old-newspaper.jpg
-night,noun,,night-town.jpg
-North,noun,,"compass-gold.png, arrow-black-directions.svg"
-nose,noun,,nose-hairs.jpg
-note,noun,,post-it-notes.jpg
-number,noun,,digit-number.jpg
-ocean,noun,,waves-dawn-ocean.jpg
-office,noun,,office-space.jpg
-oil,noun,,olive-oil.jpg
-orange,noun,,orange.jpg
-page,noun,,page.png
-pain,noun,,backpain-back-pain.png
-paint,noun,,paint-art-paintbox.jpg
-pants,noun,,jeans-pants.png
-paper,noun,,paper-parchment-roll.png
-park,noun,,city-park.jpg
-patient,noun,,doctor-patient-hospital-child.jpg
-pattern,noun,,pattern-indian-cute.png
-peace,noun,,decorative-peace-sign.png
-pen,noun,,fountain-pen.jpg
-pencil,noun,,pencil-green.png
-person,noun,,person-icon.png
-people,noun,,people-icon.png
-photograph,noun,,old-photos.jpg
-piece,noun,,"piece-of-cheese.png, piece-of-cake.jpg, puzzle-piece.png"
-pig,noun,,pig-cartoon.png
-plane,noun,,airplane-aircraft-commercial.jpg
-plant,noun,,green-plant-in-pot.pgn
-plastic,noun,,eco-friendly-plastic-star.jpg
-plate,noun,,porcelain-plate.jpg
-player,noun,,american-football-player.jpg
-pocket,noun,,jeans-pocket.jpg
-poison,noun,,poison.jgp
-police,noun,,cop-policewoman-colleagues.jpg
-pool,noun,,swimming-pool-water.jpg
-pork,noun,,pork-cuts.png
-president,noun,,monument-president-landmark.jpg
-price,noun,,gasoline-prices-petrol.jpg
-priest,noun,,pastor-priest-christian-cartoon.png
-prison,noun,,prison-cell-slammer.jpg
-queen,noun,,"queen-royalty-crown.png, chess-piece-queen.png, queen-elizabeth-i-england.jpg"
-race,noun,,relay-race-competition.jpg
-radio,noun,,old-radio-electronic-antique.png
-rain,noun,,cloud-weather-rain-rainfall.png
-reporter,noun,,woman-talk-live-reporter.png
-restaurant,noun,,restaurant-people-eating.jpg
-rice,noun,,rice.jpg
-ring,noun,,ring-jewelry.png
-river,noun,,yellowstone-national-park-sunset-river.jpg
-roof,noun,,tilted-roof.jpg
-room,noun,,living-room.jpg
-root,noun,,bed-bedroom.jpg
-salt,noun,,salt-shaker.png
-sand,noun,,sand-africa-namibia.jpg
-school,noun,,"school-icon.png, classroom.jpg"
-science,noun,,"chemical-science.png, sketch-cute-child-funny-science.jpg"
-screen,noun,,screen-monitor-tv.png
-sea,noun,,"geography-map-mediterranean-sea.jpg, sea-ocean-water-wave-nature-beach.jpg"
-season,noun,,autumn-four-seasons-spring-summer.jpg
-second,noun,,time-watch-seconds.jpg
-secretary,noun,,secretary.jpg
-ship,noun,,boat-sea-ship.jpg
-shirt,noun,,dress-shirt-office.png
-shoe,noun,,shoe-brown.png
-shoulder,noun,,female-long-hair-back-shoulder.jpg
-side,noun,,sides-game-luck-chance.png
-sign,noun,,traffic-signs-man-at-work.png
-sister,noun,,two-sisters.jpg
-skin,noun,,skin-hair-arm.jpg
-skirt,noun,,skirt-pleated.png
-sky,noun,,atmosphere-blue-sky-clouds.jpg
-female,noun,,bathroom-sign-woman-female.png
-male,noun,,bathroom-sign-woman-male.jpg
-snow,noun,,cold-snow-white.jpg
-soap,noun,,soap-bar.jpg
-soil,noun,,field-soil-agriculture.png
-soldier,noun,,isolated-soldier.png
-son  ,noun,,father-son-hammock-boy.jpg
-song,noun,,notes-lyrics-song.png
-sound,noun,,"sound-music-audio-icon.png, audio-aural-wave.png"
-soup,noun,,soup-carrot-ginger-food.jpg
-South,noun,,"compass-gold.png, arrow-directions-downwards-south.svg"
-spoon,noun,,spoon-cutlery-metal.jpg
-sport,noun,,"silhouette-sports-basketball.png, tennis-icon.png, sport-shooting-football-soccer.png"
-spring,noun,,"cherry-tree-flowering-tree-blooming-spring.jpg, season-winter-spring-summer-fall.png"
-square,noun,,square-orange.png
-stain,noun,,stain-t-shirt.png
-star,noun,,star-yellow-symbol.png
-stone,noun,,rocks-stone-nature.png
-stop,noun,,stop-sign-hand.png
-store,noun,,"shopping-supermarket.jpg, store-clothing-shop-bouique.jpg"
-street,noun,,architecture-buildings-street.jpg
-student,noun,,students-classroom.jpg
-sugar,noun,,sugar-spoon.jpg
-suit,noun,,business-suit.jpg
-summer,noun,,"beach-family-fun-leisure.jpg, season-winter-spring-summer-fall.png, straw-bales-stubble-agriculture.jpg"
-sun ,noun,,sun-happy-sunshine.png
-sweat,noun,,"sweat-body-fitness.jpg, sweat-sweaty-shirt-back.jpg"
-t-shirt,noun,,tshirt-green.png
-table,noun,,table-grey-silver-flat.png
-tea ,noun,,tea-hot-cup.jpg
-teacher,noun,,school-chemistry-uganda-teacher.jpg
-team,noun,,"team-basketball.jpg, indian-hockey-team-berlin-1936.jpg"
-tear,noun,,tear-drop.jpg
-telephone,noun,,phone-dial-old.jpg
-television,noun,,television-icon.png
-temperature,noun,,thermometer-summer.jpg
-theatre,noun,,"metz-france-opera-theatre.jpg, theater-comedy-tragedy-masks.png"
-ticket,noun,,drink-ticket.png
-tire,noun,,tire-wheel-car.png
-toe,noun,,pedicure-toes-foot.png
-tomato,noun,,tomato.png
-tongue,noun,,mouth-open-female-tongue.png
-tool,noun,,tools-spanners-hammers.png
-tooth,noun,,dental-care-dental-mascot.png
-town,noun,,old-town.jpg
-train  ,noun,,railway-bernina-train.jpg
-train station,noun,,train station.jpg
-tree,noun,,tree.png
-truck,noun,,truck-box-car.png
-university,noun,,"university-of-toronto.jpg, university-lecture-hall.jpg, graduation-cap-hat.png"
-valley,noun,,vietnam-mountains-valley.jpg
-victim,noun,,accident-victim.png
-voice,noun,,speech-icon-voice.png
-waiter,noun,,cartoon-character-waiter.jpg
-wall,noun,,"brick-wall.jpg, great-wall-chinese.jpg"
-word,noun,,"learn-word.jpg, dream-word-letters.jpg"
-war,noun,,"vickers-machine-gun-passchendaele.jpg, Korean-War-bombing-Wonsan.jpg"
-water,noun,,"faucet-fountain-water.jpg, clean-drop-of-water.jpg"
-wave,noun,,wave-water-surf-ocean.jpg
-wedding,noun,,wedding-couple-wedding-party.jpg
-week,noun,,days-week.jpg
-weight,noun,,weight-kg.png
-West,noun,,"compass-gold.png, arrow-left-west.svg"
-wife,noun,,family-love-wife.jpg
-wind,noun,,"air-bag-wind-sock.jpg, wind-power-energy.jpg"
-window,noun,,window-wooden.png
-wine,noun,,red-wine.jpg
-wing,noun,,"wing-angel.png, gray-plane-wing.jpg"
-winter,noun,,"snow-woman-winter.jpg, season-winter-spring-summer-fall.png"
-woman,noun,,"woman-wearing-pink.jpg, woman-in-black-scoop-neck-shirt.jpg"
-wood,noun,,wood-board-batten.png
-world,noun,,map-of-the-world.jpg
-yard,noun,,garden-summer-front-yard.jpg
-year,noun,,new-year-clip-art.jpg
-first,ordinal number,,first.png
-second,ordinal number,,second-ordinal.png
-third,ordinal number,,third.png
-to go,verb,,"woman-away-nature-forest.jpg, this-way-confuse-where-to-go.png"
-to sign,verb,,writing-pen-man.jpg
-to beat,verb,,policeman-riot-police-baton.png
-to bend,verb,,bend-bent-over-heaving-human.png
-to break,verb,,"chain-breaking-link.png, broken-heart-love.jpg"
-to build,verb,,construction-workers-craftsmen-build.png
-to burn,verb,,fire-burning-house-flame.jpg
-to buy,verb,,"woman-holding-card-while-operating-silver-laptop.jpg, assorted-business-desserts-display.jpg"
-to call,verb,,smiling-woman-holding-gold-iphone.jpg
-to carry,verb,,deliver-men-carrying-boxes-cartoon.png
-to catch,verb,,"football-catch-players.jpg, fisherman-caught-fish-fishing.png"
-to clean,verb,,"bucket-cleaning-rags.jpg, bucket-cleaning-supplies-housework.png"
-to close,verb,,door-handle-ball.jpg
-to count,verb,,learn-school-nursery-count.jpg
-to cry,verb,,sad-cry-tear-emotion-mood-face.jpg
-to cut,verb,,scissors-cutting-cut.png
-vegetable,noun,,vegetable-basket.jpg
-to dance,verb,,couple-dance-dancer-dancing.png
-to die,verb,,"beyond-death-faith.jpg, scythe-death-skeleton.jpg"
-to dig,verb,,shovel-trowel-digging.png
-to draw,verb,,kids-girl-pencil-drawing.jpg
-to drink,verb,,drinking-water-woman-bottle.png
-to drive,verb,,old-man-drive-vintage-car.png
-to eat,verb,,cuisine-food-italian-antipasti.jpg
-to explode,verb,,explosion.png
-to fall,verb,,fall-falling.png
-to feed,verb,,"kid-feeding-antelope.jpg, baby-eating-firsts-food.jpg"
-to fight,verb,,fighting-arguing.jpg
-to find,verb,,needle-in-a-haystack.jpg
-to fly,verb,,geese-birds-flock-wildlife-flying.jpg
-to follow ,verb,,couple-in-love-stand-hand-hand.jpg
-to grow,verb,,sapling-plant-growing.png
-to hang ,verb,,laundry-clothes-drying.jpg
-to hear,verb,,close-up-communication-deaf-ear.jpg
-to hit,verb,,anger-fight-male.png
-to jump,verb,,fitness-jump.jpg
-to kill,verb,,killing-someone.jpg
-to kiss,verb,,sunset-kiss-couple.jpg
-to laugh,verb,,man-laughing.jpg
-to lie down,verb,,man-lying-floor.jpg
-to lift,verb,,weightlifting-clean-jerk.png
-to listen,verb,,headphones-listen.png
-to live,verb,,girl-freedom-happy-sun.jpg
-to love,verb,,love-heart-kiss-hearts-kissing.jpg
-to marry,verb,,marriage-wedding-bride-groom.jpg
-to melt,verb,,ice-cube-melting.png
-to open,verb,,open-door.png
-to pay,verb,,euro-money-pay-cash.jpg
-to play,verb,,"girls-kid-children-playing.jpg, basketball-team-play-scoring.jpg"
-to pray,verb,,woman-praying.jpg
-to pull,verb,,wagon-pet-logos-pull-boy.jpg
-to push,verb,,push-pushing-move.png
-to run,verb,,running-woman-man-together.png
-to say,verb,,something-to-say.jpg
-to see,verb,,view-eyes-by-looking-woman.jpg
-to sell,verb,,street-vendor-selling-rural-market.jpg
-to shake,verb,,dog-golden-retriever-wet-shake.jpg
-to shoot,verb,,"submachine-gun-rifle.jpg, football-player-sport-shooting.png, man-sports-aim-archer-arrow-bow.png"
-to sing,verb,,singing-kids-child-group.png
-to sit,verb,,pretty-woman-face-femininity-pose-sit.jpg
-to sleep,verb,,dream-sleep-pillow-blanket.png
-to smell,verb,,women-fragrant-flowers-smell.png
-to smile,verb,,smiley-face-smile-happy.png
-to speak,verb,,conference-public-speaking.jpg
-to stand,verb,,sundress-summer-dress-girl-stand.jpg
-to stir,verb,,hand-mechanic-coffee-break-stir.jpg
-to swim,verb,,swim-swimmer-crawl-lake.jpg
-to teach,verb,,male-teacher-cartoon.jpg
-to think,verb,,think-women-head.png
-to throw,verb,,water-balloon-throwing.png
-to touch,verb,,michelangelo-abstract-boy-child-touch.jpg
-to turn,verb,,arrow-turn-left-blue-handdrawn.png
-to wake,verb,,wake-up-morning-bed-sleeping.png
-to walk,verb,,shoes-walking-railroad-tracks.jpg
-to wash,verb,,washing-dishes.jpg
-to watch,verb,,watching-tv-kid.png
-to win,verb,,boxing-winner-looser-sport-fighter.jpg
-to work,verb,,railroad-workers.jpg
-to write,verb,,writing-write-fountain-pen.jpg
-fruit,noun,,fruit-bowl.jpg
+cake,noun,cake.ogg,piece-of-cake.jpg
+camera,noun,camera.ogg,camera-vintage.jpg
+camp,noun,camp.ogg,camping-tent-fire-summer-outdoors.jpg
+car,noun,car.ogg,car-audi-auto.jpg
+card,noun,card.ogg,"playing-cards.jpg, credit-card.jpg"
+cat,noun,cat.ogg,cat-sweet-kitty.jpg
+ceiling,noun,ceiling.ogg,church-ceiling.jpg
+cell phone,noun,cell-phone.ogg,iphone-smartphone.jpg
+centimeter,noun,centimeter.ogg,measure-centimeter.jpg
+chair,noun,chair.ogg,chair-furniture-seat.png
+cheese,noun,cheese.ogg,cheese.jpg
+chicken,noun,chicken.ogg,"chicken-poultry.jpg, fried-chicken.jpg"
+child,noun,child.ogg,"boy-red-hair-freckles-portrait.jpg, child-portrait-girl.jpg"
+church,noun,church.ogg,church-snow-winter.jpg
+circle,noun,circle.ogg,circle-color.png
+city,noun,city.ogg,new-york-city-skyline.jpg
+clay,noun,clay.ogg,"pottery-handmade-cup.jpg, clay-hands-sculpting-art.jpg"
+clock,noun,clock.ogg,alarm-clock.jpg
+clothing,noun,clothing.ogg,store-clothing.jpg
+club,noun,club.ogg,"dance-party-disco.jpg, golf-club.jpg, club-weapon.svg"
+coat,noun,coat.ogg,coat-clothing-long.svg
+coffee,noun,coffee.ogg,coffee-cup-beans.jpg
+colour,noun,colour.ogg,beaded-colour-pencils.jpg
+computer,noun,computer.ogg,computer-desktop-workstation.svg
+contract,noun,contract.ogg,business-signature-contract.jpg
+copper,noun,copper.ogg,copper-cookware.jpg
+corn,noun,corn.ogg,corn.jpg
+corner,noun,corner.ogg,"wall-corner.svg, football-corner.jpg"
+country,noun,country.ogg,"europe-map-country.jpg, canada-national-flag.jpg"
+court,noun,court.ogg,"supreme-court-building-court.jpg, gavel-law.jpg"
+cow,noun,cow.ogg,cow.jpg
+crowd,noun,crowd.ogg,city-crowd.jpg
+cup,noun,cup.ogg,tea-cup.jpg
+date,noun,date.ogg,calendar-date.jpg
+daughter,noun,daughter.ogg,father-daughter-smile.jpg
+day,noun,day.ogg,"day-blue-sky.jpg, day-of-week.png"
+death,noun,death.ogg,man-skull-death.jpg
+diamond,noun,diamond.ogg,diamond.jpg
+dinner,noun,dinner.ogg,dinner-table.jpg
+disease,noun,disease.ogg,"virus-infection-cell-bacterium.jpg, sad-sick.svg"
+doctor,noun,doctor.ogg,doctor-gray-hair.jpg
+dog,noun,dog.ogg,dog-beach-pet-black.jpg
+door,noun,door.ogg,door.jpg
+dot,noun,dot.ogg,"dot.png, background-bow-color-dot.jpg"
+dress,noun,dress.ogg,dress.svg
+drug,noun,drug.ogg,"syringe-pill-capsule-morphine.jpg, seedling-cannabis-marijuana.jpg"
+dust,noun,dust.ogg,"horse-herd-dust.jpg, construction-worker-saw-concrete-dust.jpg"
+ear,noun,ear.ogg,ear.jpg
+earth,noun,earth.ogg,"planet-earth.jpg, onion-arable-field-earth.jpg"
+East,noun,east.ogg,"compass-gold.png, arrow-right-direction-east.svg"
+edge,noun,edge.ogg,edge-height-depth.jpg
+egg,noun,egg.ogg,egg.svg
+energy,noun,energy.ogg,"flash-thunderstorm.jpg, wind-farm-wind-energy.jpg"
+engine,noun,engine.ogg,restored-air-cool-engine.jpg
+evening,noun,evening.ogg,dult-mother-daughter-beach.jpg
+exercise,noun,exercise.ogg,gym-room-fitness-equipment.jpg
+eye,noun,eye.ogg,blue-eye-iris-pupil.jpg
+face,noun,face.ogg,woman-portrait-face-skin-make-up.jpg
+fall,noun,fall.ogg,"forest-season-autumn-fall.jpg, season-winter-spring-summer-fall.png"
+family,noun,family.ogg,family-kids-baby-newborn-together.jpg
+fan,noun,fan.ogg,sport-ice-hockey-fan.jpg
+fan,noun,fan.ogg,appliance-cool-electric-fan.svg
+farm,noun,farm.ogg,wisconsin-farm-country-rural.jpg
+father,noun,father.ogg,people-father-daughter-smile-happy.jpg
+finger,noun,finger.ogg,hand-finger.png
+fire,noun,fire.ogg,wood-fire-flame-burn.jpg
+fish,noun,fish.ogg,discus-fish-fauna.jpg
+floor,noun,floor.ogg,floor-wood-hardwood.jpg
+flower,noun,flower.ogg,flower-nature-flora-petal.jpg
+food,noun,food.ogg,healthy-food.jpg
+foot,noun,foot.ogg,foot-baby.jpg
+forest,noun,forest.ogg,green-park-season-nature.jpg
+fork,noun,fork.ogg,fork-eat-metal.jpg
+friend,noun,friend.ogg,girls-lying-classic-car-young.jpg
+game,noun,game.ogg,board-game.jpg
+garden,noun,garden.ogg,garden-flower.jpg
+gasoline,noun,gasoline.ogg,petrol-stations-gasoline.jpg
+gift,noun,gift.ogg,present-package-gift.jpg
+girl,noun,girl.ogg,little-girl-child-portrait.jpg
+glass,noun,glass.ogg,glass-drink-water.jpg
+God,noun,god.ogg,"poseidon-sea.jpg, fantasy-light.jpg"
+ice cream,noun,Ice-cream.ogg,"ice_cream_1, ice_cream_2"
+gold,noun,gold.ogg,gold-ingots.jpg
+grandfather,noun,grandfather.ogg,grandfather-granddaughter.jpg
+grandmother,noun,grandmother.ogg,grandma-granny.png
+grass,noun,grass.ogg,ew-morning-meadow-grass.jpg
+ground,noun,ground.ogg,ground-cobblestone-manhole.jpg
+gun,noun,gun.ogg,handgun-weapon.svg
+hair,noun,hair.ogg,beautiful-woman-hair-blond.jpg
+hand,noun,hand.ogg,hand-photography-palm.jpg
+hat,noun,hat.ogg,sun-hat.jpg
+head,noun,head.ogg,actress-beauty-face-girl-head.svg
+heart,noun,heart.ogg,heart-love-red.svg
+heat,noun,heat.ogg,firewood-fire.jpg
+heaven,noun,heaven.ogg,clouds-landscape-beyond-sky.jpg
+hell,noun,hell.ogg,hell-demons-devil.jpg
+hill,noun,hill.ogg,tree-grass-landscape-panorama.jpg
+hole,noun,hole.ogg,hole-sinkhole.jpg
+home,noun,home.ogg,house-cottage-residence.png
+horse,noun,horse.ogg,horse-mold-thoroughbred.jpg
+hospital,noun,hospital.ogg,hospital_Japan.jpg
+hotel,noun,hotel.ogg,"hotel-pool-evening.jpg, hotelroom.jpg"
+hour,noun,hour.ogg,clock-analog-time-watch.svg
+house,noun,house.ogg,architecture-family-house.jpg
+human,noun,human.ogg,first-human.jpg
+husband,noun,husband.ogg,couple-man-woman-relationship.svg
+ice,noun,ice.ogg,ice.jpg
+image,noun,image.ogg,"mona-lisa-painting-art.jpg, smartphone-face-woman-eyes.jpg"
+injury,noun,injury.ogg,kermit-injured-patch.jpg
+idea,noun,idea.ogg,think-thinking-hand-reflect-idea.png
+instrument,noun,instrument.ogg,guitar-violin-bow.svg
+island,noun,island.ogg,island.jpg
+juice,noun,juice.ogg,orange-juice.jpg
+key,noun,key.ogg,key.jpg
+king,noun,king.ogg,king-crown-beard.svg
+kitchen,noun,kitchen.ogg,kitchen-real-estate-interior-design.jpg
+knee,noun,knee.ogg,knee.jpg
+knife,noun,knife.ogg,knife-kitchen-sharp.svg
+lake,noun,lake.ogg,lake-irene-colorado-water.jpg
+lamp,noun,lamp.ogg,table-lamp.png
+laptop,noun,laptop.ogg,mac-freelancer-laptop.jpg
+lawyer,noun,lawyer.ogg,lawyer-attorney.svg
+leaf,noun,leaf.ogg,leaf-autumn-maple.jpg
+leg,noun,leg.ogg,leg-long.jpg
+lemon,noun,lemon.ogg,lemon.jpg
+mango,noun,mango.ogg,mango-fruit.png
+letter,noun,letter.ogg,letter-love-mail.svg
+library,noun,library.ogg,library-stuttgart-city.jpg
+light,noun,light.ogg,lamp-light.jpg
+lip,noun,lip.ogg,lips.jpg
+lock,noun,lock.ogg,padlock-metal.svg
+lunch,noun,lunch.ogg,restaurant-people-men-women-eating.jpg
+magazine,noun,magazine.ogg,magazine-open.jpg
+man,noun,man.ogg,people-portrait-man-male.jpg
+manager,noun,manager.ogg,man-businessmen.jpg
+map,noun,map.ogg,map-berlin.jpg
+market,noun,market.ogg,afghanistan-town-city.jpg
+marriage,noun,marriage.ogg,marriage-couple-park.jpg
+medicine,noun,medicine.ogg,pill-capsule-medicine.jpg
+metal,noun,metal.ogg,iron-rods-reinforcing-bars.jpg
+milk,noun,milk.ogg,milk-glass.jpg
+money,noun,money.ogg,coins-banknotes-money.jpg
+month,noun,month.ogg,calender-icon-pictogram.png
+morning,noun,morning.ogg,"morning-bedroom-bed-door-girl.jpg, breakfast.jpg"
+mother,noun,mother.ogg,mother-baby-happy-smiling.jpg
+mountain,noun,mountain.ogg,ama-dablam-himalaya-mountain.jpg
+mouse,noun,mouse.ogg,mouse.jpg
+mouth,noun,mouth.ogg,mouth-smile-teeth.jpg
+movie,noun,movie.ogg,bollywood-movie-cinema.jpg
+murder,noun,murder.ogg,potatoes-ketchup-murder.jpg
+music,noun,music.ogg,cd-music-audio-notes.png
+nature,noun,nature.ogg,yellowstone-national-park.jpg
+neck,noun,neck.ogg,neck-woman.jpg
+needle,noun,needle.ogg,needle.png
+neighbour,noun,neighbour.ogg,man-face-grim-evil-neighbor-fence.jpg
+network,noun,network.ogg,network-mobile-communication.jpg
+newspaper,noun,newspaper.ogg,old-newspaper.jpg
+night,noun,night.ogg,night-town.jpg
+North,noun,north.ogg,"compass-gold.png, arrow-black-directions.svg"
+nose,noun,nose.ogg,nose-hairs.jpg
+note,noun,note.ogg,post-it-notes.jpg
+number,noun,number.ogg,digit-number.jpg
+ocean,noun,ocean.ogg,waves-dawn-ocean.jpg
+office,noun,office.ogg,office-space.jpg
+oil,noun,oil.ogg,olive-oil.jpg
+orange,noun,orange.ogg,orange.jpg
+page,noun,page.ogg,page.png
+pain,noun,pain.ogg,backpain-back-pain.png
+paint,noun,paint.ogg,paint-art-paintbox.jpg
+pants,noun,pants.ogg,jeans-pants.png
+paper,noun,paper.ogg,paper-parchment-roll.png
+park,noun,park.ogg,city-park.jpg
+patient,noun,patient.ogg,doctor-patient-hospital-child.jpg
+pattern,noun,pattern.ogg,pattern-indian-cute.png
+peace,noun,peace.ogg,decorative-peace-sign.png
+pen,noun,pen.ogg,fountain-pen.jpg
+pencil,noun,pencil.ogg,pencil-green.png
+person,noun,person.ogg,person-icon.png
+people,noun,people.ogg,people-icon.png
+photograph,noun,photograph.ogg,old-photos.jpg
+piece,noun,piece.ogg,"piece-of-cheese.png, piece-of-cake.jpg, puzzle-piece.png"
+pig,noun,pig.ogg,pig-cartoon.png
+plane,noun,plane.ogg,airplane-aircraft-commercial.jpg
+plant,noun,plant.ogg,green-plant-in-pot.pgn
+plastic,noun,plastic.ogg,eco-friendly-plastic-star.jpg
+plate,noun,plate.ogg,porcelain-plate.jpg
+player,noun,player.ogg,american-football-player.jpg
+pocket,noun,pocket.ogg,jeans-pocket.jpg
+poison,noun,poison.ogg,poison.jgp
+police,noun,police.ogg,cop-policewoman-colleagues.jpg
+pool,noun,pool.ogg,swimming-pool-water.jpg
+pork,noun,pork.ogg,pork-cuts.png
+president,noun,president.ogg,monument-president-landmark.jpg
+price,noun,price.ogg,gasoline-prices-petrol.jpg
+priest,noun,priest.ogg,pastor-priest-christian-cartoon.png
+prison,noun,prison.ogg,prison-cell-slammer.jpg
+queen,noun,queen.ogg,"queen-royalty-crown.png, chess-piece-queen.png, queen-elizabeth-i-england.jpg"
+race,noun,race.ogg,relay-race-competition.jpg
+radio,noun,radio.ogg,old-radio-electronic-antique.png
+rain,noun,rain.ogg,cloud-weather-rain-rainfall.png
+reporter,noun,reporter.ogg,woman-talk-live-reporter.png
+restaurant,noun,restaurant.ogg,restaurant-people-eating.jpg
+rice,noun,rice.ogg,rice.jpg
+ring,noun,ring.ogg,ring-jewelry.png
+river,noun,river.ogg,yellowstone-national-park-sunset-river.jpg
+roof,noun,roof.ogg,tilted-roof.jpg
+room,noun,room.ogg,living-room.jpg
+root,noun,root.ogg,bed-bedroom.jpg
+salt,noun,salt.ogg,salt-shaker.png
+sand,noun,sand.ogg,sand-africa-namibia.jpg
+school,noun,school.ogg,"school-icon.png, classroom.jpg"
+science,noun,science.ogg,"chemical-science.png, sketch-cute-child-funny-science.jpg"
+screen,noun,screen.ogg,screen-monitor-tv.png
+sea,noun,sea.ogg,"geography-map-mediterranean-sea.jpg, sea-ocean-water-wave-nature-beach.jpg"
+season,noun,season.ogg,autumn-four-seasons-spring-summer.jpg
+second,noun,second.ogg,time-watch-seconds.jpg
+secretary,noun,secretary.ogg,secretary.jpg
+ship,noun,ship.ogg,boat-sea-ship.jpg
+shirt,noun,shirt.ogg,dress-shirt-office.png
+shoe,noun,shoe.ogg,shoe-brown.png
+shoulder,noun,shoulder.ogg,female-long-hair-back-shoulder.jpg
+side,noun,side.ogg,sides-game-luck-chance.png
+sign,noun,sign.ogg,traffic-signs-man-at-work.png
+sister,noun,sister.ogg,two-sisters.jpg
+skin,noun,skin.ogg,skin-hair-arm.jpg
+skirt,noun,skirt.ogg,skirt-pleated.png
+sky,noun,sky.ogg,atmosphere-blue-sky-clouds.jpg
+female,noun,female.ogg,bathroom-sign-woman-female.png
+male,noun,male.ogg,bathroom-sign-woman-male.jpg
+snow,noun,snow.ogg,cold-snow-white.jpg
+soap,noun,soap.ogg,soap-bar.jpg
+soil,noun,soil.ogg,field-soil-agriculture.png
+soldier,noun,soldier.ogg,isolated-soldier.png
+son,noun,son.ogg,father-son-hammock-boy.jpg
+song,noun,song.ogg,notes-lyrics-song.png
+sound,noun,sound.ogg,"sound-music-audio-icon.png, audio-aural-wave.png"
+soup,noun,soup.ogg,soup-carrot-ginger-food.jpg
+South,noun,south.ogg,"compass-gold.png, arrow-directions-downwards-south.svg"
+spoon,noun,spoon.ogg,spoon-cutlery-metal.jpg
+sport,noun,sport.ogg,"silhouette-sports-basketball.png, tennis-icon.png, sport-shooting-football-soccer.png"
+spring,noun,spring.ogg,"cherry-tree-flowering-tree-blooming-spring.jpg, season-winter-spring-summer-fall.png"
+square,noun,square.ogg,square-orange.png
+stain,noun,stain.ogg,stain-t-shirt.png
+star,noun,star.ogg,star-yellow-symbol.png
+stone,noun,stone.ogg,rocks-stone-nature.png
+stop,noun,stop.ogg,stop-sign-hand.png
+store,noun,store.ogg,"shopping-supermarket.jpg, store-clothing-shop-bouique.jpg"
+street,noun,street.ogg,architecture-buildings-street.jpg
+student,noun,student.ogg,students-classroom.jpg
+sugar,noun,sugar.ogg,sugar-spoon.jpg
+suit,noun,suit.ogg,business-suit.jpg
+summer,noun,summer.ogg,"beach-family-fun-leisure.jpg, season-winter-spring-summer-fall.png, straw-bales-stubble-agriculture.jpg"
+sun,noun,sun.ogg,sun-happy-sunshine.png
+sweat,noun,sweat.ogg,"sweat-body-fitness.jpg, sweat-sweaty-shirt-back.jpg"
+t-shirt,noun,t-shirt.ogg,tshirt-green.png
+table,noun,table.ogg,table-grey-silver-flat.png
+tea,noun,tea.ogg,tea-hot-cup.jpg
+teacher,noun,teacher.ogg,school-chemistry-uganda-teacher.jpg
+team,noun,team.ogg,"team-basketball.jpg, indian-hockey-team-berlin-1936.jpg"
+tear,noun,tear.ogg,tear-drop.jpg
+telephone,noun,telephone.ogg,phone-dial-old.jpg
+television,noun,television.ogg,television-icon.png
+temperature,noun,temperature.ogg,thermometer-summer.jpg
+theatre,noun,theatre.ogg,"metz-france-opera-theatre.jpg, theater-comedy-tragedy-masks.png"
+ticket,noun,ticket.ogg,drink-ticket.png
+tire,noun,tire.ogg,tire-wheel-car.png
+toe,noun,toe.ogg,pedicure-toes-foot.png
+tomato,noun,tomato.ogg,tomato.png
+tongue,noun,tongue.ogg,mouth-open-female-tongue.png
+tool,noun,tool.ogg,tools-spanners-hammers.png
+tooth,noun,tooth.ogg,dental-care-dental-mascot.png
+town,noun,town.ogg,old-town.jpg
+train,noun,train.ogg,railway-bernina-train.jpg
+train station,noun,train station.ogg,train station.jpg
+tree,noun,tree.ogg,tree.png
+truck,noun,truck.ogg,truck-box-car.png
+university,noun,university.ogg,"university-of-toronto.jpg, university-lecture-hall.jpg, graduation-cap-hat.png"
+valley,noun,valley.ogg,vietnam-mountains-valley.jpg
+victim,noun,victim.ogg,accident-victim.png
+voice,noun,voice.ogg,speech-icon-voice.png
+waiter,noun,waiter.ogg,cartoon-character-waiter.jpg
+wall,noun,wall.ogg,"brick-wall.jpg, great-wall-chinese.jpg"
+word,noun,word.ogg,"learn-word.jpg, dream-word-letters.jpg"
+war,noun,war.ogg,"vickers-machine-gun-passchendaele.jpg, Korean-War-bombing-Wonsan.jpg"
+water,noun,water.ogg,"faucet-fountain-water.jpg, clean-drop-of-water.jpg"
+wave,noun,wave.ogg,wave-water-surf-ocean.jpg
+wedding,noun,wedding.ogg,wedding-couple-wedding-party.jpg
+week,noun,week.ogg,days-week.jpg
+weight,noun,weight.ogg,weight-kg.png
+West,noun,west.ogg,"compass-gold.png, arrow-left-west.svg"
+wife,noun,wife.ogg,family-love-wife.jpg
+wind,noun,wind.ogg,"air-bag-wind-sock.jpg, wind-power-energy.jpg"
+window,noun,window.ogg,window-wooden.png
+wine,noun,wine.ogg,red-wine.jpg
+wing,noun,wing.ogg,"wing-angel.png, gray-plane-wing.jpg"
+winter,noun,winter.ogg,"snow-woman-winter.jpg, season-winter-spring-summer-fall.png"
+woman,noun,woman.ogg,"woman-wearing-pink.jpg, woman-in-black-scoop-neck-shirt.jpg"
+wood,noun,wood.ogg,wood-board-batten.png
+world,noun,world.ogg,map-of-the-world.jpg
+yard,noun,yard.ogg,garden-summer-front-yard.jpg
+year,noun,year.ogg,new-year-clip-art.jpg
+first,ordinal number,first.ogg,first.png
+second,ordinal number,second.ogg,second-ordinal.png
+third,ordinal number,third.ogg,third.png
+to go,verb,to-go.ogg,"woman-away-nature-forest.jpg, this-way-confuse-where-to-go.png"
+to sign,verb,to-sign.ogg,writing-pen-man.jpg
+to beat,verb,to-beat.ogg,policeman-riot-police-baton.png
+to bend,verb,to-bend.ogg,bend-bent-over-heaving-human.png
+to break,verb,to-break.ogg,"chain-breaking-link.png, broken-heart-love.jpg"
+to build,verb,to-build.ogg,construction-workers-craftsmen-build.png
+to burn,verb,to-burn.ogg,fire-burning-house-flame.jpg
+to buy,verb,to-buy.ogg,"woman-holding-card-while-operating-silver-laptop.jpg, assorted-business-desserts-display.jpg"
+to call,verb,to-call.ogg,smiling-woman-holding-gold-iphone.jpg
+to carry,verb,to-carry.ogg,deliver-men-carrying-boxes-cartoon.png
+to catch,verb,to-catch.ogg,"football-catch-players.jpg, fisherman-caught-fish-fishing.png"
+to clean,verb,to-clean.ogg,"bucket-cleaning-rags.jpg, bucket-cleaning-supplies-housework.png"
+to close,verb,to-close.ogg,door-handle-ball.jpg
+to count,verb,to-count.ogg,learn-school-nursery-count.jpg
+to cry,verb,to-cry.ogg,sad-cry-tear-emotion-mood-face.jpg
+to cut,verb,to-cut.ogg,scissors-cutting-cut.png
+vegetable,noun,to-etable.ogg,vegetable-basket.jpg
+to dance,verb,to-dance.ogg,couple-dance-dancer-dancing.png
+to die,verb,to-die.ogg,"beyond-death-faith.jpg, scythe-death-skeleton.jpg"
+to dig,verb,to-dig.ogg,shovel-trowel-digging.png
+to draw,verb,to-draw.ogg,kids-girl-pencil-drawing.jpg
+to drink,verb,to-drink.ogg,drinking-water-woman-bottle.png
+to drive,verb,to-drive.ogg,old-man-drive-vintage-car.png
+to eat,verb,to-eat.ogg,cuisine-food-italian-antipasti.jpg
+to explode,verb,to-explode.ogg,explosion.png
+to fall,verb,to-fall.ogg,fall-falling.png
+to feed,verb,to-feed.ogg,"kid-feeding-antelope.jpg, baby-eating-firsts-food.jpg"
+to fight,verb,to-fight.ogg,fighting-arguing.jpg
+to find,verb,to-find.ogg,needle-in-a-haystack.jpg
+to fly,verb,to-fly.ogg,geese-birds-flock-wildlife-flying.jpg
+to follow,verb,to-follow.ogg,couple-in-love-stand-hand-hand.jpg
+to grow,verb,to-grow.ogg,sapling-plant-growing.png
+to hang ,verb,to-hang.ogg,laundry-clothes-drying.jpg
+to hear,verb,to-hear.ogg,close-up-communication-deaf-ear.jpg
+to hit,verb,to-hit.ogg,anger-fight-male.png
+to jump,verb,to-jump.ogg,fitness-jump.jpg
+to kill,verb,to-kill.ogg,killing-someone.jpg
+to kiss,verb,to-kiss.ogg,sunset-kiss-couple.jpg
+to laugh,verb,to-laugh.ogg,man-laughing.jpg
+to lie down,verb,to-lie down.ogg,man-lying-floor.jpg
+to lift,verb,to-lift.ogg,weightlifting-clean-jerk.png
+to listen,verb,to-listen.ogg,headphones-listen.png
+to live,verb,to-live.ogg,girl-freedom-happy-sun.jpg
+to love,verb,to-love.ogg,love-heart-kiss-hearts-kissing.jpg
+to marry,verb,to-marry.ogg,marriage-wedding-bride-groom.jpg
+to melt,verb,to-melt.ogg,ice-cube-melting.png
+to open,verb,to-open.ogg,open-door.png
+to pay,verb,to-pay.ogg,euro-money-pay-cash.jpg
+to play,verb,to-play.ogg,"girls-kid-children-playing.jpg, basketball-team-play-scoring.jpg"
+to pray,verb,to-pray.ogg,woman-praying.jpg
+to pull,verb,to-pull.ogg,wagon-pet-logos-pull-boy.jpg
+to push,verb,to-push.ogg,push-pushing-move.png
+to run,verb,to-run.ogg,running-woman-man-together.png
+to say,verb,to-say.ogg,something-to-say.jpg
+to see,verb,to-see.ogg,view-eyes-by-looking-woman.jpg
+to sell,verb,to-sell.ogg,street-vendor-selling-rural-market.jpg
+to shake,verb,to-shake.ogg,dog-golden-retriever-wet-shake.jpg
+to shoot,verb,to-shoot.ogg,"submachine-gun-rifle.jpg, football-player-sport-shooting.png, man-sports-aim-archer-arrow-bow.png"
+to sing,verb,to-sing.ogg,singing-kids-child-group.png
+to sit,verb,to-sit.ogg,pretty-woman-face-femininity-pose-sit.jpg
+to sleep,verb,to-sleep.ogg,dream-sleep-pillow-blanket.png
+to smell,verb,to-smell.ogg,women-fragrant-flowers-smell.png
+to smile,verb,to-smile.ogg,smiley-face-smile-happy.png
+to speak,verb,to-speak.ogg,conference-public-speaking.jpg
+to stand,verb,to-stand.ogg,sundress-summer-dress-girl-stand.jpg
+to stir,verb,to-stir.ogg,hand-mechanic-coffee-break-stir.jpg
+to swim,verb,to-swim.ogg,swim-swimmer-crawl-lake.jpg
+to teach,verb,to-teach.ogg,male-teacher-cartoon.jpg
+to think,verb,to-think.ogg,think-women-head.png
+to throw,verb,to-throw.ogg,water-balloon-throwing.png
+to touch,verb,to-touch.ogg,michelangelo-abstract-boy-child-touch.jpg
+to turn,verb,to-turn.ogg,arrow-turn-left-blue-handdrawn.png
+to wake,verb,to-wake.ogg,wake-up-morning-bed-sleeping.png
+to walk,verb,to-walk.ogg,shoes-walking-railroad-tracks.jpg
+to wash,verb,to-wash.ogg,washing-dishes.jpg
+to watch,verb,to-watch.ogg,watching-tv-kid.png
+to win,verb,to-win.ogg,boxing-winner-looser-sport-fighter.jpg
+to work,verb,to-work.ogg,railroad-workers.jpg
+to write,verb,to-write.ogg,writing-write-fountain-pen.jpg
+fruit,noun,fruit.ogg,fruit-bowl.jpg

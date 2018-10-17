@@ -136,7 +136,7 @@ def prep_questions(language, student_id, num_questions_needed):
 
     mongoengine.connect("lalang_db", host="localhost", port=27017)
 
-    query_args = {"language": f"{language.capitalize()}",
+    query_args = {"language": f"{language}",
                   "description": "word flashcard"}
     questions_iter = Question.objects(__raw__=query_args)
 
@@ -145,12 +145,10 @@ def prep_questions(language, student_id, num_questions_needed):
         id=student_id).first().language_progress.filter(
         language=language)
 
-    print("before while loop")
     # draw random question from all possible questions
     # keep drawing questions until you get {num_questions} questions
     while num_questions_added < num_questions_needed:
         q_used = False
-        print("while iteration starts")
         sample_iter = questions_iter.aggregate({"$sample": {"size": 1}})
         # aggregate outputs an iterator holding dictionaries
         new_question = next(sample_iter)
@@ -158,36 +156,30 @@ def prep_questions(language, student_id, num_questions_needed):
         new_question["id"] = new_question.pop("_id")
         # convert back the dictionary to Question object
         new_question = dict_to_question_obj(new_question)
-        print("we've got a Question object! ", new_question.id)
 
         # check that this question is not in the queue, or the two stacks
         # if not, then add it to the queue; also add it to question_list
         for q_id in language_embed_doc[0].question_queue:
             if new_question.id == q_id:
                 q_used = True
-                print("question found in queue")
                 break
         if not q_used:
             for q_id in language_embed_doc[0].answered_wrong_stack:
                 if new_question.id == q_id:
                     q_used = True
-                    print("question found in answered_wrong_stack")
                     break
         if not q_used:
             for q_id in language_embed_doc[0].answered_corr_stack:
                 if new_question.id == q_id:
                     q_used = True
-                    print("question found in answered_corr_stack")
                     break
         if not q_used:
             # adding the question id to the Student queue of questions
-            print("I should add the question to the queue here")
             language_embed_doc[0].question_queue.append(new_question.id)
             language_embed_doc.save()
             # adding question to the list to be returned
             question_list.append(new_question)
             num_questions_added += 1
-            print("Number of questions added: ", num_questions_added)
 
     return question_list
 

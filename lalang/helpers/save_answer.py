@@ -5,14 +5,20 @@ import sys
 import datetime
 import pytz
 from bson.objectid import ObjectId
+import logging
 
 
 sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos")
 
 from lalang.db_model import StudentHistory, Student
-from lalang.constants import NUM_QUESTIONS_TO_LOAD, MIN_QUESTIONS_IN_QUEUE
+from lalang.constants import (NUM_QUESTIONS_TO_LOAD, MIN_QUESTIONS_IN_QUEUE,
+                              MAXLEN_ANSWERED_WRONG_STACK,
+                              MAXLEN_SLACK_ANSWERED_WRONG_STACK)
 from lalang.helpers.create_stud_hist_coll import create_stud_hist_coll
 from lalang.helpers.more_questions import prep_questions
+
+logging.basicConfig(level=logging.INFO, filename="app-save-answer.log",
+                    filemode="w")
 
 
 def save_answer(*, student_id, language,
@@ -87,12 +93,23 @@ def save_answer(*, student_id, language,
         language_embed_doc[0].answered_corr_stack.append(
             stud_hist.question_id)
     else:
-        language_embed_doc[0].answered_wrong_stack.append(
-            stud_hist.question_id)
+        # if the wrong answer stack is too big, reduce it to the
+        # maximum minus the slack, before adding the latest answer
+        wrong_stack = language_embed_doc[0].answered_wrong_stack
+        wrong_stack_len = len(wrong_stack)
+        answers_to_del = (wrong_stack_len - MAXLEN_ANSWERED_WRONG_STACK
+                          + MAXLEN_SLACK_ANSWERED_WRONG_STACK)
+
+        # DON'T USE condition: answers_to_del > 0
+        if wrong_stack_len > MAXLEN_ANSWERED_WRONG_STACK:
+            del wrong_stack[:answers_to_del]
+
+        wrong_stack.append(stud_hist.question_id)
 
     # remove the answered question from the queue
-    # assert language_embed_doc[0].question_queue[0] == stud_hist.question_id
+    assert language_embed_doc[0].question_queue[0] == stud_hist.question_id
     language_embed_doc[0].question_queue.pop(0)
+    logging.info(f"Removed question from queue")
 
     language_embed_doc.save()
 

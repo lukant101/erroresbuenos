@@ -1,5 +1,0 @@
-{'description': 'word flashcard', 'skill': 'Vocabulary', 'language': 'Spanish', 'word': 'gentía', 'part_of_speech': 'noun', 'audio_files': 'gentia.ogg', 'image_files': 'city-crowd.jpg', 'id': ObjectId('5ba13d0efde08a2e2c56f63c')}
-{'description': 'word flashcard', 'skill': 'Vocabulary', 'language': 'Spanish', 'word': 'rodilla', 'part_of_speech': 'noun', 'audio_files': 'rodilla.ogg', 'image_files': 'knee.jpg', 'id': ObjectId('5ba13d0efde08a2e2c56f691')}
-{'description': 'word flashcard', 'skill': 'Vocabulary', 'language': 'Spanish', 'word': 'portátil', 'part_of_speech': 'noun', 'audio_files': 'portatil.ogg', 'image_files': 'mac-freelancer-laptop.jpg', 'id': ObjectId('5ba13d0efde08a2e2c56f695')}
-{'description': 'word flashcard', 'skill': 'Vocabulary', 'language': 'Spanish', 'word': 'nariz', 'part_of_speech': 'noun', 'audio_files': 'nariz.ogg', 'image_files': 'nose-hairs.jpg', 'id': ObjectId('5ba13d0efde08a2e2c56f6bc')}
-{'description': 'word flashcard', 'skill': 'Vocabulary', 'language': 'Spanish', 'word': 'ola', 'part_of_speech': 'noun', 'audio_files': 'ola.ogg', 'image_files': 'wave-water-surf-ocean.jpg', 'id': ObjectId('5ba13d0efde08a2e2c56f738')}

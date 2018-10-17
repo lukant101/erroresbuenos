@@ -11,7 +11,7 @@ $(document).ready(function() {
                 {
                     language : $("#lang_select").val()
                 },
-                load_question
+                load_question, "json"
         );
     });
 });
@@ -19,23 +19,26 @@ $(document).ready(function() {
 // sends user's answer and asks for a new question when user clicks the submit button
 $(document).ready(function() {
     $("#send_answer_btn").click( function() {
+        mark_answer();
         $.post("/next-question",
                 {
-                    user_answer : $("#user_answer").val(),
+                    user_answer : $("#user_answer").val().trim().toLowerCase(),
                     question_id : $("#question_id").val(),
                     student_id : $("#student_id").val(),
                     answer_correct : $("#answer_correct").val(),
                     audio_answer_correct : $("#audio_answer_correct").val(),
                     language : $("#lang_select").val()
                 },
-                load_question
+                load_question, "json"
         );
     });
 });
 
+
 // callbback function - loads a new question
 function load_question(new_question)  {
-    var quest_obj = JSON.parse(new_question);
+    console.log(new_question);
+    var quest_obj=new_question;
     $("#fcard").attr("src", "../static/pics/" + quest_obj.image_files.split(",")[0]);
     $("#audio_src").attr("src", "../static/audio/" + quest_obj.language.toLowerCase() + "/" + quest_obj.audio_files);
     // reload the audio source in the audio element; jQuery doesn't implement $().load(), so use JavaScript
@@ -43,7 +46,67 @@ function load_question(new_question)  {
     $("#part_of_speech_elem").text(quest_obj.part_of_speech);
     $("#word_elem").text(quest_obj.word);
     $("#user_answer").val("");
+    $("#answer").val(quest_obj.word);
     $("#question_id").attr("value", quest_obj.id);
+}
+
+function mark_answer() {
+    var user_answer = $("#user_answer").val().toLowerCase().trim();
+    var answer = $("#answer").val().toLowerCase();
+    var language = $("#lang_select").val();
+    var part_of_speech = $("#part_of_speech_elem").text();
+    console.log("User answer:");
+    console.log(user_answer);
+    console.log("Correct answer:");
+    console.log(answer);
+    console.log(part_of_speech);
+
+    // answer is false be default, unless it passes in one of the tests
+    var answer_correct="false";
+
+    if (answer===user_answer) {
+        answer_correct="true";
+    // try matching by ignoring "to" in english verbs
+    } else if (language === "english" && part_of_speech === "verb") {
+        console.log("english verbs clause")
+        console.log(answer.slice(3));
+        if (answer.slice(3)===user_answer) {
+            answer_correct="true";
+    }
+    // ignore articles in front of nouns
+} else if ((language === "english" || language === "spanish")
+        && part_of_speech === "noun") {
+        var start = user_answer.indexOf(" ");
+        console.log("start:");
+        console.log(start);
+        if (start != -1) {
+            var user_answer_mod = user_answer.slice(start+1);
+            if (answer===user_answer_mod) {
+                answer_correct="true";
+        }
+    }
+    // if correct answer has parentheses, ignore the brackets portion and compare
+    } else if (answer.indexOf("\(") != -1) {
+        console.log("word with parentheses");
+        var end_user_answer = user_answer.indexOf("\(");
+        if (end_user_answer === -1) {
+            // user did not use parentheses, so leave answer unmodified
+            user_answer_mod = user_answer;
+        } else {
+            var user_answer_mod = user_answer.slice(0, end_user_answer);
+        }
+        console.log("User answer trimmed:");
+        console.log(user_answer_mod);
+        var end_answer = answer.indexOf("\(");
+        var answer_mod = answer.slice(0, end_answer);
+        console.log("Correct answer trimmed:");
+        console.log(answer_mod);
+        if (answer_mod===user_answer_mod) {
+            answer_correct="true";
+        }
+    }
+
+    $("#answer_correct").val(answer_correct);
 }
 
 var default_title="Let's Practice";

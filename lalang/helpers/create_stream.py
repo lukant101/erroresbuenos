@@ -20,7 +20,8 @@ from lalang.helpers.utils import question_obj_to_json
 mongoengine.connect("lalang_db", host="localhost", port=27017)
 
 # query to generate options for user input
-language_in = input("What language are these questions for? ").capitalize()
+language_in = input("What language are these questions for? ").lower()
+
 
 
 num_questions = 5
@@ -61,22 +62,18 @@ print("Questions added: ")
 os.chdir("C:/Users/Lukasz/Python/ErroresBuenos/lalang/questions/default")
 
 
-with open(f"stream_default_{language_in.lower()}.json", "w") as f:
+with open(f"stream_default_{language_in.lower()}.json",
+            "w", encoding="utf8") as f:
     f.write("[")
 
     for question in questions:
-        # q_json = {}
-        # q_json_iter = question._fields.keys()
-        # for k in q_json_iter:
-        #     q_json[k] = str(getattr(question, k))
+        print(question.word)
         q_json = question_obj_to_json(question)
-
-        json.dump(q_json, f, ensure_ascii=False)
+        # need to deserialize with loads, because q_json is already serialized
+        json.dump(json.loads(q_json), f, ensure_ascii=False)
 
         # separate the question documents in the list
         f.write(", ")
-
-        print(question.word)
 
     # move cursor back to the end of last question document, so we can
     # overwrite the last comma and close the list

@@ -95,14 +95,14 @@ pelota,noun,pelota.ogg,beach-ball.svg
 banano,noun,banano.ogg,banana.png
 banda,noun,banda.ogg,Lake-Malawi-music-band.jpg
 banco,noun,banco.ogg,bank-building.jpg
-bar  ,noun,bar  .ogg,alcoholic-beverages-bar.jpg
+bar,noun,bar.ogg,alcoholic-beverages-bar.jpg
 baño,noun,banxo.ogg,bathroom.jpg
 playa,noun,playa.ogg,beach-dominican-republic-caribbean.jpg
 barba,noun,barba.ogg,beard-face-man-model-mustache.jpg
 cama,noun,cama.ogg,bed.png
 dormitorio,noun,dormitorio.ogg,bedroom.jpg
 carne de res,noun,carne de res.ogg,meat-beef.jpg
-cerveza,noun,cerveza.ogg,craft-beer
+cerveza,noun,cerveza.ogg,craft-beer.jpg
 bebida,noun,bebida.ogg,beach-beverage.jpg
 bicicleta,noun,bicicleta.ogg,old-bicycle.jpg
 factura,noun,factura.ogg,pay-bill-restaurant.jpg
@@ -154,7 +154,7 @@ esquina,noun,esquina.ogg,"wall-corner.svg, football-corner.jpg"
 país,noun,pais.ogg,"europe-map-country.jpg, canada-national-flag.jpg"
 tribunal,noun,tribunal.ogg,"supreme-court-building-court.jpg, gavel-law.jpg"
 vaca,noun,vaca.ogg,cow.jpg
-gentilla,noun,gentilla.ogg,city-crowd.jpg
+gentía,noun,gentixa.ogg,city-crowd.jpg
 taza,noun,taza.ogg,tea-cup.jpg
 fecha,noun,fecha.ogg,calendar-date.jpg
 hija,noun,hija.ogg,father-daughter-smile.jpg
@@ -211,7 +211,7 @@ abuela,noun,abuela.ogg,grandma-granny.png
 hierba,noun,hierba.ogg,ew-morning-meadow-grass.jpg
 piso,noun,piso.ogg,ground-cobblestone-manhole.jpg
 arma,noun,arma.ogg,handgun-weapon.svg
-pelo,noun,,beautiful-woman-hair-blond.jpg
+pelo,noun,pelo.ogg,beautiful-woman-hair-blond.jpg
 mano,noun,mano.ogg,hand-photography-palm.jpg
 sombrero,noun,sombrero.ogg,sun-hat.jpg
 cabeza,noun,cabeza.ogg,actress-beauty-face-girl-head.svg
@@ -251,7 +251,7 @@ limon,noun,limon.ogg,lemon.jpg
 mango,noun,mango.ogg,mango-fruit.png
 carta,noun,carta.ogg,letter-love-mail.svg
 biblioteca,noun,biblioteca.ogg,library-stuttgart-city.jpg
-luz,noun,,lamp-light.jpg
+luz,noun,luz.ogg,lamp-light.jpg
 labio,noun,labio.ogg,lips.jpg
 cierre,noun,cierre.ogg,padlock-metal.svg
 almuerzo,noun,almuerzo.ogg,restaurant-people-men-women-eating.jpg
@@ -285,7 +285,7 @@ norte,noun,norte.ogg,"compass-gold.png, arrow-black-directions.svg"
 nariz,noun,nariz.ogg,nose-hairs.jpg
 nota,noun,nota.ogg,post-it-notes.jpg
 número,noun,numero.ogg,digit-number.jpg
-océano,noun,océano.ogg,waves-dawn-ocean.jpg
+océano,noun,ocexano.ogg,waves-dawn-ocean.jpg
 oficina,noun,oficina.ogg,office-space.jpg
 aceite,noun,aceite.ogg,olive-oil.jpg
 naranja,noun,naranja.ogg,orange.jpg
@@ -306,7 +306,7 @@ fotografía,noun,fotografia.ogg,old-photos.jpg
 pieza,noun,pieza.ogg,"piece-of-cheese.png, piece-of-cake.jpg, puzzle-piece.png"
 cerdo,noun,cerdo.ogg,pig-cartoon.png
 avion,noun,avion.ogg,airplane-aircraft-commercial.jpg
-planta,noun,planta.ogg,green-plant-in-pot.pgn
+planta,noun,planta.ogg,green-plant-in-pot.png
 plástico,noun,plastico.ogg,eco-friendly-plastic-star.jpg
 plato,noun,plato.ogg,porcelain-plate.jpg
 jugador,noun,jugador.ogg,american-football-player.jpg
@@ -336,11 +336,11 @@ arena,noun,arena.ogg,sand-africa-namibia.jpg
 escuela,noun,escuela.ogg,"school-icon.png, classroom.jpg"
 ciencia,noun,ciencia.ogg,"chemical-science.png, sketch-cute-child-funny-science.jpg"
 pantalla,noun,pantalla.ogg,screen-monitor-tv.png
-mar  ,noun,mar  .ogg,"geography-map-mediterranean-sea.jpg, sea-ocean-water-wave-nature-beach.jpg"
+mar,noun,mar.ogg,"geography-map-mediterranean-sea.jpg, sea-ocean-water-wave-nature-beach.jpg"
 temporada,noun,temporada.ogg,autumn-four-seasons-spring-summer.jpg
 segundo,noun,segundo.ogg,time-watch-seconds.jpg
 secretaria,noun,secretaria.ogg,secretary.jpg
-nave,noun,,boat-sea-ship.jpg
+nave,noun,nave.ogg,boat-sea-ship.jpg
 camisa,noun,camisa.ogg,dress-shirt-office.png
 zapato,noun,zapato.ogg,shoe-brown.png
 hombro,noun,hombro.ogg,female-long-hair-back-shoulder.jpg
@@ -373,7 +373,7 @@ estudiante,noun,estudiante.ogg,students-classroom.jpg
 azúcar,noun,azúcar.ogg,sugar-spoon.jpg
 traje,noun,traje.ogg,business-suit.jpg
 verano,noun,verano.ogg,"beach-family-fun-leisure.jpg, season-winter-spring-summer-fall.png, straw-bales-stubble-agriculture.jpg"
-sol ,noun,sol .ogg,sun-happy-sunshine.png
+sol ,noun,sol.ogg,sun-happy-sunshine.png
 sudor,noun,sudor.ogg,"sweat-body-fitness.jpg, sweat-sweaty-shirt-back.jpg"
 camiseta,noun,camiseta.ogg,tshirt-green.png
 mesa,noun,mesa.ogg,table-grey-silver-flat.png
@@ -392,7 +392,7 @@ tomate,noun,tomate.ogg,tomato.png
 lengua,noun,lengua.ogg,mouth-open-female-tongue.png
 herramienta,noun,herramienta.ogg,tools-spanners-hammers.png
 diente,noun,diente.ogg,dental-care-dental-mascot.png
-pueblo,noun,,old-town.jpg
+pueblo,noun,pueblo.ogg,old-town.jpg
 tren,noun,tren.ogg,railway-bernina-train.jpg
 estación de trenes,noun,estacion-de-trenes.ogg,train station.jpg
 arbol,noun,arbol.ogg,tree.png
@@ -481,7 +481,7 @@ jalar,verb ,jalar.ogg,wagon-pet-logos-pull-boy.jpg
 empujar,verb ,empujar.ogg,push-pushing-move.png
 correr,verb ,correr.ogg,running-woman-man-together.png
 decir,verb ,decir.ogg,something-to-say.jpg
-ver,verb ,,view-eyes-by-looking-woman.jpg
+ver,verb ,ver.ogg,view-eyes-by-looking-woman.jpg
 vender,verb ,vender.ogg,street-vendor-selling-rural-market.jpg
 agitar,verb ,agitar.ogg,dog-golden-retriever-wet-shake.jpg
 tirar,verb ,tirar.ogg,"submachine-gun-rifle.jpg, football-player-sport-shooting.png, man-sports-aim-archer-arrow-bow.png"
