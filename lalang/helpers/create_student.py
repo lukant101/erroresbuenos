@@ -61,9 +61,9 @@ def create_temp_student():
 if __name__ == "__main__":
     # need to comment out from lalang import routes in __init__.py
     # before running
-    # create_student("lantos101@gmail.com", username="lantos",
-    #                first_name="Lukasz", last_name="Antos",
+    # create_student("lukas@gmail.com", username="luksan",
+    #                first_name="Lukas", last_name="Santos",
     #                password="slowko", temp=False)
-    create_student("denise@gmail.com", username="denisepach",
-                   first_name="Denise", last_name="Pacheco",
+    create_student("denise@gmail.com", username="denisesal",
+                   first_name="Denise", last_name="Salinas",
                    password="palabra", temp=False)

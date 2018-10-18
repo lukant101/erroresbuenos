@@ -42,7 +42,9 @@ def save_answer(*, student_id, language,
                                        question_id=question_id[0]).first()
     if stud_hist:
         # student answered this question before, so update the document
-        stud_hist.update(push__answer=user_answer[0])
+        # add the answer string only if it's not already stored (exact match)
+        if not user_answer[0] in stud_hist.answer:
+            stud_hist.update(push__answer=user_answer[0])
         stud_hist.update(inc__attempts_count=1)
         stud_hist.update(set__last_attempted=datetime.datetime.now
                          (tz=pytz.UTC))

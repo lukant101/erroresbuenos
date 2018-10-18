@@ -60,7 +60,6 @@ def load_question():
         global current_question_num
         current_question_num[current_language] += 1
 
-        # need to unpack the dictionary
         new_questions = save_answer(**request.form)
 
         # if new questions added to question queue in Student document

@@ -86,8 +86,6 @@ class StudentHistory(db.Document):
     language = db.StringField(required=True, max_length=20,
                               choices=SUPPORTED_LANGUAGES)
     answer = db.ListField(field=db.StringField())
-    # need to see how to pass boolean from jquery to back-end
-    # answer_correct = db.BooleanField(default=False)
     answer_correct = db.BooleanField(default=False)
     audio_answer_correct = db.BooleanField(default=False)
     attempts_count = db.IntField(default=0)

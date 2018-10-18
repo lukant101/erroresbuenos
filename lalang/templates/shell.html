@@ -8,6 +8,9 @@
         <link rel="shortcut icon" href="{{ url_for('static', filename='/assets/favicon.ico') }}" type="image/x-icon">
         <link rel="icon" href="{{ url_for('static', filename='/assets/favicon.ico') }}" type="image/x-icon">
 
+        <!-- Custom CSS -->
+        <link rel="stylesheet" type="text/css" href:"{{ url_for('static', filename='style.css') }}">
+
         <!-- Bootstrap CSS -->
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -59,7 +62,7 @@
 
             {% block content %} {% endblock content %}
 
-        <div class='container my-3'>
+        <div id="gtranslate" class='container my-3' style="display: none;">
             <a href='#'>Google Translate</a>
         </div>
         </div>
