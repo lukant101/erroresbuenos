@@ -16,7 +16,8 @@ MAXLEN_SLACK_ANSWERED_WRONG_STACK = 10
 
 
 # lukasz
-student_id = "5bc56cb8fde08a2fe809e796"
+student_id = "5bcfe75afde08a2e18a11f35"
+# student_id = ""
 
 # denise
-# student_id = "5bc56d35fde08a62b029112e"
+# student_id = "5bcfe810fde08a2e18a11f36"

@@ -8,8 +8,13 @@ StudentHistory
 """
 import datetime
 import pytz
-from lalang import db
-from lalang.constants import SUPPORTED_LANGUAGES
+from lalang import db, login_manager
+from flask_login import UserMixin, AnonymousUserMixin
+import logging
+from lalang.constants import SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE
+
+
+logging.basicConfig(level=logging.INFO, filename="app.log", filemode="a")
 
 
 class Question(db.Document):
@@ -51,7 +56,12 @@ class LanguageProgress(db.EmbeddedDocument):
     answered_corr_stack = db.ListField(field=db.ObjectIdField())
 
 
-class Student(db.Document):
+@login_manager.user_loader
+def load_student(student_alt_id):
+    return Student.objects(alt_id=student_alt_id).first()
+
+
+class Student(db.Document, UserMixin):
     """Store information for each student.
 
     Information regarding student's studies in a particular language
@@ -62,16 +72,44 @@ class Student(db.Document):
     - if email provided, use it as  the username
     """
 
+    # alt_id is needed for Remember Me cookie; otherwise _id would be used
+    alt_id = db.ObjectIdField(unique=True, required=True)
     email = db.EmailField(unique=True)
     username = db.StringField(required=True, unique=True, max_length=20)
     first_name = db.StringField(max_length=30)
     last_name = db.StringField(max_length=30)
     # make sure to store  password hash in the database
-    password = db.StringField(max_length=30)
+    password = db.StringField()
     app_language = db.StringField(required=True,
                                   default="english", max_length=20)
     language_progress = db.EmbeddedDocumentListField(LanguageProgress)
     temp = db.BooleanField(default=True)
+    meta = {'indexes': ["alt_id"]}
+
+    # need to override UserMixin get_id, so that we pass
+    # alt_id to load_student, instead of id/_id
+    def get_id(self):
+        return str(self.alt_id)
+
+
+class AnonymousStudent(db.Document, AnonymousUserMixin):
+    app_language = db.StringField(required=True,
+                                  default="english", max_length=20)
+    current_study_language = db.StringField(required=True,
+                                            default=DEFAULT_LANGUAGE)
+    language_progress = db.EmbeddedDocumentListField(LanguageProgress)
+
+    def save_in_db(self):
+        """Make the object persistent by saving it in the database."""
+        self.save()
+
+    def delete_from_db(self):
+        """Delete the corresponding record from the database."""
+        self.delete()
+        self.save()
+
+    def __del__(self):
+        self.delete_from_db()
 
 
 class StudentHistory(db.Document):

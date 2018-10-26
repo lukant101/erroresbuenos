@@ -3,16 +3,31 @@
 Export:
 question_obj_to_json
 dict_to_question_obj
+is_safe_url
 """
 
 from bson.objectid import ObjectId
 import sys
 import json
 import copy
+from urllib.parse import urlparse, urljoin
+from flask import request
+import logging
 
 sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos")
 
 from lalang.db_model import Question, Student
+
+logging.basicConfig(level=logging.INFO, filename="app.log", filemode="a")
+
+
+def is_safe_url(target):
+    ref_url = urlparse(request.url_root)
+    test_url = urlparse(urljoin(request.url_root, target))
+    logging.info(f"ref_url: {ref_url}")
+    logging.info(f"test_url: {test_url}")
+    return (test_url.scheme in ("http", "https")
+            and ref_url.netloc == test_url.netloc)
 
 
 def question_obj_to_json(question_obj):

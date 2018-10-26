@@ -1,0 +1,35 @@
+{% extends 'shell.html' %}
+
+{% block content %}
+    <div class='container mb-3'>
+      <h3 id="title_practice" class='text-center mb-3'></h3>
+      <script>setTitlePractise();</script>
+      <img id='fcard' class='rounded mx-auto d-block img-fluid' src="../static/pics/{{ question.image_files.split(",")[0] }}" alt='{{ fname }}'>
+
+
+
+            <div class='form-group'>
+                <label class='d-block'>Part of Speech: <span id="part_of_speech_elem" class="font-weight-bold">{{ question.part_of_speech }}</span></label>
+                <button id='play_button' onclick='playAudioOut()' type='button' class='btn btn-info rounded-circle d-inline mr-2'><i class="fas fa-volume-up"></i></button>
+                <input type='text' class='custom-control custom-control-inline mr-0' name="user_answer" id='user_answer' />
+                <button id='send_answer_btn' type='button' class='btn btn-info rounded-circle ml-0'><i class="fas fa-arrow-right"></i></button>
+                <button id="good_job_msg" style="display:none" class="btn btn-success ml-3" type='button'>Good job!</button>
+                <button id="wrong_answer_btn" style="display:none" class="btn btn-danger rounded-circle ml-0" type='button'><i class="fas fa-arrow-right"></i></button>
+                <input type="hidden" name="question_id" id="question_id" value={{ question.id }}>
+                <input type="hidden" name="student_id" id="student_id" value={{ student_id }}>
+                <input type="hidden" name="answer" id="answer" value={{ question.word }}>
+                <input type="hidden" name="answer_correct" id="answer_correct" value="false">
+                <input type="hidden" name="audio_answer_correct" id="audio_answer_correct" value="false">
+            </div>
+
+      <audio id='card_audio'>
+        <source id="audio_src" src="../static/audio/{{curr_lang}}/{{ question.audio_files }}" type='audio/ogg'>
+        Your browser does not support the most popular royalty-free audio file format.
+      </audio>
+
+      <div id="show_answer" class='form-control' style="display: none;">
+        <p class='mb-1'>Answer: <span id="word_elem" class="font-weight-bold">{{ question.word }}</span></p>
+      </div>
+
+    </div>
+{% endblock content %}
