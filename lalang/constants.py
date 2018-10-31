@@ -14,6 +14,8 @@ MAXLEN_ANSWERED_WRONG_STACK = 50
 # whenever the stack gets filled up
 MAXLEN_SLACK_ANSWERED_WRONG_STACK = 10
 
+# used to serve questions when unlogged user lands on home page
+DEFAULT_TEMP_STUDENT_ID = "5bd362a7fde08a404c92228c"
 
 # lukasz
 student_id = "5bcfe75afde08a2e18a11f35"

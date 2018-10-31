@@ -27,9 +27,10 @@ def save_answer(*, student_id, language,
     """
     Save user's answer in StudentHistory and Student documents.
 
+    Add new questions to the queue in db, if the queue is short.
+
     Return:
-    a list of new questions, if the question queue has been replenished;
-    otherwise, return None
+    None
     """
     mongoengine.connect("lalang_db", host="localhost", port=27017)
 
@@ -40,10 +41,20 @@ def save_answer(*, student_id, language,
     # check if student has seen this question before
     stud_hist = StudentHistory.objects(student_id=student_id[0],
                                        question_id=question_id[0]).first()
+
     if stud_hist:
+        logging.info(f"student_id passed: {student_id[0]}")
+        logging.info(f"student_id received: {stud_hist.student_id}")
+        logging.info(f"question_id passed: {question_id[0]}")
+        logging.info(f"question_id received: {stud_hist.question_id}")
+        logging.info(f"StudentHistory doc id returned by db query: {str(stud_hist.id)}")
+        logging.info("student has seen this question before,\
+    so we'll update the document")
         # student answered this question before, so update the document
-        # add the answer string only if it's not already stored (exact match)
-        if not user_answer[0] in stud_hist.answer:
+        # add the answer string only if it's not already stored (exact match),
+        # and if it's not an empty string
+        if (user_answer[0] and
+                (not user_answer[0] in stud_hist.answer)):
             stud_hist.update(push__answer=user_answer[0])
         stud_hist.update(inc__attempts_count=1)
         stud_hist.update(set__last_attempted=datetime.datetime.now
@@ -61,25 +72,39 @@ def save_answer(*, student_id, language,
                 and audio_answer_correct[0] == "false"):
             stud_hist.update(set__audio_answer_correct=False)
 
-        stud_hist.save()
+        try:
+            stud_hist.save()
+        except BaseException as err:
+            logging.info(f"failed to update a doc in StudentHistory. \
+            Error: {err}")
+            return f"failed to update a doc in StudentHistory. Error: {err}"
 
     else:
+        logging.info("first time the student saw the question,\
+        so create a document for it")
         # first time the student saw the question, so create a document for it
         stud_hist = StudentHistory(
             student_id=ObjectId(student_id[0]),
             language=language[0],
             question_id=ObjectId(question_id[0]),
-            answer=[user_answer[0]],
             attempts_count=1,
             last_attempted=datetime.datetime.now(tz=pytz.UTC)
         )
+
+        # if answer not an empty string, save it
+        if user_answer[0]:
+            stud_hist.answer = [user_answer[0]]
 
         if answer_correct[0] == "true":
             stud_hist.answer_correct = True
         if audio_answer_correct[0] == "true":
             stud_hist.audio_answer_correct = True
 
-        stud_hist.save()
+        try:
+            stud_hist.save()
+        except BaseException as err:
+            logging.info(f"failed to save to StudentHistory. Error: {err}")
+            return f"failed to save to StudentHistory. Error: {err}"
 
     # update the question queue and answer stacks in Student document
 
@@ -117,9 +142,5 @@ def save_answer(*, student_id, language,
 
     # if queue doesn't have enough questions, add more questions
     if len(language_embed_doc[0].question_queue) < MIN_QUESTIONS_IN_QUEUE:
-        new_questions = prep_questions(language[0],
-                                       student_id[0], NUM_QUESTIONS_TO_LOAD)
-    else:
-        new_questions = None
-
-    return new_questions
+        prep_questions(language[0], student_id[0], NUM_QUESTIONS_TO_LOAD)
+        logging.info(f"added new questions to queue")

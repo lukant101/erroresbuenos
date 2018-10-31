@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_mongoengine import MongoEngine
 from flask_bcrypt import Bcrypt
-from flask_login import LoginManager
+from flask_login import LoginManager, user_logged_out
 
 # app = Flask("lalang", template_folder="C:/Users/Lukasz/Python/ErroresBuenos/lalang/templates")
 app = Flask("lalang")
@@ -17,6 +17,3 @@ db = MongoEngine(app)
 bcrypt = Bcrypt(app)
 
 from lalang import routes
-from lalang.db_model import AnonymousStudent
-
-login_manager.anonymous_user = AnonymousStudent

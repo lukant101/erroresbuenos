@@ -40,14 +40,14 @@
             <a href={{ url_for('home')}}><img src='{{ url_for('static',filename='pics/branding/palm_tree.svg') }}' alt='Lalang Logo' width='40' height='40'></a>
             Lalang
           </div>
-          {% if current_user.is_authenticated %}
+          {% if current_user.is_authenticated  and not current_user.temp %}
             <span class="navbar-text ml-auto" href='#'>{{ current_user.username}}'s Score</span>
           {% else %}
             <span class="navbar-text ml-auto" href='#'>Score</span>
           {% endif%}
           <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
-              {% if current_user.is_authenticated %}
+              {% if current_user.is_authenticated and not current_user.temp %}
               <li class="nav-item">
                 <a class="nav-link" href={{ url_for('classroom')}}>Classroom</a>
                 <a class="nav-link" href={{ url_for('logout')}}>Log Out</a>

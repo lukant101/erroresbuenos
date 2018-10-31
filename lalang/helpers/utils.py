@@ -16,7 +16,7 @@ import logging
 
 sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos")
 
-from lalang.db_model import Question, Student
+from lalang.db_model import Question, Student, StudentHistory
 
 logging.basicConfig(level=logging.INFO, filename="app.log", filemode="a")
 
@@ -30,8 +30,16 @@ def is_safe_url(target):
             and ref_url.netloc == test_url.netloc)
 
 
-def question_obj_to_json(question_obj):
-    """Take Question object and return it in json representation."""
+def question_obj_to_json(question_obj, *, student_id=""):
+    """Take Question object and return it in json representation.
+
+    Arguments:
+    Question instance
+    student_id: string -- optional
+
+    Return:
+    Question object in JSON format, with student_id appended, as an option
+    """
     q_json = {}
     q_fields_iter = question_obj._fields.keys()
     for f in q_fields_iter:
@@ -40,6 +48,8 @@ def question_obj_to_json(question_obj):
             q_json[f] = str(getattr(question_obj, f))
         else:
             q_json[f] = getattr(question_obj, f)
+    if student_id:
+        q_json["student_id"] = student_id
     return json.dumps(q_json, ensure_ascii=False)
     # return question_obj.word
 
@@ -62,6 +72,24 @@ def dict_to_student_obj(student_as_dict):
     for k, v in student_as_dict_copy.items():
         setattr(s_obj, k, v)
     return s_obj
+
+# callback function for blinker signal: flask_login.user_logged_out
+# def wipe_temp_student(sender, user, **extra):
+#     """Delete temp student's records in the database."""
+#     if not user.temp:
+#         pass
+    # if user.temp:
+    #     # delete student's answers in StudentHistory
+    #     num_del_docs = StudentHistory.objects(student_id=student.id).delete()
+    #     logging.info(f"Num of deleted StudentHistory documents: {num_del_docs}")
+    #     # for stud_rec in stud_hist_iter:
+    #     #     stud_rec.delete()
+    #     #     stud_rec.save()
+    #     logging.info("deleted all StudentHistory records for temp student")
+    #     # delete the main student record
+    #     logging.info(f"about to delete temp student with id: {user.id}")
+    #     user.delete()
+    #     logging.info("deleted the temp student")
 
 
 if __name__ == "__main__":

@@ -58,6 +58,7 @@ class LanguageProgress(db.EmbeddedDocument):
 
 @login_manager.user_loader
 def load_student(student_alt_id):
+    # query returns None if document not found
     return Student.objects(alt_id=student_alt_id).first()
 
 
@@ -66,10 +67,6 @@ class Student(db.Document, UserMixin):
 
     Information regarding student's studies in a particular language
     is stored in a list of embedded documents.
-
-    NEED TO IMPLEMENT:
-    - should require either email or username, but not both
-    - if email provided, use it as  the username
     """
 
     # alt_id is needed for Remember Me cookie; otherwise _id would be used
@@ -82,34 +79,20 @@ class Student(db.Document, UserMixin):
     password = db.StringField()
     app_language = db.StringField(required=True,
                                   default="english", max_length=20)
+    curr_study_lang = db.StringField(required=True,
+                                     default=DEFAULT_LANGUAGE)
     language_progress = db.EmbeddedDocumentListField(LanguageProgress)
+    # fields for temp students only
     temp = db.BooleanField(default=True)
+    last_active = db.DateTimeField(default=datetime.datetime.
+                                   now(tz=pytz.UTC))
+    num_questions_answered = db.IntField(default=0)
     meta = {'indexes': ["alt_id"]}
 
     # need to override UserMixin get_id, so that we pass
     # alt_id to load_student, instead of id/_id
     def get_id(self):
         return str(self.alt_id)
-
-
-class AnonymousStudent(db.Document, AnonymousUserMixin):
-    app_language = db.StringField(required=True,
-                                  default="english", max_length=20)
-    current_study_language = db.StringField(required=True,
-                                            default=DEFAULT_LANGUAGE)
-    language_progress = db.EmbeddedDocumentListField(LanguageProgress)
-
-    def save_in_db(self):
-        """Make the object persistent by saving it in the database."""
-        self.save()
-
-    def delete_from_db(self):
-        """Delete the corresponding record from the database."""
-        self.delete()
-        self.save()
-
-    def __del__(self):
-        self.delete_from_db()
 
 
 class StudentHistory(db.Document):

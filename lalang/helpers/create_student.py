@@ -4,10 +4,16 @@ import mongoengine
 import sys
 import uuid
 from bson import ObjectId
+import logging
 
 sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos")
 
 from lalang.db_model import Student
+from lalang.helpers.more_questions import get_questions_all_lang
+from lalang.constants import SUPPORTED_LANGUAGES
+
+logging.basicConfig(level=logging.INFO, filename="app.log",
+                    filemode="a")
 
 mongoengine.connect("lalang_db", host="localhost", port=27017)
 
@@ -26,7 +32,7 @@ def create_student(email, username, first_name, last_name, password, temp):
 
     student.save()
 
-    return Student.objects(username=student.username).first().id
+    return student.id
 
 
 def create_temp_student():
@@ -45,7 +51,7 @@ def create_temp_student():
         email=random_string + "@fantasy.com",
         alt_id=ObjectId(),
         temp=True
-    )
+        )
 
     # save the document; if the username not unique, generate new one and retry
     try:
@@ -61,7 +67,12 @@ def create_temp_student():
             except mongoengine.NotUniqueError:
                 continue
 
-    return Student.objects(username=student.username).first().id
+    logging.info(f"Just created temp student with id: {student.id}")
+    logging.info(f"about to add questions to the queue of student {student.id}")
+    # add default questions to the queues in Student document
+    get_questions_all_lang(SUPPORTED_LANGUAGES, student.id)
+
+    return student
 
 
 if __name__ == "__main__":
