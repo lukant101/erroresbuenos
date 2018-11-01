@@ -15,6 +15,7 @@
       <h3 id="title_practice" class='text-center mb-3'></h3>
       <script>
           setTitlePractise();
+          var current_language = "{{ curr_lang }}";
       </script>
 
       <img id='fcard' class='rounded mx-auto d-block img-fluid' src="../static/pics/{{ question.image_files.split(",")[0] }}" alt='{{ fname }}'>
