@@ -43,3 +43,24 @@ class StudentLogin(FlaskForm):
                              validators=[DataRequired()])
     remember = BooleanField("Remember me")
     submit = SubmitField("Log me in")
+
+
+class RequestResetForm(FlaskForm):
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    submit = SubmitField("Reset Password")
+
+    def validate_email(self, email):
+        # check that email exists
+        student = Student.objects(email=email.data.lower()).first()
+        if not student:
+            raise ValidationError("No such account exists. Please register.")
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField("Password",
+                             validators=[Length(min=6, max=30, message="Password must be between 6 and 30 \
+                             characters long"), DataRequired()])
+    confirm_password = PasswordField("Confirm Password",
+                                     validators=[DataRequired(),
+                                                 EqualTo("password")])
+    submit = SubmitField("Reset Password")

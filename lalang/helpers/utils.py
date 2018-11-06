@@ -30,15 +30,19 @@ def is_safe_url(target):
             and ref_url.netloc == test_url.netloc)
 
 
-def question_obj_to_json(question_obj, *, student_id=""):
+def question_obj_to_json(question_obj, *, request_type, student_id="", prev_q_lang=None):
     """Take Question object and return it in json representation.
 
     Arguments:
     Question instance
+    request_type: string -- used to indicate whether the JSON response
+        is a reply to a GET or POST request
+
     student_id: string -- optional
 
     Return:
-    Question object in JSON format, with student_id appended, as an option
+    Question object in JSON format, with request_type and student_id appended
+    (student_id only as an option)
     """
     q_json = {}
     q_fields_iter = question_obj._fields.keys()
@@ -48,8 +52,15 @@ def question_obj_to_json(question_obj, *, student_id=""):
             q_json[f] = str(getattr(question_obj, f))
         else:
             q_json[f] = getattr(question_obj, f)
+
+    q_json["request_type"] = request_type
+
+    if prev_q_lang:
+        q_json["prev_q_lang"] = prev_q_lang
+
     if student_id:
         q_json["student_id"] = student_id
+
     return json.dumps(q_json, ensure_ascii=False)
     # return question_obj.word
 

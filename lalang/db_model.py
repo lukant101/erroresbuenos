@@ -8,9 +8,10 @@ StudentHistory
 """
 import datetime
 import pytz
-from lalang import db, login_manager
-from flask_login import UserMixin, AnonymousUserMixin
 import logging
+from flask_login import UserMixin
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from lalang import db, login_manager, app
 from lalang.constants import SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE
 
 
@@ -93,6 +94,19 @@ class Student(db.Document, UserMixin):
     # alt_id to load_student, instead of id/_id
     def get_id(self):
         return str(self.alt_id)
+
+    def get_reset_token(self, expiry_sec=600):
+        s = Serializer(app.config['SECRET_KEY'], expiry_sec)
+        return s.dumps({"user_id": str(self.id)}).decode("utf-8")
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            user_id = s.loads(token)["user_id"]
+        except BadSignature:
+            return None
+        return Student.objects(id=user_id).first()
 
 
 class StudentHistory(db.Document):

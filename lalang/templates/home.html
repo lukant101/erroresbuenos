@@ -21,6 +21,7 @@
       <img id='fcard' class='rounded mx-auto d-block img-fluid' src="../static/pics/{{ question.image_files.split(",")[0] }}" alt='{{ fname }}'>
 
         <div class='form-group'>
+            <form id="question_form">
             <label class='d-block'>Part of Speech: <span id="part_of_speech_elem" class="font-weight-bold">{{ question.part_of_speech }}</span></label>
             <button id='play_button' onclick='playAudioOut()' type='button' class='btn btn-info rounded-circle d-inline mr-2'><i class="fas fa-volume-up"></i></button>
             <input type='text' class='custom-control custom-control-inline mr-0' name="user_answer" id='user_answer' />
@@ -32,6 +33,7 @@
             <input type="hidden" name="answer" id="answer" value={{ question.word }}>
             <input type="hidden" name="answer_correct" id="answer_correct" value="false">
             <input type="hidden" name="audio_answer_correct" id="audio_answer_correct" value="false">
+            </form>
         </div>
 
       <audio id='card_audio'>

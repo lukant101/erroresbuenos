@@ -6,7 +6,8 @@ from bson import ObjectId
 from datetime import datetime
 import pytz
 from flask_login import login_user, current_user, logout_user, login_required
-from lalang import app, bcrypt
+from flask_mail import Message
+from lalang import app, bcrypt, mail, send_email_address
 from lalang.helpers.more_questions import (get_questions_all_lang,
                                            get_queue_question)
 from lalang.helpers.save_answer import save_answer
@@ -14,7 +15,8 @@ from lalang.helpers.create_student import create_temp_student
 from lalang.constants import (SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE,
                               DEFAULT_TEMP_STUDENT_ID)
 from lalang.helpers.utils import question_obj_to_json, is_safe_url
-from lalang.forms import StudentRegister, StudentLogin
+from lalang.forms import (StudentRegister,
+                          StudentLogin, RequestResetForm, ResetPasswordForm)
 from lalang.db_model import Student, Question
 
 logging.basicConfig(level=logging.INFO, filename="app.log", filemode="a")
@@ -95,6 +97,52 @@ def register():
     return render_template("register.html", form=form)
 
 
+def send_reset_email(student):
+    token = student.get_reset_token()
+    msg=Message("Password Reset",
+                sender=send_email_address,
+                recipients=[student.email])
+    msg.body = f"""To reset the password, go to:
+{url_for("reset_password", token=token, _external=True)}
+
+If you did not request a password reset, you can simply ignore this email and no changes will be made to your account.
+"""
+    mail.send(msg)
+
+
+@app.route("/request-reset", methods=['GET', "POST"])
+def request_reset():
+    if current_user.is_authenticated and not current_user.temp:
+        return redirect(url_for("home"))
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        student = Student.objects(email=form.email.data).first()
+        send_reset_email(student)
+        flash("Please check your email for a password reset link.", "info")
+        return redirect(url_for("login"))
+    return render_template("request-reset.html", form=form)
+
+
+@app.route("/reset-password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    if current_user.is_authenticated and not current_user.temp:
+        return redirect(url_for("home"))
+    student = Student.verify_reset_token(token)
+    if student:
+        form = ResetPasswordForm()
+        if form.validate_on_submit():
+            if current_user.is_authenticated and current_user.temp:
+                logout_user()
+            student.password = bcrypt.generate_password_hash(
+                form.password.data).decode("utf-8")
+            student.save()
+            flash("Password reset successfully. Please log in.", "success")
+            return redirect(url_for("login"))
+        return render_template("reset-password.html", form=form)
+    flash("Invalid or expired token.", "warning")
+    return redirect(url_for("request_reset"))
+
+
 @app.route("/classroom", methods=['GET', "POST"])
 @app.route("/", methods=['GET', "POST"])
 def home():
@@ -146,7 +194,7 @@ def load_question():
                                           DEFAULT_TEMP_STUDENT_ID)
             # turn the question object into json and return it
             logging.info("language changed for untracked student")
-            return question_obj_to_json(question)
+            return question_obj_to_json(question, request_type=request.method)
 
         if not current_user.is_anonymous:
             # update document for logged-in student
@@ -202,10 +250,15 @@ def load_question():
 
     logging.info(f"Next word: {next_question.word}")
 
+    # we'll relay this value back to client
+    previous_question_language = request.form.get("language")
+
     # turn the question object into json and return it
     if current_user.temp:
         # for temp student, include student_id, so it can be updated
-        return question_obj_to_json(next_question,
-                                    student_id=str(current_user.id))
+        return question_obj_to_json(next_question, request_type=request.method,
+                                    student_id=str(current_user.id),
+                                    prev_q_lang=previous_question_language)
 
-    return question_obj_to_json(next_question)
+    return question_obj_to_json(next_question, request_type=request.method,
+                                prev_q_lang=previous_question_language)

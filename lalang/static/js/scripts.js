@@ -1,8 +1,8 @@
 var default_title="Let's Practice";
 var eavesdropped_audio = [];
 // flag to keep track if load_question request is for a question in a new language
-var changed_language = false;
 var wrong_answers_log = {};
+var enter_pressed = false;
 
 function title_cap(word) {
     return word.charAt(0).toUpperCase() + word.substr(1)
@@ -25,7 +25,11 @@ function playAudioOut() {
     audio_out.play();
     if (!(eavesdropped_audio.includes(current_language))) {
         eavesdropped_audio.push(current_language);
+        console.log("Full audio log: ");
+        console.log(eavesdropped_audio);
     }
+    console.log("audio played for: ");
+    console.log(current_language);
 }
 
 // when user plays audio, disable answer input field and change colour of send button
@@ -40,13 +44,52 @@ $(document).ready(function() {
     });
 });
 
+// event listener: press Enter key when in Answer input field
+// action: submit answer
+$(document).ready(function () {
+    $(document).keydown(function (event) {
+        if (event.which == 13) {
+            // prevent reloading of page
+            event.preventDefault();
+            // check whether student submitted the original answer or
+            // an incorrect answer (i.e. the red submission button is visible)
+            if ($("#wrong_answer_btn").css("display") === "none") {
+                // use a flag to prevent double-pressing Enter key
+                if (enter_pressed===false) {
+                    enter_pressed=true;
+                    console.log("pressed enter key");
+                    sub_fld = $("#user_answer");
+                    sub_fld.prop("disabled", true);
+                    markAnswer();
+                    console.log("marked the answer");
+                    showAndSubmitAnswer();
+                    console.log("submitted the answer");
+                    setTimeout(function(){
+                        sub_fld.prop("disabled", false);
+                        enter_pressed=false;
+                    },
+                    500);
+                }
+
+            } else {
+                // do the same as when the red "wrong" button is expressed
+                hideAnswer();
+                // first we cancel the timer, then we submit the wrong answer
+                info = wrong_answers_log[current_language];
+                clearTimeout(info.timer_id);
+                submitWrongAnswer(info.stud_id, info.q_id, info.ans_corr,
+                    info.audio_ans_corr, current_language);
+            }
+        }
+    });
+});
+
 // ask for a new question when user changes language in dropdown menu
 $(document).ready(function() {
     $("#lang_select").change( function() {
         current_language = $(this).val();
         console.log("Current language reset to: ");
         console.log(current_language);
-        changed_language = true;
         // enable or disable answer input depending if audio was heard for
         // the current question for this language
         if (eavesdropped_audio.includes(current_language)) {
@@ -54,12 +97,18 @@ $(document).ready(function() {
             if ($("#send_answer_btn").hasClass("btn-info")) {
                 $("#send_answer_btn").removeClass("btn-info");
                 $("#send_answer_btn").addClass("btn-warning");
+                console.log("Full audio log when locking: ");
+                console.log(eavesdropped_audio);
+                console.log("lock and yellow button");
             }
         } else {
             $("#user_answer").prop("disabled",false);
             if ($("#send_answer_btn").hasClass("btn-warning")) {
                 $("#send_answer_btn").removeClass("btn-warning");
                 $("#send_answer_btn").addClass("btn-info");
+                console.log("Full audio log when unlocking: ");
+                console.log(eavesdropped_audio);
+                console.log("unlock and back to blue button");
             }
         }
         // if  question for this language answered wrong but not yet submitted,
@@ -91,8 +140,12 @@ $(document).ready(function() {
 // sends user's answer and asks for a new question when user clicks the submit button
 $(document).ready(function() {
     $("#send_answer_btn").click( function() {
+        event.preventDefault();
+        sub_btn = $(this);
+        sub_btn.prop("disabled", true);
         markAnswer();
         showAndSubmitAnswer();
+        setTimeout(function(){sub_btn.prop("disabled", false);}, 500);
     });
 });
 
@@ -179,35 +232,19 @@ function markAnswer() {
 // event listener: the red "wrong" button is pressed to submit the answer
 $(document).ready(function() {
     $("#wrong_answer_btn").click(function() {
-        // $("#wrong_answer_btn").fadeOut(function(){
-        //     $("#send_answer_btn").fadeIn();});
-        // $("#show_answer").hide();
-        // $("#gtranslate").hide();
         hideAnswer();
         // first we cancel the timer, then we submit the wrong answer
         info = wrong_answers_log[current_language];
         clearTimeout(info.timer_id);
 
-        console.log("deleting from wrong answer log: ");
+        console.log("RED BUTTON - deleting from wrong answer log: ");
         console.log(info.u_answer);
         console.log(current_language);
 
         submitWrongAnswer(info.stud_id, info.q_id, info.ans_corr,
             info.audio_ans_corr, current_language);
-        delete wrong_answers_log[current_language];
     });
 });
-
-// previous version of event listener: the red "wrong" button is pressed to submit the answer
-// $(document).ready(function() {
-//     $("#wrong_answer_btn").click(function() {
-//         $("#wrong_answer_btn").fadeOut(function(){
-//             $("#send_answer_btn").fadeIn();});
-//         $("#show_answer").hide();
-//         $("#gtranslate").hide();
-//         submitAnswer();
-//     });
-// });
 
 function showAndSubmitAnswer() {
     // capture the variable values now because there is a delay when
@@ -225,7 +262,7 @@ function showAndSubmitAnswer() {
         showAnswer();
 
         // set 30s timer for wrong answer submission
-        timer_id = setTimeout(submitWrongAnswer, 40000, stud_id, q_id, ans_corr, audio_ans_corr, lang)
+        timer_id = setTimeout(submitWrongAnswer, 20000, stud_id, q_id, ans_corr, audio_ans_corr, lang)
 
         // add timer id to wrong_answers_log
         wrong_answers_log[lang].timer_id = timer_id;
@@ -239,7 +276,6 @@ function showAndSubmitAnswer() {
 
 function submitAnswer(stud_id, q_id, ans_corr, audio_ans_corr, lang, u_answer) {
     // flag to keep track of if load_question request is for a question in a new language
-    changed_language = false;
     $.post("/next-question",
             {
                 // user_answer : $("#user_answer").val().trim().toLowerCase(),
@@ -294,37 +330,49 @@ function hideAnswer() {
 function load_question(new_question)  {
     console.log(new_question);
     var quest_obj=new_question;
-    $("#fcard").attr("src", "../static/pics/" + quest_obj.image_files.split(",")[0]);
-    $("#audio_src").attr("src", "../static/audio/" + quest_obj.language.toLowerCase() + "/" + quest_obj.audio_files);
-    // reload the audio source in the audio element; jQuery doesn't implement $().load(), so use JavaScript
-    document.getElementById('card_audio').load();
-    $("#part_of_speech_elem").text(quest_obj.part_of_speech);
-    $("#word_elem").text(quest_obj.word);
-    $("#user_answer").val("");
-    $("#answer").val(quest_obj.word);
-    $("#question_id").attr("value", quest_obj.id);
+    repeat_question =  (quest_obj.id === $("#question_id").val());
 
-    if (changed_language===false) {
-        // remove the current language from the eavesdropped_audio array
-        // because the audio that student listened to is no longer in context
-        current_language_index = eavesdropped_audio.indexOf(current_language);
-        if (current_language_index != -1) {
-            eavesdropped_audio.splice(current_language_index,1);
-            // enable the answer input for this language
-            $("#user_answer").prop("disabled",false);
-            // if necessary, change send button colour back to default
-            if ($("#send_answer_btn").hasClass("btn-warning")) {
+    // refresh the page with new question, unless it's the same question as current
+    if (! repeat_question ||
+        quest_obj.request_type==="GET") {
+        $("#fcard").attr("src", "../static/pics/" + quest_obj.image_files.split(",")[0]);
+        $("#audio_src").attr("src", "../static/audio/" + quest_obj.language.toLowerCase() + "/" + quest_obj.audio_files);
+        // reload the audio source in the audio element; jQuery doesn't implement $().load(), so use JavaScript
+        document.getElementById('card_audio').load();
+        $("#part_of_speech_elem").text(quest_obj.part_of_speech);
+        $("#word_elem").text(quest_obj.word);
+        $("#user_answer").val("");
+        $("#answer").val(quest_obj.word);
+        $("#question_id").attr("value", quest_obj.id);
+    }
+
+    // if this question was preceded by a question (in the same language)
+    // where the student listend to audio, reset to default
+    if (quest_obj.request_type==="POST") {
+        // remove the language of the previous question
+        // from the eavesdropped_audio array (if it's there)
+        // because this question has been answered
+        language_index = eavesdropped_audio.indexOf(quest_obj.prev_q_lang);
+        if (language_index != -1) {
+            eavesdropped_audio.splice(language_index,1);
+
+            // update view only if it's not the same question
+            if (! repeat_question) {
+
+                // enable the answer input for this language
+                $("#user_answer").prop("disabled",false);
+
+                // change send button colour back to default
                 $("#send_answer_btn").removeClass("btn-warning");
                 $("#send_answer_btn").addClass("btn-info");
+                console.log("Full audio log when unlocknig in LOAD QUESTION: ");
+                console.log(eavesdropped_audio);
+                console.log("unlock and back to blue button - FROM LOAD QUESTION");
             }
-
         }
-        // it's a new question, so hide the answer, if previous question
-        // for this language was answered wrong
+        // it's a new question, so hide the answer, if already not hidden
         if ($("#show_answer").css("display") === "block") {
             hideAnswer();
         }
-
-
     }
 }
