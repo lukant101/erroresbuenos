@@ -15,8 +15,9 @@ fhd_q_size = (1920, 1440)
 
 
 # output_sizes = [h_q_size, m_q_size, l_q_size]
-output_sizes = [hd_q_size, fhd_q_size]
-quality_set = [10, 20, 30, 40, 50, 60, 70]
+output_sizes = [m_q_size]
+# quality_set = [10, 20, 30, 40, 50, 60, 70]
+quality_set = [70]
 
 _path = "C:/Users/Lukasz/Python/ErroresBuenos/assets/\
 photos/image_tests/HD/"
@@ -24,11 +25,10 @@ photos/image_tests/HD/"
 # path_file = f"C:/Users/Lukasz/Python/ErroresBuenos/assets/\
 # photos/image_tests/HD/{file_name_orig}.{file_extension}"
 
-files = [f for f in listdir(_path) if isfile(join(_path, f))]
+# files = [f for f in listdir(_path) if isfile(join(_path, f))]
+files = "woman-with-blue-hair.jpg"
 
 for f in files:
-    # file_extension = splitext(f)[-1].lower()
-    # file_name = splitext(f)[0].lower()
     file_name, _ext = splitext(f)
     if _ext == ".jpg":
         path_file = f"C:/Users/Lukasz/Python/ErroresBuenos/assets/photos/image_tests/HD/{f}"
@@ -39,6 +39,7 @@ for f in files:
             i.copy().thumbnail(size)
             for quality in quality_set:
                 path_out = f"C:/Users/Lukasz/Python/ErroresBuenos/assets/photos/image_tests/resized/quality{quality}/"
+                print(path_out)
                 i.save(path_out+file_name+f"-{size[0]}px"+_ext, quality=quality)
 
 

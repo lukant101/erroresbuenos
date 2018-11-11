@@ -2,15 +2,18 @@
 
 {% block content %}
     <div class='container mb-3'>
-
-        <select id="lang_select" onchange="updateTitlePractise()" class='form-control my-3'>
-            <option value="{{ curr_lang }}" selected>{{ curr_lang.capitalize() }}</option>
-            {% for lang in all_langs %}
-            {% if lang != curr_lang %}
-                <option value="{{ lang }}">{{ lang.capitalize() }}</option>
-            {% endif %}
-            {% endfor %}
-        </select>
+        <div class="form-group row">
+            <div class="col-xs-12 mx-auto">
+                <select id="lang_select" onchange="updateTitlePractise()" class='form-control my-3'>
+                    <option value="{{ curr_lang }}" selected>{{ curr_lang.capitalize() }}</option>
+                    {% for lang in all_langs %}
+                        {% if lang != curr_lang %}
+                            <option value="{{ lang }}">{{ lang.capitalize() }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
 
       <h3 id="title_practice" class='text-center mb-3'></h3>
       <script>
@@ -18,23 +21,41 @@
           var current_language = "{{ curr_lang }}";
       </script>
 
-      <img id='fcard' class='rounded mx-auto d-block img-fluid' src="../static/pics/{{ question.image_files.split(",")[0] }}" alt='{{ fname }}'>
+      <div id="images-container">
+      {% for image in question.image_files.split(",") %}
+        {% set image = image.lstrip() %}
+        <picture id="picture-{{ loop.index }}">
+            {% set extension = image.split(".")[-1] %}
+            {% set file_name = "../static/pics/" + image.split(".")[0] %}
+              {% if extension == 'jpg' %}
+                  <source id="img-webp-{{ loop.index }}" type=”image/webp” srcset="{{ file_name + "-480px.webp" }} 1x, {{ file_name + "-960px.webp" }} 2x">
+                  <img id="img-default-{{ loop.index }}" class='rounded mx-auto my-3 d-block img-fluid' src="{{ file_name + "-480px" + ".jpg" }}" alt='{{ question.word }}' srcset="{{ file_name + "-480px.jpg" }} 1x, {{ file_name + "-960px.jpg" }} 2x">
+              {% elif extension == "png" %}
+                  <source id="img-webp-{{ loop.index }}">
+                  <img id="img-default-{{ loop.index }}" class='rounded mx-auto my-3 d-block img-fluid' src="{{ file_name + "-480px" + ".png" }}" alt='{{ question.word }}' srcset="{{ file_name + "-480px.png" }} 1x, {{ file_name + "-960px.png" }} 2x">
+              {% elif extension == "svg" %}
+                  <source id="img-webp-{{ loop.index }}">
+                  <img id="img-default-{{ loop.index }}" class='rounded mx-auto my-3 d-block img-fluid' src="{{ file_name + ".svg" }}" alt="{{ question.word }}" width="400">
+              {% endif %}
+        </picture>
+      {% endfor %}
+      </div>
 
-        <div class='form-group'>
-            <form id="question_form">
-            <label class='d-block'>Part of Speech: <span id="part_of_speech_elem" class="font-weight-bold">{{ question.part_of_speech }}</span></label>
-            <button id='play_button' onclick='playAudioOut()' type='button' class='btn btn-info rounded-circle d-inline mr-2'><i class="fas fa-volume-up"></i></button>
-            <input type='text' class='custom-control custom-control-inline mr-0' name="user_answer" id='user_answer' />
-            <button id='send_answer_btn' type='button' class='btn btn-info rounded-circle ml-0'><i class="fas fa-arrow-right"></i></button>
-            <button id="good_job_msg" style="display:none" class="btn btn-success ml-3" type='button'>Good job!</button>
-            <button id="wrong_answer_btn" style="display:none" class="btn btn-danger rounded-circle ml-0" type='button'><i class="fas fa-arrow-right"></i></button>
-            <input type="hidden" name="question_id" id="question_id" value={{ question.id }}>
-            <input type="hidden" name="student_id" id="student_id" value={{ student_id }}>
-            <input type="hidden" name="answer" id="answer" value={{ question.word }}>
-            <input type="hidden" name="answer_correct" id="answer_correct" value="false">
-            <input type="hidden" name="audio_answer_correct" id="audio_answer_correct" value="false">
-            </form>
-        </div>
+    <div class='form-group mt-2'>
+        <form id="question_form">
+        <label class='d-block'>Part of Speech: <span id="part_of_speech_elem" class="font-weight-bold">{{ question.part_of_speech }}</span></label>
+        <button id='play_button' onclick='playAudioOut()' type='button' class='btn btn-info rounded-circle d-inline mr-2'><i class="fas fa-volume-up"></i></button>
+        <input type='text' class='custom-control custom-control-inline mr-0' name="user_answer" id='user_answer' />
+        <button id='send_answer_btn' type='button' class='btn btn-info rounded-circle ml-0'><i class="fas fa-arrow-right"></i></button>
+        <button id="good_job_msg" style="display:none" class="btn btn-success ml-3" type='button'>Good job!</button>
+        <button id="wrong_answer_btn" style="display:none" class="btn btn-danger rounded-circle ml-0" type='button'><i class="fas fa-arrow-right"></i></button>
+        <input type="hidden" name="question_id" id="question_id" value={{ question.id }}>
+        <input type="hidden" name="student_id" id="student_id" value={{ student_id }}>
+        <input type="hidden" name="answer" id="answer" value={{ question.word }}>
+        <input type="hidden" name="answer_correct" id="answer_correct" value="false">
+        <input type="hidden" name="audio_answer_correct" id="audio_answer_correct" value="false">
+        </form>
+    </div>
 
       <audio id='card_audio'>
         <source id="audio_src" src="../static/audio/{{curr_lang}}/{{ question.audio_files }}" type='audio/ogg'>

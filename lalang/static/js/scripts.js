@@ -38,7 +38,7 @@ $(document).ready(function() {
         $("#user_answer").prop("disabled",true);
         if ($("#send_answer_btn").hasClass("btn-info")) {
             $("#send_answer_btn").removeClass("btn-info");
-            $("#send_answer_btn").addClass("btn-warning");
+            $("#send_answer_btn").addClass("btn-success");
         }
 
     });
@@ -96,15 +96,15 @@ $(document).ready(function() {
             $("#user_answer").prop("disabled",true);
             if ($("#send_answer_btn").hasClass("btn-info")) {
                 $("#send_answer_btn").removeClass("btn-info");
-                $("#send_answer_btn").addClass("btn-warning");
+                $("#send_answer_btn").addClass("btn-success");
                 console.log("Full audio log when locking: ");
                 console.log(eavesdropped_audio);
                 console.log("lock and yellow button");
             }
         } else {
             $("#user_answer").prop("disabled",false);
-            if ($("#send_answer_btn").hasClass("btn-warning")) {
-                $("#send_answer_btn").removeClass("btn-warning");
+            if ($("#send_answer_btn").hasClass("btn-success")) {
+                $("#send_answer_btn").removeClass("btn-success");
                 $("#send_answer_btn").addClass("btn-info");
                 console.log("Full audio log when unlocking: ");
                 console.log(eavesdropped_audio);
@@ -140,8 +140,10 @@ $(document).ready(function() {
 // sends user's answer and asks for a new question when user clicks the submit button
 $(document).ready(function() {
     $("#send_answer_btn").click( function() {
-        event.preventDefault();
+        console.log("just pressed the first button");
+        console.log("after preventDefault()");
         sub_btn = $(this);
+        console.log("after $this statement");
         sub_btn.prop("disabled", true);
         markAnswer();
         showAndSubmitAnswer();
@@ -335,7 +337,57 @@ function load_question(new_question)  {
     // refresh the page with new question, unless it's the same question as current
     if (! repeat_question ||
         quest_obj.request_type==="GET") {
-        $("#fcard").attr("src", "../static/pics/" + quest_obj.image_files.split(",")[0]);
+        // there are a maximum of 4 images allowed per question
+        var images = quest_obj.image_files.split(",");
+        images.forEach(function(elem, index, images_arr){
+            images_arr[index] = elem.trim();
+        });
+        var images_count = images.length;
+        var prev_images_count = 1;
+        if ($("#picture-4").length) {
+            prev_images_count = 4;
+        } else if ($("#picture-3").length) {
+            prev_images_count = 3;
+        } else if ($("#picture-2").length) {
+            prev_images_count = 2;
+        }
+        var images_count_change = images_count - prev_images_count;
+
+        console.log("images_count_change: ", images_count_change);
+        console.log("prev_images_count: ", prev_images_count);
+        console.log("images_count: ", images_count);
+
+        switch (images_count_change) {
+            case -3:
+                remove_pictures(prev_images_count, 3);
+                console.log("removed 3 pictures");
+                break;
+            case -2:
+                remove_pictures(prev_images_count, 2);
+                console.log("removed 2 pictures");
+                break;
+            case -1:
+                remove_pictures(prev_images_count, 1);
+                console.log("removed 1 picture");
+                break;
+            case 0:
+                break;
+            case 1:
+                add_pictures(prev_images_count, 1);
+                console.log("added 1 picture");
+                break;
+            case 2:
+                add_pictures(prev_images_count, 2);
+                console.log("added 2 pictures");
+                break;
+            case 3:
+                add_pictures(prev_images_count, 3);
+                console.log("added 3 pictures");
+                break;
+        }
+
+        update_pictures(images, images_count);
+
         $("#audio_src").attr("src", "../static/audio/" + quest_obj.language.toLowerCase() + "/" + quest_obj.audio_files);
         // reload the audio source in the audio element; jQuery doesn't implement $().load(), so use JavaScript
         document.getElementById('card_audio').load();
@@ -363,7 +415,7 @@ function load_question(new_question)  {
                 $("#user_answer").prop("disabled",false);
 
                 // change send button colour back to default
-                $("#send_answer_btn").removeClass("btn-warning");
+                $("#send_answer_btn").removeClass("btn-success");
                 $("#send_answer_btn").addClass("btn-info");
                 console.log("Full audio log when unlocknig in LOAD QUESTION: ");
                 console.log(eavesdropped_audio);
@@ -375,4 +427,67 @@ function load_question(new_question)  {
             hideAnswer();
         }
     }
+}
+
+function remove_pictures(last_pic_index, num_pics_to_remove) {
+    for (var i=1; i <= num_pics_to_remove; i++) {
+        console.log("about to remove element: ", "#picture-" + last_pic_index.toString());
+        $("#picture-" + last_pic_index.toString()).remove();
+        last_pic_index--;
+    }
+}
+
+function add_pictures(last_pic_index, num_pics_to_add) {
+    for (var i=last_pic_index+1; i <= last_pic_index+num_pics_to_add; i++) {
+        var picture_elem = `
+            <picture id='picture-${i}'>
+                <source id='img-webp-${i}'>
+                <img id='img-default-${i}' class='rounded mx-auto my-3 d-block img-fluid'>
+            </picture>
+        `;
+        $("#images-container").append(picture_elem);
+        console.log("added element: ", picture_elem);
+    }
+}
+
+function update_pictures(image_file_names, images_count) {
+    for (var i=1; i <= images_count; i++) {
+        file_name_ext = image_file_names[i-1].split(".");
+        file_name = file_name_ext[0];
+        file_desc = file_name.split("-").join(" ");
+        f_ext = file_name_ext[1];
+        path_f_name = "../static/pics/" + file_name;
+        if (f_ext === "jpg")  {
+            console.log("updating picture element for jpeg");
+            console.log("image webp id: ", "#img-webp-" + i.toString());
+            $("#img-webp-" + i.toString()).attr("srcset", path_f_name + "-480px.webp 1x, " + path_f_name + "-960px.webp 2x");
+            $("#img-webp-" + i.toString()).attr("type", "image/webp");
+            $("#img-default-" + i.toString()).attr("src", path_f_name + "-480px.jpg");
+            $("#img-default-" + i.toString()).attr("srcset", path_f_name + "-480px.jpg 1x, " + path_f_name + "-960px.jpg 2x");
+            $("#img-default-" + i.toString()).attr("alt", file_desc);
+        } else if (f_ext === "png") {
+            console.log("updating picture element for png");
+            console.log("image id", "#img-webp-" + i.toString());
+            $("#img-webp-" + i.toString()).attr("srcset", "");
+            $("#img-webp-" + i.toString()).attr("type", "");
+            $("#img-default-" + i.toString()).attr("src", path_f_name + "-480px.png");
+            $("#img-default-" + i.toString()).attr("srcset", path_f_name + "-480px.png 1x, " + path_f_name + "-960px.png 2x");
+            $("#img-default-" + i.toString()).attr("alt", file_desc);
+        } else if (f_ext === "svg") {
+            console.log("updating picture element for svg");
+            console.log("img webp id: ", "#img-webp-" + i.toString());
+            $("#img-webp-" + i.toString()).attr("srcset", "");
+            $("#img-webp-" + i.toString()).attr("type", "");
+            console.log($("#img-webp-" + i.toString()).attr("type"));
+            console.log("img-default: ", "#img-default-" + i.toString());
+            console.log("file name: ", path_f_name);
+            $("#img-default-" + i.toString()).attr("src", path_f_name + ".svg");
+            console.log($("#img-default-" + i.toString()).attr("src"));
+            $("#img-default-" + i.toString()).attr("srcset", "");
+            $("#img-default-" + i.toString()).attr("alt", file_desc);
+            console.log($("#img-default-1").attr("alt"));
+            $("#img-default-" + i.toString()).attr("width", "400");
+        }
+    }
+    console.log(`updated ${images_count} picture(s)`);
 }
