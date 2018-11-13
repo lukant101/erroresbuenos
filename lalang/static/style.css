@@ -1,10 +1,44 @@
-.content-section {
-  background: #ffffff;
+/* .content-section {
+  /* background: #ffffff; */
+  background: yellow;
   padding: 10px 20px;
   border: 1px solid #dddddd;
   border-radius: 3px;
   margin-bottom: 20px;
+} */
+
+html, body {
+    height: 100vh;
 }
+
+#super-q-div, #question-div {
+    height: 100%;
+    margin: 0;
+}
+
+/* #show_answer {
+    border: 1px solid;
+    border-color: #17a2b8;
+    border-radius: 25rem;
+    padding: 0.5em;
+} */
+
+/* #images-container {
+    flex-basis: auto;
+    background: blue;
+    overflow: auto;
+}
+
+#super-q-div {
+    height: 75%;
+    background-color: yellow;
+}
+
+#question-div {
+    /* height: 70%;
+    background-color: green; */
+} */
+
 
 /* .images-container {
         height: 50vh;

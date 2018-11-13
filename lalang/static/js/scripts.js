@@ -44,7 +44,7 @@ $(document).ready(function() {
     });
 });
 
-// event listener: press Enter key when in Answer input field
+// event listener: Enter key pressed when in Answer input field
 // action: submit answer
 $(document).ready(function () {
     $(document).keydown(function (event) {
@@ -128,7 +128,6 @@ $(document).ready(function() {
 
         $.get("/next-question",
                 {
-                    //language : $("#lang_select").val()
                     language : current_language
                 },
                 load_question, "json"
@@ -150,6 +149,23 @@ $(document).ready(function() {
         setTimeout(function(){sub_btn.prop("disabled", false);}, 500);
     });
 });
+
+//event listener: clicked the Translate button
+$(document).ready(function() {
+    $("#translate-btn").click(function() {
+        console.log("clicked the translate button");
+        $.post("/translate", {
+            input_text : $("#translate_text_input").val(),
+            input_language : current_language
+        }, show_translation, "json");
+    });
+});
+
+function show_translation(output_text) {
+    console.log("about to provide the translated answer")
+    $("#translate_text_output").html(output_text);
+    $("#translate_text_output").fadeIn();
+}
 
 function markAnswer() {
     var user_answer = $("#user_answer").val().toLowerCase().trim();
@@ -263,8 +279,8 @@ function showAndSubmitAnswer() {
     } else {
         showAnswer();
 
-        // set 30s timer for wrong answer submission
-        timer_id = setTimeout(submitWrongAnswer, 20000, stud_id, q_id, ans_corr, audio_ans_corr, lang)
+        // set 600s timer for wrong answer submission
+        timer_id = setTimeout(submitWrongAnswer, 600000, stud_id, q_id, ans_corr, audio_ans_corr, lang)
 
         // add timer id to wrong_answers_log
         wrong_answers_log[lang].timer_id = timer_id;
@@ -280,7 +296,6 @@ function submitAnswer(stud_id, q_id, ans_corr, audio_ans_corr, lang, u_answer) {
     // flag to keep track of if load_question request is for a question in a new language
     $.post("/next-question",
             {
-                // user_answer : $("#user_answer").val().trim().toLowerCase(),
                 user_answer : u_answer,
                 question_id : q_id,
                 student_id : stud_id,
@@ -323,6 +338,7 @@ function hideAnswer() {
     console.log("hiding the answer");
     $("#show_answer").hide();
     $("#gtranslate").hide();
+    $("#translate_text_output").hide();
     $("#wrong_answer_btn").fadeOut(function(){
         $("#send_answer_btn").fadeIn();});
 
@@ -395,6 +411,7 @@ function load_question(new_question)  {
         $("#word_elem").text(quest_obj.word);
         $("#user_answer").val("");
         $("#answer").val(quest_obj.word);
+        $("#translate_text_input").val(quest_obj.word);
         $("#question_id").attr("value", quest_obj.id);
     }
 
@@ -440,10 +457,12 @@ function remove_pictures(last_pic_index, num_pics_to_remove) {
 function add_pictures(last_pic_index, num_pics_to_add) {
     for (var i=last_pic_index+1; i <= last_pic_index+num_pics_to_add; i++) {
         var picture_elem = `
-            <picture id='picture-${i}'>
+            <div id='picture-${i}' class='m-2'>
+            <picture>
                 <source id='img-webp-${i}'>
                 <img id='img-default-${i}' class='rounded mx-auto my-3 d-block img-fluid'>
             </picture>
+            </div>
         `;
         $("#images-container").append(picture_elem);
         console.log("added element: ", picture_elem);
@@ -486,7 +505,7 @@ function update_pictures(image_file_names, images_count) {
             $("#img-default-" + i.toString()).attr("srcset", "");
             $("#img-default-" + i.toString()).attr("alt", file_desc);
             console.log($("#img-default-1").attr("alt"));
-            $("#img-default-" + i.toString()).attr("width", "400");
+            $("#img-default-" + i.toString()).attr("width", "480");
         }
     }
     console.log(`updated ${images_count} picture(s)`);

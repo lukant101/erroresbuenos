@@ -13,11 +13,13 @@ from lalang.helpers.more_questions import (get_questions_all_lang,
 from lalang.helpers.save_answer import save_answer
 from lalang.helpers.create_student import create_temp_student
 from lalang.constants import (SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE,
-                              DEFAULT_TEMP_STUDENT_ID)
+                              DEFAULT_TEMP_STUDENT_ID,
+                              SUPPORTED_LANGUAGES_ABBREV)
 from lalang.helpers.utils import question_obj_to_json, is_safe_url
 from lalang.forms import (StudentRegister,
                           StudentLogin, RequestResetForm, ResetPasswordForm)
 from lalang.db_model import Student, Question
+from lalang.helpers.gtranslate import google_translate
 
 logging.basicConfig(level=logging.INFO, filename="app.log", filemode="a")
 
@@ -99,9 +101,9 @@ def register():
 
 def send_reset_email(student):
     token = student.get_reset_token()
-    msg=Message("Password Reset",
-                sender=send_email_address,
-                recipients=[student.email])
+    msg = Message("Password Reset",
+                  sender=send_email_address,
+                  recipients=[student.email])
     msg.body = f"""To reset the password, go to:
 {url_for("reset_password", token=token, _external=True)}
 
@@ -262,3 +264,17 @@ def load_question():
 
     return question_obj_to_json(next_question, request_type=request.method,
                                 prev_q_lang=previous_question_language)
+
+
+@app.route("/translate", methods=['GET', "POST"])
+def translate():
+    input_text = request.form.get("input_text")
+    input_language = request.form.get("input_language")
+    logging.info(input_language)
+    logging.info(SUPPORTED_LANGUAGES_ABBREV.get(input_language))
+    if input_language == "english":
+        target_language = "fr"
+    else:
+        target_language = "en"
+    return google_translate(input_text, target_lang=target_language,
+                            source_lang= SUPPORTED_LANGUAGES_ABBREV.get(input_language))
