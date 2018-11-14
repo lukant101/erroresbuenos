@@ -1,0 +1,41 @@
+{% extends 'shell.html' %}
+{% from "_form_field.html" import form_field %}
+
+{% block content %}
+    <div class="content-section mt-3 mb-3 col-xs-12 col-sm-12 col-med-8 col-lg-8 mx-auto">
+        <div class="media">
+            <div class="media-body">
+            <h2 class="account-heading">{{ current_user.username }}</h2>
+            <p class="text-secondary">{{ current_user.email }}</p>
+          </div>
+        </div>
+        <form method='POST' action="/account">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Your Account</legend>
+                <div class="form-group">
+                    {{ form_field(form.email)}}
+                </div>
+                <div class="form-group">
+                    {{ form_field(form.username)}}
+                </div>
+                <div class="form-group">
+                    {{ form_field(form.first_name)}}
+                </div>
+                <div class="form-group">
+                    {{ form_field(form.last_name)}}
+                </div>
+            </fieldset>
+            <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+            <div class="form-group">
+                <small class="text-muted">
+                    <a href="{{ url_for('password_update') }}" >Need to change the password?</a>
+                </small>
+            </div>
+        </form>
+        <a href="{{ url_for('home') }}"><button type="button" class="btn btn-success mt-5">Classroom</button></a>
+    </div>
+
+{% endblock content %}

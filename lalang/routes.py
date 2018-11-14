@@ -5,7 +5,8 @@ import logging
 from bson import ObjectId
 from datetime import datetime
 import pytz
-from flask_login import login_user, current_user, logout_user, login_required
+from flask_login import (login_user, current_user, logout_user, login_required,
+                         fresh_login_required)
 from flask_mail import Message
 from lalang import app, bcrypt, mail, send_email_address
 from lalang.helpers.more_questions import (get_questions_all_lang,
@@ -17,7 +18,8 @@ from lalang.constants import (SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE,
                               SUPPORTED_LANGUAGES_ABBREV)
 from lalang.helpers.utils import question_obj_to_json, is_safe_url
 from lalang.forms import (StudentRegister,
-                          StudentLogin, RequestResetForm, ResetPasswordForm)
+                          StudentLogin, RequestResetForm, ResetPasswordForm,
+                          AccountUpdateForm, PasswordUpdateForm)
 from lalang.db_model import Student, Question
 from lalang.helpers.gtranslate import google_translate
 
@@ -45,7 +47,7 @@ def login():
                 else:
                     return abort(400)
             else:
-                return redirect(url_for("classroom"))
+                return redirect(url_for("home"))
 
         else:
             flash("We could not log you in. \
@@ -168,7 +170,8 @@ def home():
 @app.route("/classroom")
 @login_required
 def classroom():
-    return render_template("classroom.html")
+    if current_user.is_authenticated and not current_user.temp:
+        return render_template("classroom.html")
 
 
 @app.route('/next-question', methods=['GET', "POST"])
@@ -266,7 +269,7 @@ def load_question():
                                 prev_q_lang=previous_question_language)
 
 
-@app.route("/translate", methods=['GET', "POST"])
+@app.route("/translate", methods=["GET", "POST"])
 def translate():
     input_text = request.form.get("input_text")
     input_language = request.form.get("input_language")
@@ -277,4 +280,55 @@ def translate():
     else:
         target_language = "en"
     return google_translate(input_text, target_lang=target_language,
-                            source_lang= SUPPORTED_LANGUAGES_ABBREV.get(input_language))
+                            source_lang=SUPPORTED_LANGUAGES_ABBREV.
+                            get(input_language))
+
+
+@fresh_login_required
+@app.route("/account", methods=["GET", "POST"])
+def account():
+    if not current_user.is_authenticated or \
+            (current_user.is_authenticated and current_user.temp):
+        return redirect(url_for("home"))
+    if current_user.is_authenticated and not current_user.temp:
+        form = AccountUpdateForm()
+
+        if form.validate_on_submit() and not current_user.temp:
+            if form.email.data:
+                current_user.email = form.email.data.lower()
+            if form.username.data:
+                current_user.username = form.username.data
+            current_user.first_name = form.first_name.data
+            current_user.last_name = form.last_name.data
+            current_user.save()
+            flash(f"The account for {form.email.data} \
+            has been updated successfully.", "success")
+            return redirect(url_for("account"))
+        elif request.method == "GET":
+            form.email.data = current_user.email
+            form.username.data = current_user.username
+            form.first_name.data = current_user.first_name
+            form.last_name.data = current_user.last_name
+
+    return render_template("student-account.html", form=form)
+
+
+@fresh_login_required
+@app.route("/password-update", methods=["GET", "POST"])
+def password_update():
+    if not current_user.is_authenticated or \
+            (current_user.is_authenticated and current_user.temp):
+        return redirect(url_for("home"))
+    if current_user.is_authenticated and not current_user.temp:
+        form = PasswordUpdateForm()
+
+        if form.validate_on_submit() and not current_user.temp:
+            hash_password = bcrypt.generate_password_hash(
+                form.password.data).decode("utf-8")
+            current_user.password = hash_password
+            current_user.save()
+            flash(f"The password for {current_user.email} \
+            has been updated successfully.", "success")
+            return redirect(url_for("account"))
+
+    return render_template("password-update.html", form=form)

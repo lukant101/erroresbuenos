@@ -279,8 +279,8 @@ function showAndSubmitAnswer() {
     } else {
         showAnswer();
 
-        // set 600s timer for wrong answer submission
-        timer_id = setTimeout(submitWrongAnswer, 600000, stud_id, q_id, ans_corr, audio_ans_corr, lang)
+        // set 60s timer for wrong answer submission
+        timer_id = setTimeout(submitWrongAnswer, 60000, stud_id, q_id, ans_corr, audio_ans_corr, lang)
 
         // add timer id to wrong_answers_log
         wrong_answers_log[lang].timer_id = timer_id;

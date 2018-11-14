@@ -1,9 +1,11 @@
 """Store all constants for the app."""
 SUPPORTED_LANGUAGES = ["english", "spanish", "polish"]
 
+# supported languages for questions
 SUPPORTED_LANGUAGES_ABBREV = {"english": "en",
-                            "spanish": "es",
-                            "polish": "pl"}
+                              "spanish": "es",
+                              "polish": "pl"}
+
 
 # how many questions to asynchronously add to question queque
 NUM_QUESTIONS_TO_LOAD = 3
