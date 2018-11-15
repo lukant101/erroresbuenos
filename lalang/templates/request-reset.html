@@ -2,23 +2,26 @@
 {% from "_form_field.html" import form_field %}
 
 {% block content%}
-<div class="mt-3 mb-3  content-section">
-<form method='POST' action="">
-    {{ form.hidden_tag() }}
-    <fieldset class="form-group">
-        <legend class="border-bottom mb-4">Request Password Reset</legend>
-        <div class="form-group">
-            {{ form_field(form.email)}}
-        </div>
-    </fieldset>
-    <div class="form-group">
-        {{ form.submit(class="btn btn-outline-info d-block") }}
+<div class="container py-2 px-4 my-3">
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-8">
+            <form method='POST' action="">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Request Password Reset</legend>
+                    <div class="form-group">
+                        {{ form_field(form.email)}}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info d-block") }}
+                </div>
+            </form>
+                <div class="border-top pt-3">
+                If you do not have an account, please <a href="{{ url_for('register')}}">sign up</a>.
+                </div>
+            </div> <!-- column -->
+        </div> <!-- row -->
     </div>
-</form>
-    <div class="border-top pt-3">
-    If you do not have an account, please <a href="{{ url_for('register')}}">sign up</a>.
-    </div>
-
-</div>
 
 {% endblock content%}

@@ -1,4 +1,4 @@
-var default_title="Let's Practice";
+const DEFAULT_TITLE="Let's Practice";
 var eavesdropped_audio = [];
 // flag to keep track if load_question request is for a question in a new language
 var wrong_answers_log = {};
@@ -10,12 +10,12 @@ function title_cap(word) {
 
 function setTitlePractise() {
           var lang=document.getElementById("lang_select").value;
-          document.getElementById("title_practice").innerHTML=default_title + " " + title_cap(lang) + "!";
+          document.getElementById("title_practice").innerHTML=DEFAULT_TITLE + " " + title_cap(lang) + "!";
 }
 
 function updateTitlePractise() {
     var lang=document.getElementById("lang_select").value;
-    document.getElementById("title_practice").innerHTML=default_title + " " + title_cap(lang) + "!";
+    document.getElementById("title_practice").innerHTML=DEFAULT_TITLE + " " + title_cap(lang) + "!";
 }
 
 // plays audio when user clicks the audio button
@@ -279,8 +279,8 @@ function showAndSubmitAnswer() {
     } else {
         showAnswer();
 
-        // set 60s timer for wrong answer submission
-        timer_id = setTimeout(submitWrongAnswer, 60000, stud_id, q_id, ans_corr, audio_ans_corr, lang)
+        // set 600s timer for wrong answer submission
+        timer_id = setTimeout(submitWrongAnswer, 600000, stud_id, q_id, ans_corr, audio_ans_corr, lang)
 
         // add timer id to wrong_answers_log
         wrong_answers_log[lang].timer_id = timer_id;

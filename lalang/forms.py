@@ -11,8 +11,8 @@ from lalang.db_model import Student
 class StudentRegister(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
     username = StringField("User Name",
-                           validators=[Length(min=2, max=20, message="User name\
-                            has to be between 2 and 20 characters long."),
+                           validators=[Length(min=2, max=15, message="User name\
+                            has to be between 2 and 15 characters long."),
                                        DataRequired()])
     first_name = StringField("First Name", validators=[Length(max=30)])
     last_name = StringField("Last Name", validators=[Length(max=30)])
@@ -73,8 +73,8 @@ class AccountUpdateForm(FlaskForm):
     email = StringField("Email", validators=[Email()])
 
     username = StringField("User Name",
-                           validators=[Length(max=20, message="User name\
-                            has to be between 2 and 20 characters long.")])
+                           validators=[Length(max=15, message="User name\
+                            has to be between 2 and 15 characters long.")])
 
     first_name = StringField("First Name", validators=[Length(max=30)])
     last_name = StringField("Last Name", validators=[Length(max=30)])
@@ -91,7 +91,7 @@ class AccountUpdateForm(FlaskForm):
 
     def validate_username(self, username):
         if len(username.data) == 1:
-            raise ValidationError("User name has to be between 2 and 20\
+            raise ValidationError("User name has to be between 2 and 15\
             characters long.")
         elif username.data and (username.data.lower() != current_user.username):
             # check that username is unique
