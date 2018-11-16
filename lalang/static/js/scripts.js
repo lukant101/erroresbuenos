@@ -3,6 +3,7 @@ var eavesdropped_audio = [];
 // flag to keep track if load_question request is for a question in a new language
 var wrong_answers_log = {};
 var enter_pressed = false;
+var signup_btn_timer_id = "";
 
 function title_cap(word) {
     return word.charAt(0).toUpperCase() + word.substr(1)
@@ -81,6 +82,15 @@ $(document).ready(function () {
                     info.audio_ans_corr, current_language);
             }
         }
+    });
+});
+
+
+// when user clicks the sign-up prompt button, hide it and cancel the timer
+$(document).ready(function() {
+    $("#prod_signup").click( function() {
+        clearTimeout(signup_btn_timer_id);
+        $("#prod_signup").hide();
     });
 });
 
@@ -350,7 +360,7 @@ function load_question(new_question)  {
     var quest_obj=new_question;
     repeat_question =  (quest_obj.id === $("#question_id").val());
 
-    // refresh the page with new question, unless it's the same question as current
+    // refresh the page with new question, unless it's the same question as current one
     if (! repeat_question ||
         quest_obj.request_type==="GET") {
         // there are a maximum of 4 images allowed per question
@@ -413,9 +423,17 @@ function load_question(new_question)  {
         $("#answer").val(quest_obj.word);
         $("#translate_text_input").val(quest_obj.word);
         $("#question_id").attr("value", quest_obj.id);
+
+        // prompt temporary user for sign-up after every fifth question answered
+        if (quest_obj.prod_signup === true) {
+            $("#prod_signup").fadeIn();
+            // show the sign-up prompt for 20s, then hide it
+            signup_btn_timer_id = setTimeout(function(){$("#prod_signup").fadeOut();},
+            20000);
+        }
     }
 
-    // if this question was preceded by a question (in the same language)
+    // if this question was preceded by a question in the same language
     // where the student listend to audio, reset to default
     if (quest_obj.request_type==="POST") {
         // remove the language of the previous question
@@ -484,25 +502,27 @@ function update_pictures(image_file_names, images_count) {
             $("#img-default-" + i.toString()).attr("src", path_f_name + "-480px.jpg");
             $("#img-default-" + i.toString()).attr("srcset", path_f_name + "-480px.jpg 1x, " + path_f_name + "-960px.jpg 2x");
             $("#img-default-" + i.toString()).attr("alt", file_desc);
+            $("#img-default-" + i.toString()).removeAttr("width");
         } else if (f_ext === "png") {
             console.log("updating picture element for png");
             console.log("image id", "#img-webp-" + i.toString());
-            $("#img-webp-" + i.toString()).attr("srcset", "");
-            $("#img-webp-" + i.toString()).attr("type", "");
+            $("#img-webp-" + i.toString()).removeAttr("srcset");
+            $("#img-webp-" + i.toString()).removeAttr("type");
             $("#img-default-" + i.toString()).attr("src", path_f_name + "-480px.png");
             $("#img-default-" + i.toString()).attr("srcset", path_f_name + "-480px.png 1x, " + path_f_name + "-960px.png 2x");
             $("#img-default-" + i.toString()).attr("alt", file_desc);
+            $("#img-default-" + i.toString()).removeAttr("width");
         } else if (f_ext === "svg") {
             console.log("updating picture element for svg");
             console.log("img webp id: ", "#img-webp-" + i.toString());
-            $("#img-webp-" + i.toString()).attr("srcset", "");
-            $("#img-webp-" + i.toString()).attr("type", "");
+            $("#img-webp-" + i.toString()).removeAttr("srcset");
+            $("#img-webp-" + i.toString()).removeAttr("type");
             console.log($("#img-webp-" + i.toString()).attr("type"));
             console.log("img-default: ", "#img-default-" + i.toString());
             console.log("file name: ", path_f_name);
             $("#img-default-" + i.toString()).attr("src", path_f_name + ".svg");
             console.log($("#img-default-" + i.toString()).attr("src"));
-            $("#img-default-" + i.toString()).attr("srcset", "");
+            $("#img-default-" + i.toString()).removeAttr("srcset");
             $("#img-default-" + i.toString()).attr("alt", file_desc);
             console.log($("#img-default-1").attr("alt"));
             $("#img-default-" + i.toString()).attr("width", "480");

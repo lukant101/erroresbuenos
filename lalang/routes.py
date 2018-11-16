@@ -150,7 +150,7 @@ def reset_password(token):
 @app.route("/classroom", methods=['GET', "POST"])
 @app.route("/", methods=['GET', "POST"])
 def home():
-    """Render the home page shell, as well as the initial questions."""
+    """Render the home page shell, as well as the first question."""
     # set up anonymous user - get questions, and save in database
     if current_user.is_anonymous:
         curr_lang = DEFAULT_LANGUAGE
@@ -165,13 +165,6 @@ def home():
                            all_langs=SUPPORTED_LANGUAGES,
                            question=questions[curr_lang],
                            student_id=student_id)
-
-
-@app.route("/classroom")
-@login_required
-def classroom():
-    if current_user.is_authenticated and not current_user.temp:
-        return render_template("classroom.html")
 
 
 @app.route('/next-question', methods=['GET', "POST"])
@@ -211,6 +204,10 @@ def load_question():
                 filter(language=current_user.
                        curr_study_lang)[0].question_queue[0]
 
+        # set flag for prompting for sign-up
+        if current_user.temp:
+            prod_signup = False
+
     if request.method == "POST":
         # user answered a question, so save it
         if current_user.is_anonymous:
@@ -232,6 +229,14 @@ def load_question():
             logging.info(f"answer after updating student id: {answer_dict}")
             save_answer(**answer_dict)
             current_user.num_questions_answered += 1
+            if current_user.num_questions_answered >= 5 and \
+                    (current_user.num_questions_answered % 5) == 0:
+                prod_signup = True
+                logging.info("prod signup TRUE")
+            else:
+                prod_signup = False
+                logging.info("prod signup FALSE")
+
             current_user.last_active = datetime.now(tz=pytz.UTC)
             current_user.save()
             logging.info(f"parameters passed to save_answer(): {answer_dict}")
@@ -261,9 +266,11 @@ def load_question():
     # turn the question object into json and return it
     if current_user.temp:
         # for temp student, include student_id, so it can be updated
+        # also, send flag whether to prompt user for sign-up
         return question_obj_to_json(next_question, request_type=request.method,
                                     student_id=str(current_user.id),
-                                    prev_q_lang=previous_question_language)
+                                    prev_q_lang=previous_question_language,
+                                    prod_signup=prod_signup)
 
     return question_obj_to_json(next_question, request_type=request.method,
                                 prev_q_lang=previous_question_language)

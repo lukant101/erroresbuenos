@@ -30,7 +30,8 @@ def is_safe_url(target):
             and ref_url.netloc == test_url.netloc)
 
 
-def question_obj_to_json(question_obj, *, request_type, student_id="", prev_q_lang=None):
+def question_obj_to_json(question_obj, *, request_type, student_id="",
+                         prev_q_lang=None, prod_signup=False):
     """Take Question object and return it in json representation.
 
     Arguments:
@@ -60,6 +61,9 @@ def question_obj_to_json(question_obj, *, request_type, student_id="", prev_q_la
 
     if student_id:
         q_json["student_id"] = student_id
+
+    q_json["prod_signup"] = prod_signup
+    logging.info(f"prod signup inside question_obj_to_json: {json.dumps(prod_signup)}")
 
     return json.dumps(q_json, ensure_ascii=False)
     # return question_obj.word

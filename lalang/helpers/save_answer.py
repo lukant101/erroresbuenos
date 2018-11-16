@@ -6,6 +6,7 @@ import datetime
 import pytz
 from bson.objectid import ObjectId
 import logging
+from flask_login import current_user
 
 
 sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos")
@@ -39,11 +40,11 @@ def save_answer(*, student_id, language,
         create_stud_hist_coll()
 
     # check if student has seen this question before
-    stud_hist = StudentHistory.objects(student_id=student_id[0],
+    stud_hist = StudentHistory.objects(student_id=str(current_user.id),
                                        question_id=question_id[0]).first()
 
     if stud_hist:
-        logging.info(f"student_id passed: {student_id[0]}")
+        logging.info(f"student_id passed: {str(current_user.id)}")
         logging.info(f"student_id received: {stud_hist.student_id}")
         logging.info(f"question_id passed: {question_id[0]}")
         logging.info(f"question_id received: {stud_hist.question_id}")
@@ -84,7 +85,7 @@ def save_answer(*, student_id, language,
         so create a document for it")
         # first time the student saw the question, so create a document for it
         stud_hist = StudentHistory(
-            student_id=ObjectId(student_id[0]),
+            student_id=current_user.id,
             language=language[0],
             question_id=ObjectId(question_id[0]),
             attempts_count=1,
@@ -110,7 +111,7 @@ def save_answer(*, student_id, language,
 
     # get embedded document for this student for this language
     language_embed_doc = Student.objects(
-        id=student_id[0]).first().language_progress.filter(
+        id=str(current_user.id)).first().language_progress.filter(
         language=stud_hist.language)
 
     # update the embedded document for this language
@@ -142,5 +143,5 @@ def save_answer(*, student_id, language,
 
     # if queue doesn't have enough questions, add more questions
     if len(language_embed_doc[0].question_queue) < MIN_QUESTIONS_IN_QUEUE:
-        prep_questions(language[0], student_id[0], NUM_QUESTIONS_TO_LOAD)
+        prep_questions(language[0], str(current_user.id), NUM_QUESTIONS_TO_LOAD)
         logging.info(f"added new questions to queue")

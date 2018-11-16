@@ -73,7 +73,7 @@ class Student(db.Document, UserMixin):
     # alt_id is needed for Remember Me cookie; otherwise _id would be used
     alt_id = db.ObjectIdField(unique=True, required=True)
     email = db.EmailField(unique=True)
-    username = db.StringField(required=True, unique=True, max_length=15)
+    username = db.StringField(required=True, unique=True, max_length=20)
     first_name = db.StringField(max_length=30)
     last_name = db.StringField(max_length=30)
     # make sure to store  password hash in the database

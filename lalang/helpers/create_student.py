@@ -51,7 +51,7 @@ def create_temp_student():
         email=random_string + "@fantasy.com",
         alt_id=ObjectId(),
         temp=True
-        )
+    )
 
     # save the document; if the username not unique, generate new one and retry
     try:
