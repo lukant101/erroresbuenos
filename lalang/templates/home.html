@@ -54,14 +54,6 @@
                 <button id='play_button' onclick='playAudioOut()' type='button' class='btn btn-info rounded-circle d-inline mr-2 mb-2'><i class="fas fa-volume-up"></i></button>
                 <input type='text' class='custom-control custom-control-inline mr-0 mb-2' name="user_answer" id='user_answer' />
                 <button id='send_answer_btn' type='button' class='btn btn-info rounded-circle ml-0 mb-2'><i class="fas fa-arrow-right"></i></button>
-
-                <button type='button' class='font-icon btn btn-info rounded-circle ml-0 mb-2'>&#8594</button>
-                <button type='button' class='font-icon btn btn-info rounded-circle ml-0 mb-2'>&#8614</button>
-                <button type='button' class='font-icon btn btn-info rounded-circle ml-0 mb-2'>&#8658</button>
-                <button type='button' class='btn btn-info rounded-circle ml-0 mb-2'><span class="font-icon">&#8680</span></button>
-                <button type='button' class='font-icon btn btn-info rounded-circle ml-0 mb-2'>&#8702</button>
-                <button type='button' class='font-icon btn btn-info rounded-circle ml-0 mb-2'>&#xf028</button>
-                <button type='button' class='font-icon btn btn-info rounded-circle ml-0 mb-2'><img src="{{ url_for('static', filename='pics/volume-up-solid.svg') }}" alt='volume up' width='50' height='50'>></button>
                 <button id="good_job_msg" style="display:none" class="btn btn-success ml-3" type='button'>Good job!</button>
                 <button id="wrong_answer_btn" style="display:none" class="btn btn-danger rounded-circle ml-0" type='button'><i class="fas fa-arrow-right"></i></button>
                 <input type="hidden" name="question_id" id="question_id" value="{{ question.id }}">
