@@ -30,12 +30,23 @@ class Question(db.Document):
     language = db.StringField(required=True, max_length=20,
                               choices=SUPPORTED_LANGUAGES)
     word = db.StringField(max_length=30)
+    alternative_answers = db.ListField(db.StringField())
+    hints = db.ListField(db.StringField())
     part_of_speech = db.StringField(max_length=25)
     audio_files = db.StringField(max_length=200)
     image_files = db.StringField(max_length=200)
+    audio = db.ListField(db.StringField(max_length=50))
+    images = db.ListField(db.ListField())
+    # nested list stores: [file root, file ext, aspect ratio]
+    # file root: StringField()
+    # file ext: StringField()
+    # aspect ratio: DecimalField(precision=3)
 
-    # allow subclasses for other question types
-    # meta = {'allow_inheritance': True}
+    child_appropriate = db.BooleanField(default=True)
+
+    # field for matching data from outside of the db to the db records
+    # the id is unique for each language
+    source_id = db.IntField()
 
 
 class LanguageProgress(db.EmbeddedDocument):

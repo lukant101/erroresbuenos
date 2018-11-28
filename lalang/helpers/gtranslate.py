@@ -1,4 +1,5 @@
-# Imports the Google Cloud client library
+"""Template for working with Google Sheets API."""
+
 from google.cloud import translate
 import json
 

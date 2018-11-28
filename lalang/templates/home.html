@@ -24,11 +24,12 @@
                           <img id="img-default-{{ loop.index }}" class='rounded mx-auto m-3 img-fluid' src="{{ url_for('static', filename='pics/' ~ file_name ~ '-480px.png') }}" alt='{{ question.word }}' srcset="{{ url_for('static', filename='pics/' ~ file_name ~ '-480px.png') }} 1x, {{ url_for('static', filename='pics/' ~ file_name ~ '-960px.png') }} 2x">
                       {% elif extension == "svg" %}
                           <source id="img-webp-{{ loop.index }}">
-                          <img id="img-default-{{ loop.index }}" class='rounded mx-auto m-3 img-fluid' src="{{ url_for('static', filename='pics/' ~ file_name ~ '.svg') }}" alt="{{ question.word }}" width="480">
+                          <img id="img-default-{{ loop.index }}" style="width: 300px" class='rounded mx-auto m-3 img-fluid' src="{{ url_for('static', filename='pics/' ~ file_name ~ '.svg') }}" alt="{{ question.word }}">
                       {% endif %}
                 </picture>
             </div> <!-- picture -->
           {% endfor %}
+    
       </div> <!-- image-container -->
   </div> <!-- row -->
 

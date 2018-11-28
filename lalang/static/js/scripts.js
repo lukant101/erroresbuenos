@@ -525,7 +525,7 @@ function update_pictures(image_file_names, images_count) {
             $("#img-default-" + i.toString()).removeAttr("srcset");
             $("#img-default-" + i.toString()).attr("alt", file_desc);
             console.log($("#img-default-1").attr("alt"));
-            $("#img-default-" + i.toString()).attr("width", "480");
+            // $("#img-default-" + i.toString()).attr("width", "480");
         }
     }
     console.log(`updated ${images_count} picture(s)`);
