@@ -49,6 +49,37 @@ class Question(db.Document):
     source_id = db.IntField()
 
 
+class Question2(db.Document):
+    """Store questions for all languages.
+
+    The document / class has all the information needed to pose a question.
+    """
+
+    description = db.StringField(default="word flashcard",
+                                 max_length=20)
+    skill = db.StringField(required=True, max_length=20)
+    language = db.StringField(required=True, max_length=20,
+                              choices=SUPPORTED_LANGUAGES)
+    word = db.StringField(max_length=30)
+    alternative_answers = db.ListField(db.StringField())
+    hints = db.ListField(db.StringField())
+    part_of_speech = db.StringField(max_length=25)
+    audio_files = db.StringField(max_length=200)
+    image_files = db.StringField(max_length=200)
+    audio = db.ListField(db.StringField(max_length=50))
+    images = db.ListField(db.ListField())
+    # nested list stores: [file root, file ext, aspect ratio]
+    # file root: StringField()
+    # file ext: StringField()
+    # aspect ratio: DecimalField(precision=3)
+
+    child_appropriate = db.BooleanField(default=True)
+
+    # field for matching data from outside of the db to the db records
+    # the id is unique for each language
+    source_id = db.IntField()
+
+
 class LanguageProgress(db.EmbeddedDocument):
     """Store information about student's studies in a given language.
 
@@ -94,6 +125,8 @@ class Student(db.Document, UserMixin):
     curr_study_lang = db.StringField(required=True,
                                      default=DEFAULT_LANGUAGE)
     language_progress = db.EmbeddedDocumentListField(LanguageProgress)
+    num_correct_anwers = db.IntField(default=0)
+
     # fields for temp students only
     temp = db.BooleanField(default=True)
     last_active = db.DateTimeField(default=datetime.datetime.

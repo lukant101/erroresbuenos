@@ -9,7 +9,7 @@ import time
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
-workbook_name = "Flashcards_pol"
+workbook_name = "flashcards_pl"
 sheet_name = "deck 1"
 
 # full path to input file

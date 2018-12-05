@@ -45,6 +45,12 @@ $(document).ready(function() {
     });
 });
 
+// event listener: resizing of the window
+// we need to adjust the bottom margin of the images container
+$( window ).resize(function() {
+    set_height_img_container();
+});
+
 // event listener: Enter key pressed when in Answer input field
 // action: submit answer
 $(document).ready(function () {
@@ -341,6 +347,7 @@ function showAnswer() {
     $("#wrong_answer_btn").fadeIn();
     $("#show_answer").fadeIn();
     $("#gtranslate").fadeIn();
+    set_height_img_container();
 
 }
 
@@ -354,7 +361,7 @@ function hideAnswer() {
 
 }
 
-// callbback function - loads a new question
+// callback function for ajax request - loads a new question
 function load_question(new_question)  {
     console.log(new_question);
     var quest_obj=new_question;
@@ -364,11 +371,10 @@ function load_question(new_question)  {
     if (! repeat_question ||
         quest_obj.request_type==="GET") {
         // there are a maximum of 4 images allowed per question
-        var images = quest_obj.image_files.split(",");
-        images.forEach(function(elem, index, images_arr){
-            images_arr[index] = elem.trim();
-        });
+        var images = quest_obj.images;
         var images_count = images.length;
+
+        // check how many images previous question had
         var prev_images_count = 1;
         if ($("#picture-4").length) {
             prev_images_count = 4;
@@ -377,6 +383,7 @@ function load_question(new_question)  {
         } else if ($("#picture-2").length) {
             prev_images_count = 2;
         }
+
         var images_count_change = images_count - prev_images_count;
 
         console.log("images_count_change: ", images_count_change);
@@ -414,9 +421,11 @@ function load_question(new_question)  {
 
         update_pictures(images, images_count);
 
-        $("#audio_src").attr("src", "../static/audio/" + quest_obj.language.toLowerCase() + "/" + quest_obj.audio_files);
+        // at present, only one audio file (in mp3 format) is presented per question
+        $("#audio_src").attr("src", "../static/audio/" + quest_obj.language.toLowerCase() + "/" + quest_obj.audio[0] + ".mp3");
         // reload the audio source in the audio element; jQuery doesn't implement $().load(), so use JavaScript
         document.getElementById('card_audio').load();
+
         $("#part_of_speech_elem").text(quest_obj.part_of_speech);
         $("#word_elem").text(quest_obj.word);
         $("#user_answer").val("");
@@ -487,46 +496,58 @@ function add_pictures(last_pic_index, num_pics_to_add) {
     }
 }
 
-function update_pictures(image_file_names, images_count) {
+function update_pictures(images, images_count) {
     for (var i=1; i <= images_count; i++) {
-        file_name_ext = image_file_names[i-1].split(".");
-        file_name = file_name_ext[0];
-        file_desc = file_name.split("-").join(" ");
-        f_ext = file_name_ext[1];
-        path_f_name = "../static/pics/" + file_name;
-        if (f_ext === "jpg")  {
-            console.log("updating picture element for jpeg");
+        var file_name = images[i-1][0];
+        var file_desc = file_name.split("-").join(" ");
+        var _ext = images[i-1][1];
+        var img_aspect_ratio = images[i-1][2];
+        if (img_aspect_ratio >= 1.333) {
+            var width = "480px";
+            var height = Math.round(480/img_aspect_ratio).toString();
+        } else {
+            var width = Math.round(360*img_aspect_ratio).toString();
+            var height = "360px";
+        }
+        var path_f_name = "../static/pics/" + file_name;
+        if (_ext !== "svg")  {
+            console.log("updating picture element for: ", _ext);
             console.log("image webp id: ", "#img-webp-" + i.toString());
+            // removing previous image before resizing
+            // otherwise we see old image resized before the new one loads
+            $("#img-webp-" + i.toString()).removeAttr("srcset");
+            $("#img-default-" + i.toString()).removeAttr("src");
+            $("#img-default-" + i.toString()).removeAttr("srcset");
+            $("#img-default-" + i.toString()).css("width", width);
             $("#img-webp-" + i.toString()).attr("srcset", path_f_name + "-480px.webp 1x, " + path_f_name + "-960px.webp 2x");
             $("#img-webp-" + i.toString()).attr("type", "image/webp");
-            $("#img-default-" + i.toString()).attr("src", path_f_name + "-480px.jpg");
-            $("#img-default-" + i.toString()).attr("srcset", path_f_name + "-480px.jpg 1x, " + path_f_name + "-960px.jpg 2x");
+            $("#img-default-" + i.toString()).attr("src", path_f_name + "-480px." + _ext);
+            $("#img-default-" + i.toString()).attr("srcset", path_f_name + "-480px." + _ext +" 1x, " + path_f_name + "-960px." + _ext +" 2x");
             $("#img-default-" + i.toString()).attr("alt", file_desc);
-            $("#img-default-" + i.toString()).removeAttr("width");
-        } else if (f_ext === "png") {
-            console.log("updating picture element for png");
-            console.log("image id", "#img-webp-" + i.toString());
-            $("#img-webp-" + i.toString()).removeAttr("srcset");
-            $("#img-webp-" + i.toString()).removeAttr("type");
-            $("#img-default-" + i.toString()).attr("src", path_f_name + "-480px.png");
-            $("#img-default-" + i.toString()).attr("srcset", path_f_name + "-480px.png 1x, " + path_f_name + "-960px.png 2x");
-            $("#img-default-" + i.toString()).attr("alt", file_desc);
-            $("#img-default-" + i.toString()).removeAttr("width");
-        } else if (f_ext === "svg") {
+        } else if (_ext === "svg") {
             console.log("updating picture element for svg");
             console.log("img webp id: ", "#img-webp-" + i.toString());
+            // removing previous image before resizing
+            // otherwise we see old image resized before the new one loads
             $("#img-webp-" + i.toString()).removeAttr("srcset");
             $("#img-webp-" + i.toString()).removeAttr("type");
+            $("#img-default-" + i.toString()).removeAttr("src");
+            $("#img-default-" + i.toString()).removeAttr("srcset");
+            $("#img-default-" + i.toString()).css("width", width);
             console.log($("#img-webp-" + i.toString()).attr("type"));
             console.log("img-default: ", "#img-default-" + i.toString());
             console.log("file name: ", path_f_name);
             $("#img-default-" + i.toString()).attr("src", path_f_name + ".svg");
             console.log($("#img-default-" + i.toString()).attr("src"));
-            $("#img-default-" + i.toString()).removeAttr("srcset");
             $("#img-default-" + i.toString()).attr("alt", file_desc);
-            console.log($("#img-default-1").attr("alt"));
-            // $("#img-default-" + i.toString()).attr("width", "480");
         }
     }
-    console.log(`updated ${images_count} picture(s)`);
+    console.log("updated ${images_count} picture(s)");
+}
+
+function set_height_img_container() {
+    var fixed_div_height = $("#bottom-container").outerHeight();
+    $(document).ready(function() {
+        $("#images-container").css("margin-bottom", fixed_div_height);
+    });
 }

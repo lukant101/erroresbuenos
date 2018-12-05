@@ -6,6 +6,7 @@ SUPPORTED_LANGUAGES_ABBREV = {"english": "en",
                               "spanish": "es",
                               "polish": "pl"}
 
+AUDIO_FORMATS = ['mp3', 'ogg']
 
 # how many questions to asynchronously add to question queque
 NUM_QUESTIONS_TO_LOAD = 3

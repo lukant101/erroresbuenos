@@ -12,16 +12,17 @@ from collections import namedtuple
 
 Workbook = namedtuple("Workbook", "name sheet_name first_col last_row")
 
-wb_eng = Workbook("Flashcards_eng", "deck 1", "H", 511)
-wb_pol = Workbook("Flashcards_pol", "deck 1", "K", 504)
-wb_esp = Workbook("Flashcards_esp", "deck 1", "J", 505)
+wb_eng = Workbook("flashcards_en", "deck 1", "H", 511)
+wb_pol = Workbook("flashcards_pl", "deck 1", "K", 504)
+wb_esp = Workbook("flashcards_es", "deck 1", "J", 505)
 
 _workbooks = [wb_eng, wb_pol, wb_esp]
 
 _path = "assets/questions/"
 os.chdir(_path)
 
-_time = time.asctime(time.localtime(time.time())).replace(" ", "-")
+_time = time.asctime(time.localtime(
+    time.time())).replace(" ", "-").replace(":", "-")
 
 # text file where names of all used image files is stored
 output_file = f"used_photos_list-{_time}.txt"

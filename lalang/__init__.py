@@ -23,4 +23,4 @@ db = MongoEngine(app)
 
 bcrypt = Bcrypt(app)
 
-# from lalang import routes
+from lalang import routes

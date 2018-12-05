@@ -6,10 +6,8 @@ import time
 input_file = "C:/Users/Lukasz/Python/ErroresBuenos/assets/questions/\
 used_photos_list_Nov22_2018.txt"
 
-_time = time.asctime(time.localtime(time.time())).replace(" ", "-")
-
-
-.replace(".", "-")
+_time = time.asctime(time.localtime(
+    time.time())).replace(" ", "-").replace(":", "-")
 
 output_file = f"C:/Users/Lukasz/Python/ErroresBuenos/assets/questions/\
 missing_photos_list-{_time}.txt"

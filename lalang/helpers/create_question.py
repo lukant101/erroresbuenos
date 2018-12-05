@@ -2,6 +2,7 @@
 
 import mongoengine
 import sys
+from os.path import splitext
 
 sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos")
 
@@ -10,71 +11,39 @@ from lalang.db_model import Question
 mongoengine.connect("lalang_db", host="localhost", port=27017)
 
 
-def create_question(language, *,
-                    Word,
-                    Part_of_Speech,
-                    Audio,
-                    Photo1,
-                    Photo1_ar,
-                    Photo2,
-                    Photo2_ar,
-                    Photo3,
-                    Photo3_ar,
-                    Photo4,
-                    Photo4_ar,
-                    Child_Appropriate,
-                    Alternative_Answer,
-                    Source_Id):
+def create_question(language, *, odict):
     """Create a question document and save it to database."""
 
     question = Question(
         description="word flashcard",
         skill="Vocabulary",
         language=language.lower(),
-        word=Word,
-        part_of_speech=Part_of_Speech,
-        source_id=Source_Id
+        word=odict["Word"],
+        part_of_speech=odict["Part_of_Speech"],
+        source_id=odict["Source_Id"]
     )
 
-    alt_answers = Alternative_Answer.split('\n')
-    if len(alt_answers) > 1:
-        for i in range(1, len(alt_answers)):
-            alt_answers[i] = alt_answers[i].lstrip(" ")
-    question.alternative_answers = alt_answers
+    # css.DictReader escapes newline characters, so split with: '\\n '
+    question.alternative_answers = odict["Alternative_Answer"].split('\\n ')
 
-    if Child_Appropriate.lower() == "no":
+    if odict["Child_Appropriate"].lower() == "no":
         question.child_appropriate = False
 
-    question.audio = Audio.split(".")
-    question.audio.pop()
-
-    # determine how many images there are
-    if Photo4:
-        img_count = 4
-        images_list = [[Photo1, Photo1_ar], [Photo2, Photo2_ar],
-                       [Photo3, Photo3_ar], [Photo4, Photo4_ar]]
-    else:
-        if Photo3:
-            img_count = 3
-            images_list = [[Photo1, Photo1_ar], [Photo2, Photo2_ar],
-                           [Photo3, Photo3_ar]]
-        else:
-            if Photo2:
-                img_count = 2
-                images_list = [[Photo1, Photo1_ar], [Photo2, Photo2_ar]]
-            else:
-                if Photo1:
-                    img_count = 1
-                    images_list = [[Photo1, Photo1_ar]]
-                else:
-                    img_count = 0
-                    images_list = []
+    question.audio = odict["Audio"].split(", ")
 
     question.images = []
 
-    for img in images_list:
-        # adding info for each image
-        fileroot, ext = img[0].split(".")
-        question.images.append([fileroot, ext, img[1]])
+    # adding info for the first image
+    fileroot, ext = splitext(odict["Photo1"])
+    ext = ext.lstrip(".")
+    question.images.append([fileroot, ext, float(odict["Photo1_ar"])])
 
-    student.save()
+    # if there are more images, add info for them
+    for i in [1, 2, 3]:
+        if odict[f"Photo{i+1}"]:
+            fileroot, ext = splitext(odict[f"Photo{i+1}"])
+            ext = ext.lstrip(".")
+            question.images.append([fileroot, ext,
+                                    float(odict[f"Photo{i+1}_ar"])])
+
+    question.save()
