@@ -101,3 +101,7 @@ a.navbar-brand {
         margin-right: 15%;
     }
 }
+
+html {
+    margin-left: calc(100vw - 100%);
+}

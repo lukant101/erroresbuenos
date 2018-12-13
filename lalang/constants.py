@@ -24,8 +24,21 @@ MAXLEN_SLACK_ANSWERED_WRONG_STACK = 10
 # used to serve questions when unlogged user lands on home page
 DEFAULT_TEMP_STUDENT_ID = "5bd362a7fde08a404c92228c"
 
+# maxium length of the user's answer
+MAX_USER_ANSWER_LEN = 100
+
+# after reaching this many correct answers, the answered_corr_stack
+# is reduced to BASE_ANSWERED_CORRECTLY questions,
+# i.e. questions are released for review.
+START_REVIEW = 400
+
+# when answered_corr_stack size passes START_REVIEW, reduce the stack
+# to this number of questions
+BASE_ANSWERED_CORRECTLY = 100
+
+
 # lukasz
-student_id = "5bcfe75afde08a2e18a11f35"
+# student_id = "5bcfe75afde08a2e18a11f35"
 # student_id = ""
 
 # denise

@@ -1,7 +1,7 @@
-"""Create a series of default questions, to be presented to students.
+"""Create a series of default questions to be presented to students.
 
 Get questions from database and save them in a json file.
-The file stores a list of json strings representing the questions.
+The file stores JSON-formatted text representing the questions.
 """
 
 import mongoengine
@@ -23,11 +23,13 @@ mongoengine.connect("lalang_db", host="localhost", port=27017)
 language_in = input("What language are these questions for? ").lower()
 
 
-
 num_questions = 5
 
-# query_args = {"language": "Polish", "description": "word flashcard"}
-query_args = {"language": f"{language_in}", "description": "word flashcard"}
+# dummy variable
+student_id = ""
+
+query_args = {"language": f"{language_in}", "description": "word flashcard",
+              "child_appropriate": True}
 results_iter = Question.objects(__raw__=query_args)
 total_questions = results_iter.count()
 
@@ -63,12 +65,13 @@ os.chdir("C:/Users/Lukasz/Python/ErroresBuenos/lalang/questions/default")
 
 
 with open(f"stream_default_{language_in.lower()}.json",
-            "w", encoding="utf8") as f:
+          "w", encoding="utf8") as f:
     f.write("[")
 
     for question in questions:
         print(question.word)
-        q_json = question_obj_to_json(question)
+        q_json = question_obj_to_json(question, request_type="GET",
+                                      student_id=student_id)
         # need to deserialize with loads, because q_json is already serialized
         json.dump(json.loads(q_json), f, ensure_ascii=False)
 

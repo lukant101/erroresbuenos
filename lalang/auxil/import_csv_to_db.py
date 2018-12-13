@@ -17,15 +17,7 @@ def add_questions_to_db(db_name, language, filename):
     print(sys.path)
     print(os.getcwd())
 
-    # db_name = input("What is the name of the database\
-    #  that you want to update? ")
-
     mongoengine.connect(db_name, host="localhost", port=27017)
-
-    # filename = input("Enter the csv file name,
-    # including the full path: ")
-
-    # language = input("Enter the language of the data: ")
 
     with open(filename, encoding="utf8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=",")

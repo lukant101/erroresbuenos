@@ -1,9 +1,10 @@
 """Exports functions that fetch questions.
 
 Exports functions:
-get_questions_all_lang,
+get_default_questions,
+get_queue_question,
 prep_questions,
-get_queue_question.
+get_questions_all_lang.
 """
 
 import os
@@ -12,6 +13,7 @@ import mongoengine
 import logging
 from lalang.db_model import Question, Student, LanguageProgress
 from lalang.helpers.utils import dict_to_question_obj
+from lalang.constants import START_REVIEW, BASE_ANSWERED_CORRECTLY
 
 logging.basicConfig(level=logging.INFO, filename="app.log",
                     filemode="a")
@@ -155,6 +157,18 @@ def prep_questions(language, student_id, num_questions_needed):
     language_embed_doc = Student.objects(
         id=student_id).first().language_progress.filter(
         language=language)
+
+    # if answered_corr_stack is "big", reduce it, i.e. release questions
+    # for review
+    size_corr_stack = len(language_embed_doc[0].answered_corr_stack)
+    logging.info(f"size_corr_stack: {size_corr_stack}")
+
+    if size_corr_stack > START_REVIEW:
+        logging.info("We need to release questions for review")
+        questions_to_release = (size_corr_stack - BASE_ANSWERED_CORRECTLY)
+        logging.info(f"Number of questions to release: {questions_to_release}")
+        del language_embed_doc[0].answered_corr_stack[:questions_to_release]
+        logging.info("Questions released for review.")
 
     # draw random question from all possible questions
     # keep drawing questions until you get {num_questions} questions

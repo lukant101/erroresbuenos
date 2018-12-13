@@ -1,3 +1,7 @@
+""" Check whether this script can be deleted.
+
+We have another script that handles several raster formats.
+"""
 from PIL import Image
 # import sys
 from os import listdir

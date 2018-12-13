@@ -4,19 +4,50 @@ var eavesdropped_audio = [];
 var wrong_answers_log = {};
 var enter_pressed = false;
 var signup_btn_timer_id = "";
+var all_answers = [];
+var current_ids = {};
 
 function title_cap(word) {
     return word.charAt(0).toUpperCase() + word.substr(1)
 }
 
-function setTitlePractise() {
-          var lang=document.getElementById("lang_select").value;
-          document.getElementById("title_practice").innerHTML=DEFAULT_TITLE + " " + title_cap(lang) + "!";
+function updateTitlePractise() {
+    $(document).ready(function() {
+        const title_elem = document.getElementById("title_practice");
+        if (title_elem !== null) {
+            var lang=document.getElementById("lang_select").value;
+            title_elem.innerHTML=DEFAULT_TITLE + " " + title_cap(lang) + "!";
+        }
+    });
 }
 
-function updateTitlePractise() {
-    var lang=document.getElementById("lang_select").value;
-    document.getElementById("title_practice").innerHTML=DEFAULT_TITLE + " " + title_cap(lang) + "!";
+function load_answers() {
+    // the answers array is wrapped in a string in a hidden form field
+    // so turn it back into an array
+    $(document).ready(function() {
+        let answers = $("#answers").val().slice(2,-2);
+        console.log("marking answer. Answers after slicing: ", answers);
+        answers = answers.split("', '");
+        console.log("marking answer. Answers after splitting: ", answers);
+        answers.forEach(function(elem, i, a) {
+            a[i]=elem.toLowerCase().trim();
+        });
+        all_answers = answers;
+        console.log("answers saved in a variable");
+        $("#answers").remove();
+    });
+}
+
+// read the question and student ids from the DOM and then remove these elements
+function capture_ids() {
+    $(document).ready(function() {
+        current_ids.student_id = $("#student_id").val();
+        console.log("captured student id: ", current_ids.student_id);
+        $("#student_id").remove();
+        current_ids.question_id = $("#question_id").val();
+        console.log("captured question id: ", current_ids.question_id);
+        $("#question_id").remove();
+    });
 }
 
 // plays audio when user clicks the audio button
@@ -51,7 +82,7 @@ $( window ).resize(function() {
     set_height_img_container();
 });
 
-// event listener: Enter key pressed when in Answer input field
+// event listener: Enter key pressed when in Answer input field;
 // action: submit answer
 $(document).ready(function () {
     $(document).keydown(function (event) {
@@ -67,13 +98,12 @@ $(document).ready(function () {
                     console.log("pressed enter key");
                     sub_fld = $("#user_answer");
                     sub_fld.prop("disabled", true);
-                    markAnswer();
-                    console.log("marked the answer");
-                    showAndSubmitAnswer();
-                    console.log("submitted the answer");
+                    console.log("sending the answer to be marked");
+                    showAndSubmitAnswer(markAnswer());
                     setTimeout(function(){
                         sub_fld.prop("disabled", false);
                         enter_pressed=false;
+                        $("#user_answer").focus();
                     },
                     500);
                 }
@@ -84,8 +114,7 @@ $(document).ready(function () {
                 // first we cancel the timer, then we submit the wrong answer
                 info = wrong_answers_log[current_language];
                 clearTimeout(info.timer_id);
-                submitWrongAnswer(info.stud_id, info.q_id, info.ans_corr,
-                    info.audio_ans_corr, current_language);
+                submitWrongAnswer(info);
             }
         }
     });
@@ -148,6 +177,7 @@ $(document).ready(function() {
                 },
                 load_question, "json"
         );
+        $("#user_answer").focus();
     });
 });
 
@@ -156,13 +186,30 @@ $(document).ready(function() {
 $(document).ready(function() {
     $("#send_answer_btn").click( function() {
         console.log("just pressed the first button");
-        console.log("after preventDefault()");
         sub_btn = $(this);
+        console.log($(this));
         console.log("after $this statement");
         sub_btn.prop("disabled", true);
-        markAnswer();
-        showAndSubmitAnswer();
-        setTimeout(function(){sub_btn.prop("disabled", false);}, 500);
+        console.log("submit button disabled");
+        console.log($(this));
+        console.log($(this).css("display"));
+        showAndSubmitAnswer(markAnswer());
+        console.log("about to set timer for submit button pressed event");
+        console.log("button display before timer set: ");
+        console.log($("#send_answer_btn").css("display"));
+        setTimeout(function(){
+            console.log("executing after end of timer");
+            console.log("button display before enabling the button: ");
+            console.log($("#send_answer_btn").css("display"));
+            sub_btn.prop("disabled", false);
+            console.log("button display after enabling the button: ");
+            console.log($("#send_answer_btn").css("display"));
+            console.log("submit button enabled");
+            $("#user_answer").focus();
+            console.log("button display after focusing on user input: ");
+            console.log($("#send_answer_btn").css("display"));
+            console.log("set focus on the user input field");
+        }, 500);
     });
 });
 
@@ -185,165 +232,173 @@ function show_translation(output_text) {
 
 function markAnswer() {
     var user_answer = $("#user_answer").val().toLowerCase().trim();
-    var answer = $("#answer").val().toLowerCase();
-    var language = current_language;
-    var part_of_speech = $("#part_of_speech_elem").text();
-    console.log("User answer:");
-    console.log(user_answer);
-    console.log("Correct answer:");
-    console.log(answer);
+    user_answer = sanitize(user_answer);
+    const language = current_language;
+    const part_of_speech = $("#part_of_speech_elem").text();
+    console.log("User answer: ", user_answer);
+    console.log("Correct answer: ", all_answers);
     console.log(part_of_speech);
 
-    // answer is false be default, unless it passes in one of the tests
-    var answer_correct="false";
+    var answer_correct = false;
 
-    if (answer===user_answer) {
-        answer_correct="true";
-    }
+    // check that the answer is not an empty string, then check whether
+    // it's correct
+    if (user_answer !=="") {
+        answer_correct = arrayIncludes(user_answer, all_answers);
 
-    // try matching by ignoring "to" in english verbs
-    if (answer_correct!="true" && language === "english" && part_of_speech === "verb") {
-        console.log("english verbs clause")
-        console.log(answer.slice(3));
-        if (answer.slice(3)===user_answer) {
-            answer_correct="true";
-        }
-    }
-
-    // ignore articles in front of nouns
-    if (answer_correct!="true" && part_of_speech === "noun" &&
-        (language === "english" || language === "spanish")) {
-        var start = user_answer.indexOf(" ");
-        if (start != -1) {
-            var user_answer_mod = user_answer.slice(start+1);
-            if (answer===user_answer_mod) {
-                answer_correct="true";
+        // ignore articles in front of nouns and check again
+        if (answer_correct!=true && part_of_speech === "noun" &&
+            (language === "english" || language === "spanish")) {
+            var start = user_answer.indexOf(" ");
+            if (start != -1) {
+                var user_answer_mod = user_answer.slice(start+1);
+                answer_correct = arrayIncludes(user_answer_mod, all_answers);
             }
         }
     }
 
-    // if correct answer has parentheses, ignore the brackets portion and compare
-    if (answer_correct!="true" && answer.indexOf("\(") != -1) {
-        console.log("word with parentheses");
-        var end_user_answer = user_answer.indexOf("\(");
-        if (end_user_answer === -1) {
-            // user did not use parentheses, so leave answer unmodified
-            user_answer_mod = user_answer;
-        } else {
-            var user_answer_mod = user_answer.slice(0, end_user_answer);
-        }
-        console.log("User answer trimmed:");
-        console.log(user_answer_mod);
-        var end_answer = answer.indexOf("\(");
-        var answer_mod = answer.slice(0, end_answer);
-        console.log("Correct answer trimmed:");
-        console.log(answer_mod);
-        if (answer_mod===user_answer_mod) {
-            answer_correct="true";
-        }
+
+    console.log("answer correct: ", answer_correct);
+
+    if (answer_correct && ($("#scoreCount").length)) {
+        console.log("entered the increment clause")
+        incrementScore();
     }
 
-    $("#answer_correct").val(answer_correct);
+    console.log("before saving to answer_info:")
+    console.log("current_ids.student_id: ", current_ids.student_id)
+    console.log("current_ids.question_id: ", current_ids.question_id)
+
+    answer_info = {
+        student_id : current_ids.student_id,
+        question_id : current_ids.question_id,
+        user_answer : user_answer,
+        answer_correct : answer_correct,
+        audio_answer_correct : false,
+        language : language
+    };
 
     // log if answer is wrong, since it's not sent to server until
     // the user presses the red send button
-    if (answer_correct==="false") {
-        answer_info = {
-            stud_id : $("#student_id").val(),
-            q_id : $("#question_id").val(),
-            u_answer : user_answer,
-            ans_corr : $("#answer_correct").val(),
-            audio_ans_corr : $("#audio_answer_correct").val(),
-            lang : language
-        };
+    if (! answer_correct) {
         wrong_answers_log[language] = answer_info;
         console.log("added to wrong answer log:");
-        console.log(wrong_answers_log[language].u_answer);
+        console.log(wrong_answers_log[language].user_answer);
         console.log(language);
     }
+
+    return answer_info
+}
+
+function sanitize(input) {
+    return input
+         .replace(/;/g, ".")
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "")
+         .replace(/\\/g, "&#92;")
+         .replace(/{/g, "&#123;")
+         .replace(/}/g, "&#125;");
+}
+
+function incrementScore() {
+    var scoreCount = parseInt($("#scoreCount").html());
+    console.log("the score count retrieved: ", scoreCount);
+    scoreCount++;
+    console.log("score increased");
+    console.log("the increased score as integer: ", scoreCount);
+    $("#scoreCount").html(scoreCount.toString());
+    console.log("the score as a string: ", scoreCount.toString());
+}
+
+function arrayIncludes(elem, array_in) {
+    for (let a of array_in) {
+        if (elem === a) {
+            return true;
+        console.log("looking in array for: ", elem);
+        console.log("matching to: ", a, "and the result: ", (elem === a))
+        }
+    }
+
+    return false;
 }
 
 // event listener: the red "wrong" button is pressed to submit the answer
 $(document).ready(function() {
     $("#wrong_answer_btn").click(function() {
+        console.log("RED BUTTON - submitting wrong answer launched");
         hideAnswer();
         // first we cancel the timer, then we submit the wrong answer
         info = wrong_answers_log[current_language];
         clearTimeout(info.timer_id);
 
-        console.log("RED BUTTON - deleting from wrong answer log: ");
-        console.log(info.u_answer);
-        console.log(current_language);
-
-        submitWrongAnswer(info.stud_id, info.q_id, info.ans_corr,
-            info.audio_ans_corr, current_language);
+        submitWrongAnswer(info);
+        $("#user_answer").focus();
     });
 });
 
-function showAndSubmitAnswer() {
-    // capture the variable values now because there is a delay when
-    // submitting a wrong answer, and these values might change otherwise
-    var stud_id = $("#student_id").val();
-    var q_id = $("#question_id").val();
-    var ans_corr = $("#answer_correct").val();
-    var audio_ans_corr = $("#audio_answer_correct").val();
-    var lang = current_language;
-    if ($("#answer_correct").val()==="true") {
+function showAndSubmitAnswer(answer_info) {
+    if (answer_info.answer_correct) {
         console.log("right answer");
-        var u_answer = $("#user_answer").val().trim().toLowerCase();
-        $("#good_job_msg").fadeIn().delay(800).fadeOut(submitAnswer(stud_id, q_id, ans_corr, audio_ans_corr, lang, u_answer));
+        $("#good_job_msg").fadeIn().delay(800).fadeOut(submitAnswer(answer_info));
     } else {
         showAnswer();
 
-        // set 600s timer for wrong answer submission
-        timer_id = setTimeout(submitWrongAnswer, 600000, stud_id, q_id, ans_corr, audio_ans_corr, lang)
+        // set 6000s timer for wrong answer submission
+        timer_id = setTimeout(submitWrongAnswer, 6000000, answer_info)
 
         // add timer id to wrong_answers_log
-        wrong_answers_log[lang].timer_id = timer_id;
+        wrong_answers_log[answer_info.language].timer_id = timer_id;
         console.log("added timer id: ");
-        console.log(wrong_answers_log[lang].timer_id);
+        console.log(wrong_answers_log[answer_info.language].timer_id);
+        console.log("button display: ");
+        console.log($("#send_answer_btn").css("display"));
 
     }
 }
 
 
 
-function submitAnswer(stud_id, q_id, ans_corr, audio_ans_corr, lang, u_answer) {
+function submitAnswer(answer_info) {
     // flag to keep track of if load_question request is for a question in a new language
     $.post("/next-question",
             {
-                user_answer : u_answer,
-                question_id : q_id,
-                student_id : stud_id,
-                answer_correct : ans_corr,
-                audio_answer_correct : audio_ans_corr,
-                language : lang
+                user_answer : answer_info.user_answer,
+                question_id : answer_info.question_id,
+                student_id : answer_info.student_id,
+                answer_correct : answer_info.answer_correct,
+                audio_answer_correct : answer_info.audio_answer_correct,
+                language : answer_info.language
             },
             load_question, "json"
     );
+    console.log("passed to server student_id: ", answer_info.student_id);
 }
 
-function submitWrongAnswer(stud_id, q_id, ans_corr, audio_ans_corr, lang) {
-    var wrong_answer_rec = wrong_answers_log[lang];
-    var user_answer = wrong_answer_rec.u_answer;
+function submitWrongAnswer(answer_info) {
     console.log("deleting from wrong answer log: ");
-    console.log(user_answer);
-    console.log(lang);
-    delete wrong_answers_log[lang];
+    console.log(answer_info.user_answer);
+    console.log(answer_info.language);
+    delete wrong_answers_log[answer_info.language];
 
     // when submission is delayed, the active language might not be the same
     // as the language of this submission, so check
-    if (current_language===lang) {
+    if (current_language===answer_info.language) {
         hideAnswer();
     }
 
-
-    submitAnswer(stud_id, q_id, ans_corr, audio_ans_corr, lang, user_answer);
+    submitAnswer(answer_info);
 }
 
 function showAnswer() {
-    console.log("wrong answer");
+    console.log("about to show wrong answer");
+    console.log($("#send_answer_btn"));
+    console.log($("#send_answer_btn").css("display"));
     $("#send_answer_btn").hide();
+    console.log("hid the submit button");
+    console.log($("#send_answer_btn"));
+    console.log($("#send_answer_btn").css("display"));
     $("#wrong_answer_btn").fadeIn();
     $("#show_answer").fadeIn();
     $("#gtranslate").fadeIn();
@@ -365,12 +420,12 @@ function hideAnswer() {
 function load_question(new_question)  {
     console.log(new_question);
     var quest_obj=new_question;
-    repeat_question =  (quest_obj.id === $("#question_id").val());
+    repeat_question =  (quest_obj.id === current_ids.question_id);
 
     // refresh the page with new question, unless it's the same question as current one
     if (! repeat_question ||
         quest_obj.request_type==="GET") {
-        // there are a maximum of 4 images allowed per question
+        // there are a maximum of 4 images per question
         var images = quest_obj.images;
         var images_count = images.length;
 
@@ -427,11 +482,18 @@ function load_question(new_question)  {
         document.getElementById('card_audio').load();
 
         $("#part_of_speech_elem").text(quest_obj.part_of_speech);
+        $("#hint").text(quest_obj.audio_files);
         $("#word_elem").text(quest_obj.word);
         $("#user_answer").val("");
-        $("#answer").val(quest_obj.word);
         $("#translate_text_input").val(quest_obj.word);
-        $("#question_id").attr("value", quest_obj.id);
+        current_ids.question_id = quest_obj.id;
+        console.log("received from server student_id: ", quest_obj.student_id)
+        current_ids.student_id = quest_obj.student_id;
+        console.log("updated current_ids.student_id to: ", current_ids.student_id)
+
+        // store the answers in a variable
+        all_answers = quest_obj.all_answers;
+        console.log("answers saved in a variable");
 
         // prompt temporary user for sign-up after every fifth question answered
         if (quest_obj.prod_signup === true) {
@@ -484,7 +546,7 @@ function remove_pictures(last_pic_index, num_pics_to_remove) {
 function add_pictures(last_pic_index, num_pics_to_add) {
     for (var i=last_pic_index+1; i <= last_pic_index+num_pics_to_add; i++) {
         var picture_elem = `
-            <div id='picture-${i}' class='m-2'>
+            <div id='picture-${i}' class='m-2 align-self-center'>
             <picture>
                 <source id='img-webp-${i}'>
                 <img id='img-default-${i}' class='rounded mx-auto my-3 d-block img-fluid'>
@@ -534,7 +596,6 @@ function update_pictures(images, images_count) {
             $("#img-default-" + i.toString()).removeAttr("src");
             $("#img-default-" + i.toString()).removeAttr("srcset");
             $("#img-default-" + i.toString()).css("width", width);
-            console.log($("#img-webp-" + i.toString()).attr("type"));
             console.log("img-default: ", "#img-default-" + i.toString());
             console.log("file name: ", path_f_name);
             $("#img-default-" + i.toString()).attr("src", path_f_name + ".svg");
@@ -542,7 +603,7 @@ function update_pictures(images, images_count) {
             $("#img-default-" + i.toString()).attr("alt", file_desc);
         }
     }
-    console.log("updated ${images_count} picture(s)");
+    console.log("updated " + images_count + " picture(s)");
 }
 
 function set_height_img_container() {

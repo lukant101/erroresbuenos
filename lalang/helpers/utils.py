@@ -30,20 +30,21 @@ def is_safe_url(target):
             and ref_url.netloc == test_url.netloc)
 
 
-def question_obj_to_json(question_obj, *, request_type, student_id="",
+def question_obj_to_json(question_obj, *, request_type, student_id,
                          prev_q_lang=None, prod_signup=False):
     """Take Question object and return it in json representation.
 
     Arguments:
     Question instance
-    request_type: string -- used to indicate whether the JSON response
+    request_type:
+        "GET", "POST" ring)
+        -- flag to indicate whether the JSON response
         is a reply to a GET or POST request
 
-    student_id: string -- optional
+    student_id: string
 
     Return:
-    Question object in JSON format, with request_type and student_id appended
-    (student_id only as an option)
+    Question object in JSON format, with request_type and student_id appended.
     """
     q_json = {}
     q_fields_iter = question_obj._fields.keys()
@@ -56,17 +57,15 @@ def question_obj_to_json(question_obj, *, request_type, student_id="",
 
     q_json["request_type"] = request_type
 
+    q_json["student_id"] = student_id
+
     if prev_q_lang:
         q_json["prev_q_lang"] = prev_q_lang
-
-    if student_id:
-        q_json["student_id"] = student_id
 
     q_json["prod_signup"] = prod_signup
     logging.info(f"prod signup inside question_obj_to_json: {json.dumps(prod_signup)}")
 
     return json.dumps(q_json, ensure_ascii=False)
-    # return question_obj.word
 
 
 def dict_to_question_obj(question_as_dict):
@@ -88,32 +87,14 @@ def dict_to_student_obj(student_as_dict):
         setattr(s_obj, k, v)
     return s_obj
 
-# callback function for blinker signal: flask_login.user_logged_out
-# def wipe_temp_student(sender, user, **extra):
-#     """Delete temp student's records in the database."""
-#     if not user.temp:
-#         pass
-    # if user.temp:
-    #     # delete student's answers in StudentHistory
-    #     num_del_docs = StudentHistory.objects(student_id=student.id).delete()
-    #     logging.info(f"Num of deleted StudentHistory documents: {num_del_docs}")
-    #     # for stud_rec in stud_hist_iter:
-    #     #     stud_rec.delete()
-    #     #     stud_rec.save()
-    #     logging.info("deleted all StudentHistory records for temp student")
-    #     # delete the main student record
-    #     logging.info(f"about to delete temp student with id: {user.id}")
-    #     user.delete()
-    #     logging.info("deleted the temp student")
-
 
 if __name__ == "__main__":
-    # question_id = ObjectId("5ba13cd3fde08a0ce81856b5")
-    # skakać
-    # question_id = ObjectId("5ba13d2cfde08a6a948a701f")
-    # spaść
-    question_id = ObjectId("5ba13d2cfde08a6a948a7015")
+    # question_id = ObjectId("5bc56c47fde08a1908df5987")
+    # gotować
+    # question_id: 5bc56c47fde08a1908df5a24
+    # truskawka
+    question_id = ObjectId("5bc56c47fde08a1908df5a24")
     question = Question.objects(id=question_id).first()
-    q_as_json = question_obj_to_json(question)
+    q_as_json = question_obj_to_json(question, request_type="POST")
     print(q_as_json)
     print(type(q_as_json))

@@ -192,7 +192,8 @@ def load_question():
                                           DEFAULT_TEMP_STUDENT_ID)
             # turn the question object into json and return it
             logging.info("language changed for untracked student")
-            return question_obj_to_json(question, request_type=request.method)
+            return question_obj_to_json(question, request_type=request.method,
+                                        student_id=DEFAULT_TEMP_STUDENT_ID)
 
         if not current_user.is_anonymous:
             # update document for logged-in student
@@ -273,7 +274,8 @@ def load_question():
                                     prod_signup=prod_signup)
 
     return question_obj_to_json(next_question, request_type=request.method,
-                                prev_q_lang=previous_question_language)
+                                prev_q_lang=previous_question_language,
+                                student_id=str(current_user.id))
 
 
 @app.route("/translate", methods=["GET", "POST"])

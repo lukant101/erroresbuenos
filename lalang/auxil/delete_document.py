@@ -1,6 +1,5 @@
-"""Delete questions from a database."""
+"""Delete questions from a database.
 
-"""
 Matching criteria for the questions to be deleted are hard-coded at the moment.
 Also, deletion of every question needs to be confirmed one at a times
 - no batch deletion.
@@ -13,17 +12,12 @@ import sys
 import os
 
 sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos")
-# sys.path.append("C:\\Users\\Lukasz\\Python")
 
 from lalang.db_model import Question
 
 
 db_in = input("Which database should the questions be deleted from? ")
 mongoengine.connect(db_in, host="localhost", port=27017)
-
-
-# DUPLICATE DON'T USE IT - iść
-# darn_record = Question.objects(language="Polish", word="duży")
 
 del_match = {"word": {"$regex": "^DU"}, "language": "Polish"}
 del_records_iter = Question.objects(__raw__=del_match)

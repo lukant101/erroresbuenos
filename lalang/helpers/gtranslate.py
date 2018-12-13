@@ -1,4 +1,4 @@
-"""Template for working with Google Sheets API."""
+"""Exports function: google_translate"""
 
 from google.cloud import translate
 import json

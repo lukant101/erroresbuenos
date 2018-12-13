@@ -12,7 +12,7 @@ from os.path import splitext
 sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos")
 
 from lalang.db_model import Question
-from create_question import create_question
+from lalang.auxil.create_question import create_question
 
 
 def update_questions(db_name, language, filename):
@@ -21,12 +21,9 @@ def update_questions(db_name, language, filename):
     update_counter = 0
     added_counter = 0
 
+    mongoengine.connect(db_name, host="localhost", port=27017)
 
-db.question-backup.renameCollection("question-backup2")
-
-mongoengine.connect(db_name, host="localhost", port=27017)
-
-with open(filename, encoding="utf8") as csv_file:
+    with open(filename, encoding="utf8") as csv_file:
         csv_reader = csv.DictReader(csv_file)
         for row in csv_reader:
             questions = Question.objects(language=language,
@@ -39,6 +36,7 @@ with open(filename, encoding="utf8") as csv_file:
             for question in questions:
                 question.word = row["Word"]
                 question.part_of_speech = row["Part_of_Speech"]
+                question.hint = row["Hint"]
                 question.source_id = row["Source_Id"]
                 question.audio = row["Audio"].split(", ")
 
@@ -49,7 +47,7 @@ with open(filename, encoding="utf8") as csv_file:
 
                 # css.DictReader escapes newline characters, so split with:
                 # '\\n '
-                question.alternative_answers = row["Alternative_Answer"].split('\\n ')
+                question.all_answers = row["All_Answers"].split('\\n ')
 
                 question.part_of_speech = row["Part_of_Speech"]
 

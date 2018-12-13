@@ -1,4 +1,5 @@
 """Export function: create_stud_hist_coll."""
+
 import mongoengine
 import sys
 from bson.objectid import ObjectId

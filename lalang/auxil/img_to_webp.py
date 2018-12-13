@@ -1,3 +1,5 @@
+"""Converts several raster image formats to webp."""
+
 from PIL import Image
 from os import listdir
 from os.path import isfile, join, splitext

@@ -18,7 +18,6 @@ import sys
 
 
 sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos")
-# sys.path.append("C:\\Users\\Lukasz\\Python")
 
 from lalang.db_model import Student
 

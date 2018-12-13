@@ -13,11 +13,16 @@
 # Miscellaneous #
 ############
 venv/
+venv37/
 temp/
+GCP/
 snippets.txt
 __pycache__/
 lalang/helpers/__pycache__/
 assets/
 lalang/myTests/
 lalang/app_config.cfg
+app_config.cfg
+local
+app.log
 

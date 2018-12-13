@@ -24,7 +24,7 @@ def create_question(language, *, odict):
     )
 
     # css.DictReader escapes newline characters, so split with: '\\n '
-    question.alternative_answers = odict["Alternative_Answer"].split('\\n ')
+    question.all_answers = odict["All_Answers"].split('\\n ')
 
     if odict["Child_Appropriate"].lower() == "no":
         question.child_appropriate = False
