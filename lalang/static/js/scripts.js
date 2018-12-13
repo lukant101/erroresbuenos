@@ -82,11 +82,13 @@ $( window ).resize(function() {
     set_height_img_container();
 });
 
-// event listener: Enter key pressed when in Answer input field;
+// event listener: Enter key pressed;
 // action: submit answer
 $(document).ready(function () {
     $(document).keydown(function (event) {
-        if (event.which == 13) {
+        let code = event.which || event.keyCode;
+        if (code == 13) {
+            console.log("pressed the enter key");
             // prevent reloading of page
             event.preventDefault();
             // check whether student submitted the original answer or
@@ -95,22 +97,17 @@ $(document).ready(function () {
                 // use a flag to prevent double-pressing Enter key
                 if (enter_pressed===false) {
                     enter_pressed=true;
-                    console.log("pressed enter key");
                     sub_fld = $("#user_answer");
                     sub_fld.prop("disabled", true);
-                    console.log("sending the answer to be marked");
+                    $("#send_answer_btn").prop("disabled",true);
                     showAndSubmitAnswer(markAnswer());
-                    setTimeout(function(){
-                        sub_fld.prop("disabled", false);
-                        enter_pressed=false;
-                        $("#user_answer").focus();
-                    },
-                    500);
                 }
 
             } else {
+                console.log("red button is visible, so hide the answer");
                 // do the same as when the red "wrong" button is expressed
                 hideAnswer();
+                console.log("after hideAnswer()");
                 // first we cancel the timer, then we submit the wrong answer
                 info = wrong_answers_log[current_language];
                 clearTimeout(info.timer_id);
@@ -177,7 +174,6 @@ $(document).ready(function() {
                 },
                 load_question, "json"
         );
-        $("#user_answer").focus();
     });
 });
 
@@ -190,26 +186,13 @@ $(document).ready(function() {
         console.log($(this));
         console.log("after $this statement");
         sub_btn.prop("disabled", true);
+        $("#user_answer").prop("disabled",true);
         console.log("submit button disabled");
         console.log($(this));
         console.log($(this).css("display"));
         showAndSubmitAnswer(markAnswer());
-        console.log("about to set timer for submit button pressed event");
-        console.log("button display before timer set: ");
+        console.log("button display at the end of send button pressed event: ");
         console.log($("#send_answer_btn").css("display"));
-        setTimeout(function(){
-            console.log("executing after end of timer");
-            console.log("button display before enabling the button: ");
-            console.log($("#send_answer_btn").css("display"));
-            sub_btn.prop("disabled", false);
-            console.log("button display after enabling the button: ");
-            console.log($("#send_answer_btn").css("display"));
-            console.log("submit button enabled");
-            $("#user_answer").focus();
-            console.log("button display after focusing on user input: ");
-            console.log($("#send_answer_btn").css("display"));
-            console.log("set focus on the user input field");
-        }, 500);
     });
 });
 
@@ -334,19 +317,21 @@ $(document).ready(function() {
         clearTimeout(info.timer_id);
 
         submitWrongAnswer(info);
-        $("#user_answer").focus();
     });
 });
 
 function showAndSubmitAnswer(answer_info) {
+    console.log("Document has focus? ", document.hasFocus());
     if (answer_info.answer_correct) {
         console.log("right answer");
         $("#good_job_msg").fadeIn().delay(800).fadeOut(submitAnswer(answer_info));
     } else {
+        console.log("Document has focus? ", document.hasFocus());
         showAnswer();
+        console.log("Document has focus? ", document.hasFocus());
 
-        // set 6000s timer for wrong answer submission
-        timer_id = setTimeout(submitWrongAnswer, 6000000, answer_info)
+        // set 60s timer for wrong answer submission
+        timer_id = setTimeout(submitWrongAnswer, 60000, answer_info)
 
         // add timer id to wrong_answers_log
         wrong_answers_log[answer_info.language].timer_id = timer_id;
@@ -354,7 +339,10 @@ function showAndSubmitAnswer(answer_info) {
         console.log(wrong_answers_log[answer_info.language].timer_id);
         console.log("button display: ");
         console.log($("#send_answer_btn").css("display"));
-
+        // document loses focus (in Firefox, for example)
+        // so set focus to "red button"
+        // otherwise pressing enter key does not submit the (wrong) answer
+        $("#wrong_answer_btn").focus();
     }
 }
 
@@ -395,7 +383,8 @@ function showAnswer() {
     console.log("about to show wrong answer");
     console.log($("#send_answer_btn"));
     console.log($("#send_answer_btn").css("display"));
-    $("#send_answer_btn").hide();
+    // $("#send_answer_btn").hide();
+    $("#send_answer_btn").css("display", "none");
     console.log("hid the submit button");
     console.log($("#send_answer_btn"));
     console.log($("#send_answer_btn").css("display"));
@@ -412,7 +401,8 @@ function hideAnswer() {
     $("#gtranslate").hide();
     $("#translate_text_output").hide();
     $("#wrong_answer_btn").fadeOut(function(){
-        $("#send_answer_btn").fadeIn();});
+        $("#send_answer_btn").css("display", "inline-block");});
+    console.log("answer hidden");
 
 }
 
@@ -481,8 +471,18 @@ function load_question(new_question)  {
         // reload the audio source in the audio element; jQuery doesn't implement $().load(), so use JavaScript
         document.getElementById('card_audio').load();
 
+        console.log("Hint contains: ", quest_obj.hint);
+
+        if (quest_obj.hint === "") {
+            $("#hint-div").css("display", "none");
+            console.log("hiding the hint area");
+        } else {
+            $("#hint-div").css("display", "inline");
+            $("#hint").text(quest_obj.hint);
+            console.log("showing the hint area");
+        }
+
         $("#part_of_speech_elem").text(quest_obj.part_of_speech);
-        $("#hint").text(quest_obj.audio_files);
         $("#word_elem").text(quest_obj.word);
         $("#user_answer").val("");
         $("#translate_text_input").val(quest_obj.word);
@@ -533,6 +533,14 @@ function load_question(new_question)  {
             hideAnswer();
         }
     }
+
+    // reset these properties to initial state so that an answer can be
+    // submitted again
+    enter_pressed=false;
+    $("#send_answer_btn").prop("disabled",false);
+    $("#user_answer").prop("disabled",false);
+    $("#user_answer").focus();
+    console.log("finished loading question and reset to defaults");
 }
 
 function remove_pictures(last_pic_index, num_pics_to_remove) {

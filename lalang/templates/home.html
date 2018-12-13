@@ -81,7 +81,12 @@
 
           <form id="question_form" class="d-flex" > <!-- answer input -->
             <div class="form-group mt-2 mb-0">
-                <label class='d-block'>Part of Speech: <span id="part_of_speech_elem" class="font-weight-bold">{{ question.part_of_speech }}</span><span class="ml-3">Hint: </span><span id="hint" class="font-weight-bold">{{ question.hint }}</span></label>
+                {% if question.hint == "" %}
+                    {% set hint_display = "none" %}
+                {% else %}
+                    {% set hint_display = "inline" %}
+                {% endif %}
+                <label class='d-block'>Part of Speech: <span id="part_of_speech_elem" class="font-weight-bold">{{ question.part_of_speech }}</span><div id="hint-div" style="display: {{ hint_display}};"><span class="ml-3">Hint: </span><span id="hint" class="font-weight-bold">{{ question.hint }}</span></div></label>
                     <button id='play_button' onclick='playAudioOut()' type='button' class='btn btn-info rounded-circle d-inline mr-2 mb-2'><i class="fas fa-volume-up"></i></button>
                     <input type='text' class='custom-control custom-control-inline mr-0 mb-2' name="user_answer" id='user_answer' autofocus>
                     <button id='send_answer_btn' type='button' class='btn btn-info rounded-circle ml-0 mr-2 mb-2'><i class="fas fa-arrow-right"></i></button>
@@ -103,13 +108,12 @@
           </audio>
       </div> <!-- flex-column -->
   </div> <!-- bottom container -->
-  <script>
+  <script type="text/javascript">
       updateTitlePractise();
       load_answers();
       capture_ids();
       set_height_img_container();
-  </script>
-  <script type="text/javascript">
+
     var csrf_token = "{{ csrf_token() }}";
 
     $.ajaxSetup({
@@ -119,5 +123,5 @@
             }
         }
     });
-</script>
+  </script>
 {% endblock content %}
