@@ -21,8 +21,24 @@ __pycache__/
 lalang/helpers/__pycache__/
 assets/
 lalang/myTests/
+lalang/static/audio/
+lalang/static/pics/
 lalang/app_config.cfg
 app_config.cfg
 local
 app.log
+lalang/helpers/unused/
+lalang/questions/
+lalang/static/fonts/fontawesome/
 
+# For deployment #
+############
+for_deployment/__pycache__/
+for_deployment/qwell/helpers/__pycache__/
+for_deployment/app_config.cfg
+for_deployment/app.log
+for_deployment/qwell/static/assets/
+for_deployment/qwell/static/audio/
+for_deployment/qwell/static/fonts/
+for_deployment/qwell/static/pics
+for_deployment/qwell/questions/

@@ -1,0 +1,127 @@
+{% extends 'shell.html' %}
+
+{% block content %}
+
+    <script>
+        var current_language = "{{ curr_lang }}";
+    </script>
+
+  <div class="row">
+      <div class="col d-flex flex-column align-items-center mt-3">
+
+          <div class="d-flex flex-wrap align-items-center">
+              <div id="lang_select_div" class="mr-2">
+                  <select id="lang_select" onchange="updateTitlePractise()" class='custom-select custom-select-sm shadow-sm'>
+                      <option value="{{ curr_lang }}" selected>{{ curr_lang.capitalize() }}</option>
+                      {% for lang in all_langs %}
+                          {% if lang != curr_lang %}
+                              <option value="{{ lang }}">{{ lang.capitalize() }}</option>
+                          {% endif %}
+                      {% endfor %}
+                  </select>
+              </div>
+
+              {% if current_user.is_authenticated and not current_user.temp %}
+                <div id="scoreboard" class="ml-2 border rounded border-secondary shadow-sm">
+                    <div class="d-inline-block" class="d-inline-block">{{ current_user.username}}</div>
+                    <div class="d-inline-block"><i class="far fa-check-circle text-success"></i> <b id="scoreCount">{{ current_user.num_correct_answers}}</b></div>
+                </div>
+              {% endif%}
+          </div>
+
+          {% if not current_user.is_authenticated or current_user.temp %}
+            <h3 id="title_practice" class='text-center mt-3 mb-0'></h3>
+          {% endif%}
+
+    </div> <!-- column of top row -->
+  </div> <!-- top row -->
+
+
+  <div class="row flex-grow-1 d-flex align-items-start justify-content-center">
+      <div id="images-container" class="col d-flex align-items-start justify-content-center flex-wrap" style="margin-bottom: 40vh;">
+          {% for image in question.images %}
+            {% set file_name = image[0] %}
+            {% set extension = image[1] %}
+            {% if image[2] >= 1.333 %}
+                {% set img_width = "480px" %}
+                {% set img_height = (480/image[2])|round()|string +"px" %}
+            {% else %}
+                {% set img_width = (360*image[2])|round()|string +"px" %}
+                {% set img_height = "360px" %}
+            {% endif %}
+            <div id="picture-{{ loop.index }}" class="m-2 align-self-center">
+                <picture>
+                      {% if extension != "svg" %}
+                          <source id="img-webp-{{ loop.index }}" type=”image/webp” srcset="{{ url_for('static', filename='pics/' ~ file_name ~ '-480px.webp') }} 1x, {{ url_for('static', filename='pics/' ~ file_name ~ '-960px.webp') }} 2x">
+                          <img id="img-default-{{ loop.index }}" style="width: {{ img_width }};" class='rounded mx-auto m-3 img-fluid' src="{{ url_for('static', filename='pics/' ~ file_name ~ '-480px.' ~ extension) }}" alt='{{ question.word }}' srcset="{{ url_for('static', filename='pics/' ~ file_name ~ '-480px.' ~ extension) }} 1x, {{ url_for('static', filename='pics/' ~ file_name ~ '-960px.' ~ extension) }} 2x">
+                      {% else %}
+                          <source id="img-webp-{{ loop.index }}">
+                          <img id="img-default-{{ loop.index }}" style="width: {{ img_width }};" class='rounded mx-auto m-3 img-fluid' src="{{ url_for('static', filename='pics/' ~ file_name ~ '.svg') }}" alt="{{ question.word }}">
+                      {% endif %}
+                </picture>
+            </div> <!-- picture -->
+          {% endfor %}
+      </div> <!-- images-container -->
+  </div> <!-- row -->
+
+  <div id="bottom-container" class="row justify-content-center">
+      <div id="bottom_container_inner" class="col-md-6 d-flex flex-column align-items-start">
+          <div id="show_answer" class="pt-2" style="display: none;"> <!-- display answer -->
+            <span class='mb-1'>Answer: <span id="word_elem" class="font-weight-bold">{{ question.word }}</span></span>
+          </div> <!-- display answer -->
+
+          <div id="gtranslate" class='my-3' style="display: none;"> <!-- google translation -->
+              <form>
+                  <input id="translate_text_input" type="hidden" value="{{ question.word }}">
+                  <button id="translate-btn" type="button" class="btn btn-info ml-0">Translate</button>
+                  <button id="translate_text_output" type="button" class="btn btn-success" style="display: none;"></button>
+              </form>
+          </div> <!-- google translation -->
+
+
+          <form id="question_form" class="d-flex" > <!-- answer input -->
+            <div class="form-group mt-2 mb-0">
+                {% if question.hint == "" %}
+                    {% set hint_display = "none" %}
+                {% else %}
+                    {% set hint_display = "inline" %}
+                {% endif %}
+                <label class='d-block'>Part of Speech: <span id="part_of_speech_elem" class="font-weight-bold">{{ question.part_of_speech }}</span><div id="hint-div" style="display: {{ hint_display}};"><span class="ml-3">Hint: </span><span id="hint" class="font-weight-bold">{{ question.hint }}</span></div></label>
+                    <button id='play_button' onclick='playAudioOut()' type='button' class='btn btn-info rounded-circle d-inline mr-2 mb-2'><i class="fas fa-volume-up"></i></button>
+                    <input type='text' class='custom-control custom-control-inline mr-0 mb-2' name="user_answer" id='user_answer' autofocus>
+                    <button id='send_answer_btn' type='button' class='btn btn-info rounded-circle ml-0 mr-2 mb-2'><i class="fas fa-arrow-right"></i></button>
+                    <button id="good_job_msg" style="display: none" class="btn btn-success ml-0 mb-2" type='button'>Good job!</button>
+                    <button id="wrong_answer_btn" style="display:none" class="btn btn-danger rounded-circle ml-0 mr-2 mb-2" type='button'><i class="fas fa-arrow-right"></i></button>
+                    <input type="hidden" name="question_id" id="question_id" value="{{ question.id }}">
+                    <input type="hidden" name="student_id" id="student_id" value="{{ student_id }}">
+                    <input type="hidden" name="answers" id="answers" value="{{ question.all_answers }}">
+            </div>
+          </form> <!-- answer input -->
+
+          <div class="d-flex mt-2 mb-3 w-100 justify-content-center">
+            <a href="{{ url_for('register') }}"><button id="prod_signup" type="button" class="btn btn-primary" style="display: none;">Sign up and save your answers!</button></a>
+          </div> <!-- prompt sign-up -->
+
+
+          <audio id='card_audio'>
+            <source id="audio_src" src="{{ url_for('static', filename='audio/' ~ curr_lang ~ '/' ~ question.audio[0]) ~ '.mp3' }}">
+          </audio>
+      </div> <!-- flex-column -->
+  </div> <!-- bottom container -->
+  <script type="text/javascript">
+      updateTitlePractise();
+      load_answers();
+      capture_ids();
+      set_height_img_container();
+
+    var csrf_token = "{{ csrf_token() }}";
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            }
+        }
+    });
+  </script>
+{% endblock content %}

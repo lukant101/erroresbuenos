@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="icon" href="{{ url_for('static', filename='assets/favicon.ico') }}" type="image/x-icon">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+        <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <!-- Font Awesome -->
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <script src="{{ url_for('static', filename="js/scripts.js") }}"></script>
+
+        <!-- <link href="https://fonts.googleapis.com/css?family=Poppins&text=Qwell" rel="stylesheet"> -->
+
+        <title>qwell</title>
+    </head>
+
+    <body id="body-div" class="d-flex flex-column">
+        <div class='container'>
+          <nav class="navbar bg-light navbar-light">
+              <!-- <div id="navbar-left" class=""> -->
+                  <button class="navbar-button" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+              <!-- </div> -->
+
+              <div id="navbar-centre">
+                    <a class="qwell-logo navbar-brand" href="{{ url_for('home') }}">Q</a>
+                    <a class="navbar-brand" href="{{ url_for('home')}}">
+                        <div id="logo-container">
+                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                            <g>
+                            	<rect x="88.276" y="26.483" style="fill:#CB8252;" width="335.448" height="35.31"/>
+                            	<path style="fill:#A5A5A4;" d="M317.793,211.862c-4.875,0-8.828-3.952-8.828-8.828v-17.655c0-29.252-23.713-52.966-52.966-52.966
+                            		s-52.966,23.713-52.966,52.966v17.655c0,4.875-3.952,8.828-8.828,8.828s-8.828-3.952-8.828-8.828v-17.655
+                            		c0-39.003,31.618-70.621,70.621-70.621s70.621,31.618,70.621,70.621v17.655c0,2.341-0.93,4.587-2.586,6.242
+                            		C322.38,210.932,320.134,211.862,317.793,211.862z"/>
+                            	<path style="fill:#D1D4D1;" d="M335.448,203.034v97.103H176.552v-97.103c0-4.875,3.952-8.828,8.828-8.828h141.241
+                            		C331.496,194.207,335.448,198.159,335.448,203.034z"/>
+                            	<path style="fill:#A5A5A4;" d="M335.448,220.69v17.655h-97.103c-4.875,0-8.828-3.952-8.828-8.828s3.952-8.828,8.828-8.828H335.448z
+                            		"/>
+                            	<g>
+                            		<path style="fill:#805333;" d="M185.379,0c-4.875,0-8.828,3.952-8.828,8.828v70.621c0,4.875,3.952,8.828,8.828,8.828
+                            			c4.875,0,8.828-3.952,8.828-8.828V8.828C194.207,3.952,190.255,0,185.379,0z"/>
+                            		<path style="fill:#805333;" d="M220.69,0c-4.875,0-8.828,3.952-8.828,8.828v70.621c0,4.875,3.952,8.828,8.828,8.828
+                            			s8.828-3.952,8.828-8.828V8.828C229.517,3.952,225.565,0,220.69,0z"/>
+                            		<path style="fill:#805333;" d="M256,0c-4.875,0-8.828,3.952-8.828,8.828v123.586c0,4.875,3.952,8.828,8.828,8.828
+                            			s8.828-3.952,8.828-8.828V8.828C264.828,3.952,260.875,0,256,0z"/>
+                            		<path style="fill:#805333;" d="M291.31,0c-4.875,0-8.828,3.952-8.828,8.828v70.621c0,4.875,3.952,8.828,8.828,8.828
+                            			s8.828-3.952,8.828-8.828V8.828C300.138,3.952,296.186,0,291.31,0z"/>
+                            		<path style="fill:#805333;" d="M326.621,0c-4.875,0-8.828,3.952-8.828,8.828v70.621c0,4.875,3.952,8.828,8.828,8.828
+                            			s8.828-3.952,8.828-8.828V8.828C335.448,3.952,331.496,0,326.621,0z"/>
+                            		<path style="fill:#805333;" d="M97.103,0c9.751,0,17.655,7.904,17.655,17.655v282.483h-35.31V17.655
+                            			C79.448,7.904,87.353,0,97.103,0z"/>
+                            		<path style="fill:#805333;" d="M414.897,0c9.751,0,17.655,7.904,17.655,17.655v282.483h-35.31V17.655
+                            			C397.241,7.904,405.146,0,414.897,0z"/>
+                            	</g>
+                            	<path style="fill:#D1D4D1;" d="M467.862,353.103v-26.483H44.138v26.483c-14.626,0-26.483,11.857-26.483,26.483v26.483
+                            		c0,14.626,11.857,26.483,26.483,26.483v26.483h423.724v-26.483c14.626,0,26.483-11.857,26.483-26.483v-26.483
+                            		C494.345,364.96,482.488,353.103,467.862,353.103z"/>
+                            	<g>
+                            		<path style="fill:#A5A5A4;" d="M494.345,282.483v44.138c0,14.626-11.857,26.483-26.483,26.483H44.138
+                            			c-14.626,0-26.483-11.857-26.483-26.483v-44.138c0-4.875,3.952-8.828,8.828-8.828h459.034
+                            			C490.393,273.655,494.345,277.607,494.345,282.483z"/>
+                            		<path style="fill:#A5A5A4;" d="M494.345,459.034v44.138c0,4.875-3.952,8.828-8.828,8.828H26.483c-4.875,0-8.828-3.952-8.828-8.828
+                            			v-44.138c0-14.626,11.857-26.483,26.483-26.483h423.724C482.488,432.552,494.345,444.408,494.345,459.034z"/>
+                            	</g>
+                            	<g>
+                            		<path style="fill:#5E5F62;" d="M220.69,273.655v44.138c0,4.875-3.952,8.828-8.828,8.828c-4.875,0-8.828-3.952-8.828-8.828v-44.138
+                            			H220.69z"/>
+                            		<path style="fill:#5E5F62;" d="M406.069,273.655v44.138c0,4.875-3.952,8.828-8.828,8.828c-4.875,0-8.828-3.952-8.828-8.828
+                            			v-44.138H406.069z"/>
+                            		<path style="fill:#5E5F62;" d="M220.69,432.552v44.138c0,4.875-3.952,8.828-8.828,8.828c-4.875,0-8.828-3.952-8.828-8.828v-44.138
+                            			H220.69z"/>
+                            		<path style="fill:#5E5F62;" d="M406.069,432.552v44.138c0,4.875-3.952,8.828-8.828,8.828c-4.875,0-8.828-3.952-8.828-8.828
+                            			v-44.138H406.069z"/>
+                            	</g>
+                            	<g>
+                            		<path style="fill:#A5A5A4;" d="M114.759,388.414v44.138H97.103v-44.138c0-4.875,3.952-8.828,8.828-8.828
+                            			S114.759,383.538,114.759,388.414z"/>
+                            		<path style="fill:#A5A5A4;" d="M300.138,388.414v44.138h-17.655v-44.138c0-4.875,3.952-8.828,8.828-8.828
+                            			S300.138,383.538,300.138,388.414z"/>
+                            	</g>
+                            </g>
+                            </svg>
+                        </div> <!-- logo container -->
+                    </a>
+                    <a class="qwell-logo navbar-brand" href="{{ url_for('home') }}">well</a>
+              </div>
+
+              <div id="navbar-right">
+              </div>
+
+              <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                  {% if current_user.is_authenticated and not current_user.temp %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home')}}">Classroom</a>
+                    <a class="nav-link" href="{{ url_for('account')}}">Account</a>
+                    <a class="nav-link" href="{{ url_for('logout')}}">Log Out</a>
+                  </li>
+                  {% else %}
+                      {% if request.base_url != "http://localhost:5000/" %}
+                          <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('home')}}">Questions</a>
+                          </li>
+                      {% endif %}
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login')}}">Log In</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('register')}}">Sign Up</a>
+                      </li>
+                  {% endif %}
+                </ul>
+              </div>
+          </nav>
+        </div> <!-- container -->
+
+        <main role="main" class="container-fluid  d-flex flex-column flex-grow-1">
+
+
+            {% with messages=get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="container mt-3">
+                      <div class="row justify-content-center">
+                          <div class="col-md-9 col-lg-8">
+
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                            </div> <!-- column -->
+                        </div> <!-- row -->
+                      </div>
+                {% endif %}
+            {% endwith %}
+
+
+          {% block content %} {% endblock content %}
+
+        </main>
+    </body>
+</html>
