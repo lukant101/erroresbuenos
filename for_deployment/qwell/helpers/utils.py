@@ -12,17 +12,12 @@ import json
 import copy
 from urllib.parse import urlparse, urljoin
 from flask import request
-import logging
 from qwell.db_model import Question, Student, StudentHistory
-
-logging.basicConfig(level=logging.INFO, filename="app.log", filemode="a")
-
 
 def is_safe_url(target):
     ref_url = urlparse(request.url_root)
     test_url = urlparse(urljoin(request.url_root, target))
-    logging.info(f"ref_url: {ref_url}")
-    logging.info(f"test_url: {test_url}")
+
     return (test_url.scheme in ("http", "https")
             and ref_url.netloc == test_url.netloc)
 
@@ -60,8 +55,7 @@ def question_obj_to_json(question_obj, *, request_type, student_id,
         q_json["prev_q_lang"] = prev_q_lang
 
     q_json["prod_signup"] = prod_signup
-    logging.info(f"prod signup inside question_obj_to_json: {json.dumps(prod_signup)}")
-
+    
     return json.dumps(q_json, ensure_ascii=False)
 
 

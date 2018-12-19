@@ -8,14 +8,10 @@ StudentHistory
 """
 import datetime
 import pytz
-import logging
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from qwell import db, login_manager, app
 from qwell.constants import SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE
-
-
-logging.basicConfig(level=logging.INFO, filename="app.log", filemode="a")
 
 
 class Question(db.Document):

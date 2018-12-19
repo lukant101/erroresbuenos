@@ -33,12 +33,16 @@ lalang/static/fonts/fontawesome/
 
 # For deployment #
 ############
+for_deployment/app.yaml
 for_deployment/__pycache__/
+for_deployment/qwell/__pycache__/
 for_deployment/qwell/helpers/__pycache__/
 for_deployment/app_config.cfg
 for_deployment/app.log
-for_deployment/qwell/static/assets/
 for_deployment/qwell/static/audio/
-for_deployment/qwell/static/fonts/
 for_deployment/qwell/static/pics
-for_deployment/qwell/questions/
+for_deployment/my-project-1542060211099-dde76ee657a3.json
+
+# files for Google test projects #
+python-docs-samples/
+venv_google/

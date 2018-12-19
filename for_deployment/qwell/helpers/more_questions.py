@@ -10,13 +10,9 @@ get_questions_all_lang.
 import os
 import json
 import mongoengine
-import logging
 from qwell.db_model import Question, Student, LanguageProgress
 from qwell.helpers.utils import dict_to_question_obj
 from qwell.constants import START_REVIEW, BASE_ANSWERED_CORRECTLY
-
-logging.basicConfig(level=logging.INFO, filename="app.log",
-                    filemode="a")
 
 
 def get_default_questions(language, student_id):
@@ -38,8 +34,6 @@ def get_default_questions(language, student_id):
 
     path_ = (os.getcwd() + "/qwell/questions/default/" +
              f"stream_default_{language.lower()}.json")
-
-    logging.info(f"path for {language}: {path_}")
 
     with open(path_, "r",
               encoding="utf8") as f:
@@ -104,8 +98,7 @@ def get_queue_question(language, student_id):
     Return:
     Question object or None
     """
-    mongoengine.connect("qwell_db", host="localhost", port=27017)
-
+    
     # check this EmbeddedDocumentList field exists before adding to it;
     # if all list items get deleted, then MongoDB will delete the list field
     # so guard against that
@@ -150,8 +143,6 @@ def prep_questions(language, student_id, num_questions_needed):
     """
     num_questions_added = 0
 
-    mongoengine.connect("qwell_db", host="localhost", port=27017)
-
     query_args = {"language": f"{language}",
                   "description": "word flashcard"}
     questions_iter = Question.objects(__raw__=query_args)
@@ -164,14 +155,10 @@ def prep_questions(language, student_id, num_questions_needed):
     # if answered_corr_stack is "big", reduce it, i.e. release questions
     # for review
     size_corr_stack = len(language_embed_doc[0].answered_corr_stack)
-    logging.info(f"size_corr_stack: {size_corr_stack}")
 
     if size_corr_stack > START_REVIEW:
-        logging.info("We need to release questions for review")
         questions_to_release = (size_corr_stack - BASE_ANSWERED_CORRECTLY)
-        logging.info(f"Number of questions to release: {questions_to_release}")
         del language_embed_doc[0].answered_corr_stack[:questions_to_release]
-        logging.info("Questions released for review.")
 
     # draw random question from all possible questions
     # keep drawing questions until you get {num_questions} questions
@@ -242,11 +229,9 @@ def get_questions_all_lang(supp_lang_list, student_id):
             # questions in student's queue, so add them to dictionary
             # of all supported languages
             questions_all_lang[lang] = question_list
-            logging.info(f"Just fetched a question from queue for {lang}")
         else:
             # no questions in queue, i.e. student has not studied
             # this language, so use default questions read from json file
             questions_all_lang[lang] = get_default_questions(lang, student_id)
-            logging.info(f"Just added default questions for {lang}")
 
     return questions_all_lang

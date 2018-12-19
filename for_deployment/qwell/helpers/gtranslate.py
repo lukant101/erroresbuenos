@@ -11,7 +11,6 @@ def google_translate(input_text, *, source_lang, target_lang):
     # The target language
     target = target_lang
 
-    # Translates some text into Russian
     translation = client.translate(
         input_text,
         target_language=target,

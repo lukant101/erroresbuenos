@@ -6,6 +6,8 @@ var enter_pressed = false;
 var signup_btn_timer_id = "";
 var all_answers = [];
 var current_ids = {};
+// bucket where image and audio files are stored
+const bucket = "https://storage.googleapis.com/my-project-1542060211099.appspot.com/static/";
 
 function title_cap(word) {
     return word.charAt(0).toUpperCase() + word.substr(1)
@@ -362,6 +364,7 @@ function submitAnswer(answer_info) {
             load_question, "json"
     );
     console.log("passed to server student_id: ", answer_info.student_id);
+    console.log("passed to server question_id: ", answer_info.question_id);
 }
 
 function submitWrongAnswer(answer_info) {
@@ -467,7 +470,7 @@ function load_question(new_question)  {
         update_pictures(images, images_count);
 
         // at present, only one audio file (in mp3 format) is presented per question
-        $("#audio_src").attr("src", "../static/audio/" + quest_obj.language.toLowerCase() + "/" + quest_obj.audio[0] + ".mp3");
+        $("#audio_src").attr("src", bucket + "audio/" + quest_obj.language.toLowerCase() + "/" + quest_obj.audio[0] + ".mp3");
         // reload the audio source in the audio element; jQuery doesn't implement $().load(), so use JavaScript
         document.getElementById('card_audio').load();
 
@@ -579,7 +582,7 @@ function update_pictures(images, images_count) {
             var width = Math.round(360*img_aspect_ratio).toString();
             var height = "360px";
         }
-        var path_f_name = "../static/pics/" + file_name;
+        var path_f_name = bucket + "pics/" + file_name;
         if (_ext !== "svg")  {
             console.log("updating picture element for: ", _ext);
             console.log("image webp id: ", "#img-webp-" + i.toString());

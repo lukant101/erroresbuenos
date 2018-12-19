@@ -4,15 +4,10 @@ import mongoengine
 import sys
 import uuid
 from bson import ObjectId
-import logging
 from qwell.db_model import Student
 from qwell.helpers.more_questions import get_questions_all_lang
 from qwell.constants import SUPPORTED_LANGUAGES
 
-logging.basicConfig(level=logging.INFO, filename="app.log",
-                    filemode="a")
-
-mongoengine.connect("qwell_db", host="localhost", port=27017)
 
 
 def create_student(email, username, first_name, last_name, password, temp):
@@ -64,8 +59,6 @@ def create_temp_student():
             except mongoengine.NotUniqueError:
                 continue
 
-    logging.info(f"Just created temp student with id: {student.id}")
-    logging.info(f"about to add questions to the queue of student {student.id}")
     # add default questions to the queues in Student document
     get_questions_all_lang(SUPPORTED_LANGUAGES, student.id)
 

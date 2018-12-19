@@ -1,7 +1,6 @@
 """Handle requests for all endpoints of the website."""
 
 from flask import render_template, request, redirect, flash, url_for, abort
-import logging
 from bson import ObjectId
 from datetime import datetime
 import pytz
@@ -22,8 +21,6 @@ from qwell.forms import (StudentRegister,
                           AccountUpdateForm, PasswordUpdateForm)
 from qwell.db_model import Student, Question
 from qwell.helpers.gtranslate import google_translate
-
-logging.basicConfig(level=logging.INFO, filename="app.log", filemode="a")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -180,7 +177,6 @@ def load_question():
     Return:
     question as JSON
     """
-    logging.info(f"the student is anonymous? {str(current_user.is_anonymous)}")
 
     if request.method == "GET":
         # user changed the language
@@ -191,7 +187,6 @@ def load_question():
             question = get_queue_question(requested_lang,
                                           DEFAULT_TEMP_STUDENT_ID)
             # turn the question object into json and return it
-            logging.info("language changed for untracked student")
             return question_obj_to_json(question, request_type=request.method,
                                         student_id=DEFAULT_TEMP_STUDENT_ID)
 
@@ -199,7 +194,6 @@ def load_question():
             # update document for logged-in student
             current_user.curr_study_lang = requested_lang
             current_user.save()
-            logging.info("language saved for tracked student")
             # get id for the next question
             next_question_id = current_user.language_progress.\
                 filter(language=current_user.
@@ -218,48 +212,35 @@ def load_question():
             temp_student.curr_study_lang = request.form.get('language')
             temp_student.save()
             login_user(temp_student)
-            logging.info("logged in temp student")
-            logging.info(f"temp student id: {str(current_user.id)}")
 
         if current_user.temp:
-            logging.info(f"answer received: {request.form}")
             # update the dictionary with new student id
             # make mutable shallow copy of ImmutableMultiDict
             answer_dict = request.form.copy()
             answer_dict["student_id"] = str(current_user.id)
-            logging.info(f"answer after updating student id: {answer_dict}")
             save_answer(**answer_dict)
             current_user.num_questions_answered += 1
             if current_user.num_questions_answered >= 5 and \
                     (current_user.num_questions_answered % 5) == 0:
                 prod_signup = True
-                logging.info("prod signup TRUE")
             else:
                 prod_signup = False
-                logging.info("prod signup FALSE")
 
             current_user.last_active = datetime.now(tz=pytz.UTC)
             current_user.save()
-            logging.info(f"parameters passed to save_answer(): {answer_dict}")
-            logging.info("answer saved for temp student")
 
         if not current_user.temp:
-            logging.info(request.form)
             save_answer(**request.form)
-            logging.info("answer saved for logged in student")
 
         # need to query in db to get the current state of student,
         # because it has been updated, but current_user
         # does not refresh until page reload
         student = Student.objects(id=current_user.id).first()
-        logging.info(f"student id returned from query: {student.id}")
         # get id for the next question
         next_question_id = student.language_progress.\
             filter(language=current_user.curr_study_lang)[0].question_queue[0]
 
     next_question = Question.objects(id=next_question_id).first()
-
-    logging.info(f"Next word: {next_question.word}")
 
     # we'll relay this value back to client
     previous_question_language = request.form.get("language")
@@ -282,8 +263,6 @@ def load_question():
 def translate():
     input_text = request.form.get("input_text")
     input_language = request.form.get("input_language")
-    logging.info(input_language)
-    logging.info(SUPPORTED_LANGUAGES_ABBREV.get(input_language))
     if input_language == "english":
         target_language = "fr"
     else:

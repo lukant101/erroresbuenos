@@ -10,7 +10,6 @@ from qwell.db_model import StudentHistory, Question
 
 def create_stud_hist_coll():
     """If the StudentHistory collection does not exist, create it."""
-    mongoengine.connect("qwell_db", host="localhost", port=27017)
 
     # default student - lukasz:
     student_id = "5bb6b5bffde08a535c580608"
