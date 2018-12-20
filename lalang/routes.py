@@ -8,14 +8,14 @@ import pytz
 from flask_login import (login_user, current_user, logout_user, login_required,
                          fresh_login_required)
 from flask_mail import Message
-from lalang import app, bcrypt, mail, send_email_address
+from lalang import app, bcrypt, mail
 from lalang.helpers.more_questions import (get_questions_all_lang,
                                            get_queue_question)
 from lalang.helpers.save_answer import save_answer
 from lalang.helpers.create_student import create_temp_student
 from lalang.constants import (SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE,
                               DEFAULT_TEMP_STUDENT_ID,
-                              SUPPORTED_LANGUAGES_ABBREV)
+                              SUPPORTED_LANGUAGES_ABBREV, EMAIL_SENDER)
 from lalang.helpers.utils import question_obj_to_json, is_safe_url
 from lalang.forms import (StudentRegister,
                           StudentLogin, RequestResetForm, ResetPasswordForm,
@@ -103,8 +103,8 @@ def register():
 
 def send_reset_email(student):
     token = student.get_reset_token()
-    msg = Message("Password Reset",
-                  sender=send_email_address,
+    msg = Message("Qwell Password Reset",
+                  sender=EMAIL_SENDER,
                   recipients=[student.email])
     msg.body = f"""To reset the password, go to:
 {url_for("reset_password", token=token, _external=True)}

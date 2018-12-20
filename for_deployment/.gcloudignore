@@ -25,3 +25,4 @@ qwell/helpers/__pycache__/
 app.log
 qwell/static/audio/
 qwell/static/pics
+qwell/static/js/scriptsTemp2.js

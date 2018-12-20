@@ -90,9 +90,9 @@
                 <label class='d-block'>Part of Speech: <span id="part_of_speech_elem" class="font-weight-bold">{{ question.part_of_speech }}</span><div id="hint-div" style="display: {{ hint_display}};"><span class="ml-3">Hint: </span><span id="hint" class="font-weight-bold">{{ question.hint }}</span></div></label>
                     <button id='play_button' onclick='playAudioOut()' type='button' class='btn btn-info rounded-circle d-inline mr-2 mb-2'><i class="fas fa-volume-up"></i></button>
                     <input type='text' class='custom-control custom-control-inline mr-0 mb-2' name="user_answer" id='user_answer' autofocus>
-                    <button id='send_answer_btn' type='button' class='btn btn-info rounded-circle ml-0 mr-2 mb-2'><i class="fas fa-arrow-right"></i></button>
-                    <button id="good_job_msg" style="display: none" class="btn btn-success ml-0 mb-2" type='button'>Good job!</button>
-                    <button id="wrong_answer_btn" style="display:none" class="btn btn-danger rounded-circle ml-0 mr-2 mb-2" type='button'><i class="fas fa-arrow-right"></i></button>
+                    <button id='send_answer_btn' type='button' class='btn btn-info rounded-circle ml-0 mr-1 mb-2'><i class="fas fa-arrow-right"></i></button>
+                    <button id="wrong_answer_btn" style="display:none" class="btn btn-danger rounded-circle ml-1 mb-2" type='button'><i class="fas fa-arrow-right"></i></button>
+                    <i id="good_job_msg" class="ml-0 text-success far fa-check-circle"></i>
                     <input type="hidden" name="question_id" id="question_id" value="{{ question.id }}">
                     <input type="hidden" name="student_id" id="student_id" value="{{ student_id }}">
                     <input type="hidden" name="answers" id="answers" value="{{ question.all_answers }}">

@@ -11,9 +11,9 @@ app = Flask("lalang")
 
 app.config.from_pyfile('../app_config.cfg')
 
-send_email_address = os.environ.get('EMAIL_USER')
-app.config['MAIL_USERNAME'] = send_email_address
+app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')
 app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')
+
 
 mail = Mail(app)
 

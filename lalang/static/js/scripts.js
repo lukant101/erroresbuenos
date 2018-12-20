@@ -324,7 +324,11 @@ function showAndSubmitAnswer(answer_info) {
     console.log("Document has focus? ", document.hasFocus());
     if (answer_info.answer_correct) {
         console.log("right answer");
-        $("#good_job_msg").fadeIn().delay(800).fadeOut(submitAnswer(answer_info));
+        $("#good_job_msg").addClass("visible");
+        setTimeout(function() {
+            $("#good_job_msg").removeClass("visible");
+        }, 1000);
+        setTimeout(submitAnswer, 2000, answer_info);
     } else {
         console.log("Document has focus? ", document.hasFocus());
         showAnswer();

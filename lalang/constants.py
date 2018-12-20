@@ -36,10 +36,5 @@ START_REVIEW = 400
 # to this number of questions
 BASE_ANSWERED_CORRECTLY = 100
 
-
-# lukasz
-# student_id = "5bcfe75afde08a2e18a11f35"
-# student_id = ""
-
-# denise
-# student_id = "5bcfe810fde08a2e18a11f36"
+# adddress of the email account from which password reset emails are sent.
+EMAIL_SENDER = "password@qwell.ca"

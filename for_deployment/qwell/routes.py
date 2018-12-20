@@ -6,21 +6,21 @@ from datetime import datetime
 import pytz
 from flask_login import (login_user, current_user, logout_user, login_required,
                          fresh_login_required)
-from flask_mail import Message
-from qwell import app, bcrypt, mail, send_email_address
+from qwell import app, bcrypt
 from qwell.helpers.more_questions import (get_questions_all_lang,
-                                           get_queue_question)
+                                          get_queue_question)
 from qwell.helpers.save_answer import save_answer
 from qwell.helpers.create_student import create_temp_student
 from qwell.constants import (SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE,
-                              DEFAULT_TEMP_STUDENT_ID,
-                              SUPPORTED_LANGUAGES_ABBREV)
+                             DEFAULT_TEMP_STUDENT_ID,
+                             SUPPORTED_LANGUAGES_ABBREV)
 from qwell.helpers.utils import question_obj_to_json, is_safe_url
 from qwell.forms import (StudentRegister,
-                          StudentLogin, RequestResetForm, ResetPasswordForm,
-                          AccountUpdateForm, PasswordUpdateForm)
+                         StudentLogin, RequestResetForm, ResetPasswordForm,
+                         AccountUpdateForm, PasswordUpdateForm)
 from qwell.db_model import Student, Question
 from qwell.helpers.gtranslate import google_translate
+from qwell.helpers.send_reset_email import send_reset_email
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -96,19 +96,6 @@ def register():
         return redirect(url_for("login"))
 
     return render_template("register.html", form=form)
-
-
-def send_reset_email(student):
-    token = student.get_reset_token()
-    msg = Message("Password Reset",
-                  sender=send_email_address,
-                  recipients=[student.email])
-    msg.body = f"""To reset the password, go to:
-{url_for("reset_password", token=token, _external=True)}
-
-If you did not request a password reset, you can simply ignore this email and no changes will be made to your account.
-"""
-    mail.send(msg)
 
 
 @app.route("/request-reset", methods=['GET', "POST"])
