@@ -137,10 +137,10 @@ def prep_questions(language, student_id, num_questions_needed):
 
     language: str
     student_id = str -- argument for ObjectId() in MongoDB
-    num_ques: integer
+    num_questions_needed: integer
 
     Precondition:
-    num_ques > 0
+    num_questions_needed > 0
 
     Return:
     None
@@ -158,6 +158,9 @@ def prep_questions(language, student_id, num_questions_needed):
         id=student_id).first().language_progress.filter(
         language=language)
 
+    logging.info("Num of questions in queue at beginning of prep_questions: ")
+    logging.info(len(language_embed_doc[0].question_queue))
+
     # if answered_corr_stack is "big", reduce it, i.e. release questions
     # for review
     size_corr_stack = len(language_embed_doc[0].answered_corr_stack)
@@ -171,45 +174,48 @@ def prep_questions(language, student_id, num_questions_needed):
         logging.info("Questions released for review.")
 
     # draw random question from all possible questions
-    # keep drawing questions until you get {num_questions} questions
+    # keep drawing questions until you get {num_questions_needed} questions
     while num_questions_added < num_questions_needed:
+        logging.info("In the while loop in prep_questions")
         q_used = False
         sample_iter = questions_iter.aggregate({"$sample": {"size": 1}})
         # aggregate outputs an iterator holding dictionaries
         new_question = next(sample_iter)
-        # aggregate returns key "_id", so change to "id"
-        new_question["id"] = new_question.pop("_id")
-        # convert the dictionary to Question object
-        new_question = dict_to_question_obj(new_question)
 
         # check that this question is not in the queue, or the two stacks
         # of answered questions
         # if not, then add it to the queue
         for q_id in language_embed_doc[0].question_queue:
-            if new_question.id == q_id:
+            # aggregate returns key "_id", so don't use "id"
+            if new_question["_id"] == q_id:
                 q_used = True
                 break
-        if q_used:
-            break
 
-        for q_id in language_embed_doc[0].answered_wrong_stack:
-            if new_question.id == q_id:
-                q_used = True
-                break
-        if q_used:
-            break
+        if not q_used:
+            for q_id in language_embed_doc[0].answered_wrong_stack:
+                if new_question["_id"] == q_id:
+                    q_used = True
+                    break
+            if not q_used:
+                for q_id in language_embed_doc[0].answered_corr_stack:
+                    if new_question["_id"] == q_id:
+                        q_used = True
+                        break
 
-        for q_id in language_embed_doc[0].answered_corr_stack:
-            if new_question.id == q_id:
-                q_used = True
-                break
-        if q_used:
-            break
+        if not q_used:
+            # question not used, so add its id to the Student queue of questions
+            language_embed_doc[0].question_queue.append(new_question["_id"])
+            language_embed_doc.save()
+            num_questions_added += 1
+            logging.info(f"Num of questions added to queue: {num_questions_added}")
 
-        # question not used, so add its id to the Student queue of questions
-        language_embed_doc[0].question_queue.append(new_question.id)
-        language_embed_doc.save()
-        num_questions_added += 1
+    # query again to check the size of the question queue
+    language_embed_doc = Student.objects(
+        id=student_id).first().language_progress.filter(
+        language=language)
+
+    logging.info("Num of questions in queue at the end of prep_questions: ")
+    logging.info(len(language_embed_doc[0].question_queue))
 
     return None
 
@@ -234,11 +240,11 @@ def get_questions_all_lang(supp_lang_list, student_id):
     questions_all_lang = {}
 
     for lang in supp_lang_list:
-        question_list = get_queue_question(lang, student_id)
-        if question_list:
-            # questions in student's queue, so add them to dictionary
+        question = get_queue_question(lang, student_id)
+        if question:
+            # question in student's queue, so add it to dictionary
             # of all supported languages
-            questions_all_lang[lang] = question_list
+            questions_all_lang[lang] = question
             logging.info(f"Just fetched a question from queue for {lang}")
         else:
             # no questions in queue, i.e. student has not studied

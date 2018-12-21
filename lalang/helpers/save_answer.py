@@ -125,6 +125,8 @@ def save_answer(*, student_id, language,
     language_embed_doc = student.language_progress.filter(
         language=stud_hist.language)
 
+    logging.info(f"Number of questions in queue: {len(language_embed_doc[0].question_queue)}")
+
     # update the embedded document for this language
     language_embed_doc[0].last_studied = datetime.datetime.now(tz=pytz.UTC)
 
@@ -150,9 +152,21 @@ def save_answer(*, student_id, language,
     language_embed_doc[0].question_queue.pop(0)
     logging.info(f"Removed question from queue")
 
+    logging.info(
+        f"Number of questions in queue after pop: {len(language_embed_doc[0].question_queue)}")
+
     language_embed_doc.save()
+
+    logging.info(
+        f"Number of questions in queue after save: {len(language_embed_doc[0].question_queue)}")
 
     # if queue doesn't have enough questions, add more questions
     if len(language_embed_doc[0].question_queue) < MIN_QUESTIONS_IN_QUEUE:
         prep_questions(language[0], str(current_user.id), NUM_QUESTIONS_TO_LOAD)
         logging.info(f"added new questions to queue")
+
+    language_embed_doc = student.language_progress.filter(
+        language=stud_hist.language)
+
+    logging.info(
+        f"Number of questions in queue after new query: {len(language_embed_doc[0].question_queue)}")

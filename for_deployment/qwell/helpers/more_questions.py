@@ -98,7 +98,7 @@ def get_queue_question(language, student_id):
     Return:
     Question object or None
     """
-    
+
     # check this EmbeddedDocumentList field exists before adding to it;
     # if all list items get deleted, then MongoDB will delete the list field
     # so guard against that
@@ -133,10 +133,10 @@ def prep_questions(language, student_id, num_questions_needed):
 
     language: str
     student_id = str -- argument for ObjectId() in MongoDB
-    num_ques: integer
+    num_questions_needed: integer
 
     Precondition:
-    num_ques > 0
+    num_questions_needed > 0
 
     Return:
     None
@@ -161,45 +161,38 @@ def prep_questions(language, student_id, num_questions_needed):
         del language_embed_doc[0].answered_corr_stack[:questions_to_release]
 
     # draw random question from all possible questions
-    # keep drawing questions until you get {num_questions} questions
+    # keep drawing questions until you get {num_questions_needed} questions
     while num_questions_added < num_questions_needed:
         q_used = False
         sample_iter = questions_iter.aggregate({"$sample": {"size": 1}})
         # aggregate outputs an iterator holding dictionaries
         new_question = next(sample_iter)
-        # aggregate returns key "_id", so change to "id"
-        new_question["id"] = new_question.pop("_id")
-        # convert the dictionary to Question object
-        new_question = dict_to_question_obj(new_question)
 
         # check that this question is not in the queue, or the two stacks
         # of answered questions
         # if not, then add it to the queue
         for q_id in language_embed_doc[0].question_queue:
-            if new_question.id == q_id:
+            # aggregate returns key "_id", so don't use "id"
+            if new_question["_id"] == q_id:
                 q_used = True
                 break
-        if q_used:
-            break
 
-        for q_id in language_embed_doc[0].answered_wrong_stack:
-            if new_question.id == q_id:
-                q_used = True
-                break
-        if q_used:
-            break
+        if not q_used:
+            for q_id in language_embed_doc[0].answered_wrong_stack:
+                if new_question["_id"] == q_id:
+                    q_used = True
+                    break
+            if not q_used:
+                for q_id in language_embed_doc[0].answered_corr_stack:
+                    if new_question["_id"] == q_id:
+                        q_used = True
+                        break
 
-        for q_id in language_embed_doc[0].answered_corr_stack:
-            if new_question.id == q_id:
-                q_used = True
-                break
-        if q_used:
-            break
-
-        # question not used, so add its id to the Student queue of questions
-        language_embed_doc[0].question_queue.append(new_question.id)
-        language_embed_doc.save()
-        num_questions_added += 1
+        if not q_used:
+            # question not used, so add its id to the Student queue of questions
+            language_embed_doc[0].question_queue.append(new_question["_id"])
+            language_embed_doc.save()
+            num_questions_added += 1
 
     return None
 
@@ -224,11 +217,11 @@ def get_questions_all_lang(supp_lang_list, student_id):
     questions_all_lang = {}
 
     for lang in supp_lang_list:
-        question_list = get_queue_question(lang, student_id)
-        if question_list:
-            # questions in student's queue, so add them to dictionary
+        question = get_queue_question(lang, student_id)
+        if question:
+            # question in student's queue, so add it to dictionary
             # of all supported languages
-            questions_all_lang[lang] = question_list
+            questions_all_lang[lang] = question
         else:
             # no questions in queue, i.e. student has not studied
             # this language, so use default questions read from json file

@@ -5,6 +5,7 @@ ingested into the database.
 
 Input:
 hard-code info on each workbook:
+workbook / file name
 sheet name
 and the range of cells holding info on the images:
 first column, last column, last row

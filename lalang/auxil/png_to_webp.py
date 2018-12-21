@@ -6,11 +6,11 @@ m_q_size = (480, 360)
 h_q_size = (640, 480)
 xh_q_size = (960, 720)
 
-output_sizes = [m_q_size]
+output_sizes = [m_q_size, xh_q_size]
 quality = 70
 
 _path = "C:/Users/Lukasz/Python/ErroresBuenos/assets/\
-photos/resizing/HD/"
+photos/resizing/resize_queue/"
 
 files = [f for f in listdir(_path) if isfile(join(_path, f))]
 
@@ -22,6 +22,6 @@ for f in files:
         for size in output_sizes:
             i = Image.open(path_file)
             i.thumbnail(size)
-            path_out = f"C:/Users/Lukasz/Python/ErroresBuenos/assets/photos/resizing/resized/webp/from_png/quality{quality}/"
+            path_out = f"C:/Users/Lukasz/Python/ErroresBuenos/assets/photos/resizing/resize_output/webp/"
             i.save(path_out+file_name+f"-{size[0]}px" + ".webp",
                    format="webp", quality=quality, method=6)

@@ -24,7 +24,7 @@
               {% if current_user.is_authenticated and not current_user.temp %}
                 <div id="scoreboard" class="ml-2 border rounded border-secondary shadow-sm">
                     <div class="d-inline-block" class="d-inline-block">{{ current_user.username}}</div>
-                    <div class="d-inline-block"><i class="far fa-check-circle text-success"></i> <b id="scoreCount">{{ current_user.num_correct_answers}}</b></div>
+                    <div class="d-inline-block"><i class="far fa-check-circle text-success"></i> <b id="scoreCount" class="ml-1">{{ current_user.num_correct_answers}}</b></div>
                 </div>
               {% endif%}
           </div>
