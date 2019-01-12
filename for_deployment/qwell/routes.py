@@ -6,18 +6,17 @@ from datetime import datetime
 import pytz
 from flask_login import (login_user, current_user, logout_user, login_required,
                          fresh_login_required)
-from qwell import app, bcrypt
-from qwell.helpers.more_questions import (get_questions_all_lang,
-                                          get_queue_question)
+from qwell import app, bcrypt, mail
+from qwell.helpers.more_questions import get_question
 from qwell.helpers.save_answer import save_answer
 from qwell.helpers.create_student import create_temp_student
 from qwell.constants import (SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE,
-                             DEFAULT_TEMP_STUDENT_ID,
-                             SUPPORTED_LANGUAGES_ABBREV)
+                              DEFAULT_TEMP_STUDENT_ID,
+                              SUPPORTED_LANGUAGES_ABBREV, EMAIL_SENDER)
 from qwell.helpers.utils import question_obj_to_json, is_safe_url
 from qwell.forms import (StudentRegister,
-                         StudentLogin, RequestResetForm, ResetPasswordForm,
-                         AccountUpdateForm, PasswordUpdateForm)
+                          StudentLogin, RequestResetForm, ResetPasswordForm,
+                          AccountUpdateForm, PasswordUpdateForm)
 from qwell.db_model import Student, Question
 from qwell.helpers.gtranslate import google_translate
 from qwell.helpers.send_reset_email import send_reset_email
@@ -143,11 +142,11 @@ def home():
         curr_lang = current_user.curr_study_lang
         student_id = str(current_user.id)
 
-    questions = get_questions_all_lang(SUPPORTED_LANGUAGES, student_id)
+    question, side = get_question(curr_lang, student_id)
 
-    return render_template('home.html', curr_lang=curr_lang,
+    return render_template("home.html", curr_lang=curr_lang,
                            all_langs=SUPPORTED_LANGUAGES,
-                           question=questions[curr_lang],
+                           question=question, side=side,
                            student_id=student_id)
 
 
@@ -164,39 +163,37 @@ def load_question():
     Return:
     question as JSON
     """
-
     if request.method == "GET":
         # user changed the language
         requested_lang = request.args.get('language')
 
         if current_user.is_anonymous:
+            student_id = DEFAULT_TEMP_STUDENT_ID
             # get the default question for the requested language
-            question = get_queue_question(requested_lang,
-                                          DEFAULT_TEMP_STUDENT_ID)
+            question, side = get_question(requested_lang, student_id)
             # turn the question object into json and return it
-            return question_obj_to_json(question, request_type=request.method,
-                                        student_id=DEFAULT_TEMP_STUDENT_ID)
 
         if not current_user.is_anonymous:
+            student_id = current_user.id
             # update document for logged-in student
             current_user.curr_study_lang = requested_lang
             current_user.save()
-            # get id for the next question
-            next_question_id = current_user.language_progress.\
-                filter(language=current_user.
-                       curr_study_lang)[0].question_queue[0]
 
-        # set flag for prompting for sign-up
-        if current_user.temp:
-            prod_signup = False
+            # get the next question and return it
+            question, side = get_question(requested_lang,
+                                          current_user.id)
+
+        return question_obj_to_json(question, question_side=side,
+                                    student_id=student_id, request_type="GET")
 
     if request.method == "POST":
+        question_language = request.form.get('language')
         # user answered a question, so save it
         if current_user.is_anonymous:
             # to save, we need a Student document, so create one and
             # log student in (to save subsequent questions)
             temp_student = create_temp_student()
-            temp_student.curr_study_lang = request.form.get('language')
+            temp_student.curr_study_lang = question_language
             temp_student.save()
             login_user(temp_student)
 
@@ -218,32 +215,18 @@ def load_question():
 
         if not current_user.temp:
             save_answer(**request.form)
+            prod_signup = False
 
-        # need to query in db to get the current state of student,
-        # because it has been updated, but current_user
-        # does not refresh until page reload
-        student = Student.objects(id=current_user.id).first()
-        # get id for the next question
-        next_question_id = student.language_progress.\
-            filter(language=current_user.curr_study_lang)[0].question_queue[0]
+        # get the next question in the same language as the answer
+        question, side = get_question(question_language,
+                                      current_user.id)
 
-    next_question = Question.objects(id=next_question_id).first()
-
-    # we'll relay this value back to client
-    previous_question_language = request.form.get("language")
-
-    # turn the question object into json and return it
-    if current_user.temp:
-        # for temp student, include student_id, so it can be updated
-        # also, send flag whether to prompt user for sign-up
-        return question_obj_to_json(next_question, request_type=request.method,
-                                    student_id=str(current_user.id),
-                                    prev_q_lang=previous_question_language,
+        # return the question object and other info as json
+        return question_obj_to_json(question, question_side=side,
+                                    student_id=current_user.id,
+                                    request_type="POST",
+                                    prev_q_lang=question_language,
                                     prod_signup=prod_signup)
-
-    return question_obj_to_json(next_question, request_type=request.method,
-                                prev_q_lang=previous_question_language,
-                                student_id=str(current_user.id))
 
 
 @app.route("/translate", methods=["GET", "POST"])

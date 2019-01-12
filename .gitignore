@@ -30,6 +30,7 @@ app.log
 lalang/helpers/unused/
 lalang/questions/
 lalang/static/fonts/fontawesome/
+previous_deployment_files/
 
 # For deployment #
 ############

@@ -1,4 +1,3 @@
-const DEFAULT_TITLE="Let's Practice";
 var eavesdropped_audio = [];
 // flag to keep track if load_question request is for a question in a new language
 var wrong_answers_log = {};
@@ -7,18 +6,20 @@ var signup_btn_timer_id = "";
 var all_answers = [];
 var current_ids = {};
 
-function title_cap(word) {
-    return word.charAt(0).toUpperCase() + word.substr(1)
-}
-
-function updateTitlePractise() {
-    $(document).ready(function() {
-        const title_elem = document.getElementById("title_practice");
-        if (title_elem !== null) {
-            var lang=document.getElementById("lang_select").value;
-            title_elem.innerHTML=DEFAULT_TITLE + " " + title_cap(lang) + "!";
+function updateTitlePractise(lang) {
+    const title_elem = document.getElementById("title_practice");
+    if (title_elem !== null) {
+        switch (lang) {
+            case "english":
+                title_elem.innerHTML="Let's Practise English!";
+                break;
+            case "polish":
+                title_elem.innerHTML="Uczmy się polskiego!";
+                break;
+            default:
+                title_elem.innerHTML="¡Practiquemos español!";
         }
-    });
+    }
 }
 
 function load_answers() {
@@ -82,6 +83,48 @@ $( window ).resize(function() {
     set_height_img_container();
 });
 
+// even listener: left or right arrow key pressed when
+// student sees the three answer buttons on a front-sided question
+$(document).keydown(function (event) {
+    if ($("#answer_front_btns").css("display") !== "none") {
+        let code = event.which || event.keyCode;
+        let activeElem_id = $(document.activeElement).prop("id");
+        console.log("active element id: ", activeElem_id);
+        if (activeElem_id === "0_answer_front") {
+            if (code === 39) {
+                // right arrow key pressed
+                $("#1_answer_front").focus();
+            }
+            if (code === 37) {
+                // left arrow key pressed
+                $("#2_answer_front").focus();
+            }
+        }
+        if (activeElem_id === "1_answer_front") {
+            if (code === 39) {
+                // right arrow key pressed
+                $("#2_answer_front").focus();
+            }
+            if (code === 37) {
+                // left arrow key pressed
+                $("#0_answer_front").focus();
+            }
+        }
+        if (activeElem_id === "2_answer_front") {
+            if (code === 39) {
+                // right arrow key pressed
+                $("#0_answer_front").focus();
+            }
+            if (code === 37) {
+                // left arrow key pressed
+                $("#1_answer_front").focus();
+            }
+        }
+    }
+});
+
+
+
 // event listener: Enter key pressed;
 // action: submit answer
 $(document).ready(function () {
@@ -91,45 +134,78 @@ $(document).ready(function () {
             console.log("pressed the enter key");
             // prevent reloading of page
             event.preventDefault();
-            // check whether student submitted the original answer or
-            // an incorrect answer (i.e. the red submission button is visible)
-            if ($("#wrong_answer_btn").css("display") === "none") {
-                // use a flag to prevent double-pressing Enter key
-                if (enter_pressed===false) {
-                    enter_pressed=true;
-                    sub_fld = $("#user_answer");
-                    sub_fld.prop("disabled", true);
-                    $("#send_answer_btn").prop("disabled",true);
-                    showAndSubmitAnswer(markAnswer());
+            // check whether student is looking at the front or back side of a question
+            if ($("#front-top-container").css("display") !== "none") {
+                // student sees a front-sided question
+                // now check whether it's the initial submission
+                // or whether the three answer buttons are visible and we are
+                // ready to submit answer to server
+                if ($("#answer_front_btns").css("display") === "none") {
+                    front_initial_submit();
+                    // student is shown the three answer buttons; focus on the
+                    // first one so that the enter key can be used right away
+                    // to submit
+                    $("#0_answer_front").focus();
+                } else {
+                    // student sees the three answer buttons
+                    let activeElem_id = $(document.activeElement).prop("id");
+                    console.log("active element id: ", activeElem_id);
+                    if (activeElem_id === "0_answer_front") {
+                        submit_front_answer("0");
+                        console.log("submitted front answer 0");
+                    }
+                    if (activeElem_id === "1_answer_front") {
+                        submit_front_answer("1");
+                        console.log("submitted front answer 1");
+                    }
+                    if (activeElem_id === "2_answer_front") {
+                        submit_front_answer("2");
+                        console.log("submitted front answer 2");
+                    }
                 }
-
             } else {
-                console.log("red button is visible, so hide the answer");
-                // do the same as when the red "wrong" button is expressed
-                hideAnswer();
-                console.log("after hideAnswer()");
-                // first we cancel the timer, then we submit the wrong answer
-                info = wrong_answers_log[current_language];
-                clearTimeout(info.timer_id);
-                submitWrongAnswer(info);
+                // student sees a back-sided question
+                // now check if student submitted the original answer or
+                // an incorrect answer (i.e. the red submission button is visible)
+                if ($("#wrong_answer_btn").css("display") === "none") {
+                    // use a flag to prevent double-pressing Enter key
+                    if (enter_pressed===false) {
+                        enter_pressed=true;
+                        sub_fld = $("#user_answer");
+                        sub_fld.prop("disabled", true);
+                        $("#send_answer_btn").prop("disabled",true);
+                        showAndSubmitAnswer(markAnswer());
+                    }
+
+                } else {
+                    console.log("red button is visible, so hide the answer");
+                    // do the same as when the red "wrong" button is expressed
+                    hideAnswer();
+                    console.log("after hideAnswer()");
+                    // first we cancel the timer, then we submit the wrong answer
+                    info = wrong_answers_log[current_language];
+                    clearTimeout(info.timer_id);
+                    submitWrongAnswer(info);
+                }
             }
         }
     });
 });
 
-
 // when user clicks the sign-up prompt button, hide it and cancel the timer
-$(document).ready(function() {
-    $("#prod_signup").click( function() {
-        clearTimeout(signup_btn_timer_id);
-        $("#prod_signup").hide();
-    });
-});
+function hide_prod_signup() {
+    clearTimeout(signup_btn_timer_id);
+    $("#prod_signup").hide();
+    console.log("hid the sign-up prompt button");
+    location.assign("/register");
+
+}
 
 // ask for a new question when user changes language in dropdown menu
 $(document).ready(function() {
     $("#lang_select").change( function() {
         current_language = $(this).val();
+        updateTitlePractise(current_language);
         console.log("Current language reset to: ");
         console.log(current_language);
         // enable or disable answer input depending if audio was heard for
@@ -177,6 +253,32 @@ $(document).ready(function() {
     });
 });
 
+function submit_front_answer(answer) {
+    // disable the answer buttons
+    $("#0_answer_front").prop("disabled",true);
+    $("#1_answer_front").prop("disabled",true);
+    $("#2_answer_front").prop("disabled",true);
+
+    // If student picked "Again", submit "0" as user_answer
+    // If student picked "Good", submit "1" as user_answer
+    // If student picked "Easy", submit "2" as user_answer
+
+    if (answer === "2") {
+        incrementScore();
+    }
+    console.log("sending question id: ", current_ids.question_id);
+    $.post("/next-question",
+            {
+                user_answer : answer,
+                question_id : current_ids.question_id,
+                question_side: "front",
+                student_id : current_ids.student_id,
+                language : current_language
+            },
+            load_question, "json"
+    );
+}
+
 // event listener: clicked the answer submit button
 // sends user's answer and asks for a new question when user clicks the submit button
 $(document).ready(function() {
@@ -196,6 +298,19 @@ $(document).ready(function() {
     });
 });
 
+// event listener: clicked the "front" answer submit button
+// result: shows the Again, Good, Easy buttons
+$(document).ready(function() {
+    $("#send_answer_btn_front").click(front_initial_submit);
+});
+
+function front_initial_submit() {
+    console.log("just pressed the front submit button");
+    $("#send_answer_btn_front").prop("disabled", true);
+    $("#answer_front_btns").fadeIn();
+    $("#images-outermost-container").css("display", "flex");
+}
+
 //event listener: clicked the Translate button
 $(document).ready(function() {
     $("#translate-btn").click(function() {
@@ -208,7 +323,7 @@ $(document).ready(function() {
 });
 
 function show_translation(output_text) {
-    console.log("about to provide the translated answer")
+    console.log("about to provide the translated answer");
     $("#translate_text_output").html(output_text);
     $("#translate_text_output").fadeIn();
 }
@@ -244,7 +359,7 @@ function markAnswer() {
     console.log("answer correct: ", answer_correct);
 
     if (answer_correct && ($("#scoreCount").length)) {
-        console.log("entered the increment clause")
+        console.log("entered the increment clause");
         incrementScore();
     }
 
@@ -350,14 +465,13 @@ function showAndSubmitAnswer(answer_info) {
     }
 }
 
-
-
 function submitAnswer(answer_info) {
     // flag to keep track of if load_question request is for a question in a new language
     $.post("/next-question",
             {
                 user_answer : answer_info.user_answer,
                 question_id : answer_info.question_id,
+                question_side: "back",
                 student_id : answer_info.student_id,
                 answer_correct : answer_info.answer_correct,
                 audio_answer_correct : answer_info.audio_answer_correct,
@@ -410,11 +524,52 @@ function hideAnswer() {
 
 }
 
+function reload_audio(language, file_name) {
+    // at present, only one audio file (in mp3 format) is presented per question
+    $("#audio_src").attr("src", "../static/audio/" + language.toLowerCase() + "/" + file_name + ".mp3");
+    // reload the audio source in the audio element; jQuery doesn't implement $().load(), so use JavaScript
+    document.getElementById('card_audio').load();
+}
+
+function prompt_signup() {
+        // show the sign-up prompt for 20s, then hide it
+        $("#prod_signup").fadeIn();
+        // in case there is a time-out active, cancel the previous time-out
+        if (signup_btn_timer_id) {
+            clearTimeout(signup_btn_timer_id);
+        }
+        signup_btn_timer_id = setTimeout(function(){$("#prod_signup").fadeOut();},
+        20000);
+}
+
 // callback function for ajax request - loads a new question
 function load_question(new_question)  {
     console.log(new_question);
     var quest_obj=new_question;
-    repeat_question =  (quest_obj.id === current_ids.question_id);
+    var new_q_side = quest_obj.question_side;
+    var prev_q_side = "front";
+    if ($("#front-top-container").css("display") === "none") {
+        prev_q_side = "back";
+    }
+    console.log("New side: ", new_q_side);
+    console.log("Previous side: ", prev_q_side);
+
+    // making sure that the sign-up prompt is in the right div
+    if (new_q_side !== prev_q_side) {
+        if (new_q_side === "front") {
+            $("#prod_signup").detach().appendTo("#front-top-container");
+        } else {
+            $("#prod_signup").detach().appendTo("#bottom_container_inner");
+        }
+    }
+
+    // prompt temporary user for sign-up after every fifth question answered
+    if (quest_obj.prod_signup === true) {
+        prompt_signup("#prod_signup");
+    }
+
+    var repeat_question =  ((quest_obj.id === current_ids.question_id) &&
+                            (prev_q_side === new_q_side));
 
     // refresh the page with new question, unless it's the same question as current one
     if (! repeat_question ||
@@ -470,57 +625,81 @@ function load_question(new_question)  {
 
         update_pictures(images, images_count);
 
-        // at present, only one audio file (in mp3 format) is presented per question
-        $("#audio_src").attr("src", "../static/audio/" + quest_obj.language.toLowerCase() + "/" + quest_obj.audio[0] + ".mp3");
-        // reload the audio source in the audio element; jQuery doesn't implement $().load(), so use JavaScript
-        document.getElementById('card_audio').load();
+        current_ids.question_id = quest_obj.id;
+        console.log("received from server question_id: ", quest_obj.id);
+        console.log("received from server student_id: ", quest_obj.student_id);
+        current_ids.student_id = quest_obj.student_id;
+        console.log("updated current_ids.student_id to: ", current_ids.student_id);
 
-        console.log("Hint contains: ", quest_obj.hint);
+        if (new_q_side === "back") {
+            reload_audio(quest_obj.language, quest_obj.audio[0]);
 
-        if (quest_obj.hint === "") {
-            $("#hint-div").css("display", "none");
-            console.log("hiding the hint area");
-        } else {
-            $("#hint-div").css("display", "inline");
-            $("#hint").text(quest_obj.hint);
-            console.log("showing the hint area");
+            console.log("Hint contains: ", quest_obj.hint);
+
+            if (quest_obj.hint === "") {
+                $("#hint-div").css("display", "none");
+                console.log("hiding the hint area");
+            } else {
+                $("#hint-div").css("display", "inline");
+                $("#hint").text(quest_obj.hint);
+                console.log("showing the hint area");
+            }
+
+            $("#part_of_speech_elem").text(quest_obj.part_of_speech);
+            $("#word_elem").text(quest_obj.word);
+            $("#user_answer").val("");
+            $("#translate_text_input").val(quest_obj.word);
+
+            // store the answers in a variable
+            all_answers = quest_obj.all_answers;
+            console.log("answers saved in a variable");
+
+            // show or hide divs, as necessary
+            if (prev_q_side === "front") {
+                $("#front-top-container").css("display", "none");
+                $("#images-outermost-container").css("display", "flex");
+                $("#bottom-container").css("display", "flex");
+            }
         }
 
-        $("#part_of_speech_elem").text(quest_obj.part_of_speech);
-        $("#word_elem").text(quest_obj.word);
-        $("#user_answer").val("");
-        $("#translate_text_input").val(quest_obj.word);
-        current_ids.question_id = quest_obj.id;
-        console.log("received from server student_id: ", quest_obj.student_id)
-        current_ids.student_id = quest_obj.student_id;
-        console.log("updated current_ids.student_id to: ", current_ids.student_id)
+        if (new_q_side === "front") {
+            reload_audio(quest_obj.language, quest_obj.audio[0]);
 
-        // store the answers in a variable
-        all_answers = quest_obj.all_answers;
-        console.log("answers saved in a variable");
+            $("#question_front").text(quest_obj.word);
 
-        // prompt temporary user for sign-up after every fifth question answered
-        if (quest_obj.prod_signup === true) {
-            $("#prod_signup").fadeIn();
-            // show the sign-up prompt for 20s, then hide it
-            signup_btn_timer_id = setTimeout(function(){$("#prod_signup").fadeOut();},
-            20000);
+            // show or hide divs, as necessary
+            $("#images-outermost-container").css("display", "none");
+            if (prev_q_side === "back") {
+                $("#front-top-container").css("display", "flex");
+                $("#bottom-container").css("display", "none");
+            }
+        }
+        if (prev_q_side === "front") {
+            // enable the submit button for the "front" sided questions
+            $("#send_answer_btn_front").prop("disabled", false);
+            // enable the three answer buttons, but hide the whole div
+            $("#answer_front_btns").css("display", "none");
+            $("#0_answer_front").prop("disabled",false);
+            $("#1_answer_front").prop("disabled",false);
+            $("#2_answer_front").prop("disabled",false);
         }
     }
 
-    // if this question was preceded by a question in the same language
-    // where the student listend to audio, reset to default
     if (quest_obj.request_type==="POST") {
-        // remove the language of the previous question
-        // from the eavesdropped_audio array (if it's there)
-        // because this question has been answered
-        language_index = eavesdropped_audio.indexOf(quest_obj.prev_q_lang);
-        if (language_index != -1) {
-            eavesdropped_audio.splice(language_index,1);
+        // if this "back" question was preceded by a "back" question
+        // in the same language where the student listend to audio,
+        // reset to default
+        if ((new_q_side === "back") && prev_q_side === "back") {
+            // remove the language of the previous question
+            // from the eavesdropped_audio array (if it's there)
+            // because this question has been answered
+            language_index = eavesdropped_audio.indexOf(quest_obj.prev_q_lang);
+            if (language_index != -1) {
+                eavesdropped_audio.splice(language_index,1);
+            }
 
             // update view only if it's not the same question
             if (! repeat_question) {
-
                 // enable the answer input for this language
                 $("#user_answer").prop("disabled",false);
 
@@ -531,10 +710,11 @@ function load_question(new_question)  {
                 console.log(eavesdropped_audio);
                 console.log("unlock and back to blue button - FROM LOAD QUESTION");
             }
-        }
-        // it's a new question, so hide the answer, if already not hidden
-        if ($("#show_answer").css("display") === "block") {
-            hideAnswer();
+
+            // it's a new question, so hide the answer, if already not hidden
+            if ($("#show_answer").css("display") === "block") {
+                hideAnswer();
+            }
         }
     }
 

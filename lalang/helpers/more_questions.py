@@ -2,57 +2,83 @@
 
 Exports functions:
 get_default_questions,
+get_question,
 get_queue_question,
-prep_questions,
-get_questions_all_lang.
+prep_questions.
 """
 
 import os
 import json
+import random
 import mongoengine
 import logging
 from lalang.db_model import Question, Student, LanguageProgress
 from lalang.helpers.utils import dict_to_question_obj
-from lalang.constants import START_REVIEW, BASE_ANSWERED_CORRECTLY
+from lalang.constants import (START_REVIEW, BASE_ANSWERED_CORRECTLY,
+                              SUPPORTED_LANGUAGES,
+                              MIN_WRONG_STACK_SIZE_FOR_DRAW,
+                              MIN_REVIEW_STACK_SIZE_FOR_DRAW)
+
 
 logging.basicConfig(level=logging.INFO, filename="app.log",
                     filemode="a")
 
 
-def get_default_questions(language, student_id):
-    """Read and return questions from json file.
+def _read_question_from_json(language, side):
+    """Read and return questions from json files.
 
-    For a language, read questions from a json file and add their ids
-    to the question queue in the student's document.
-    Also, return the first question as an object Question.
+    Generates a list of question ids and then for the first qusestion returns it
+    as a Question object.
 
-    Argument:
-
-    language: str
-    student_id = str -- argument for ObjectId() in MongoDB
+    Arguments:
+    language: str -- language of the question
+    side: "front" or "back"
 
     Return:
-    Question object -- the first question in the question queue
+    Tuple: (a list of question ids, question as Question object)
     """
-    question_list = []
 
     os.chdir("C:/Users/Lukasz/Python/ErroresBuenos/lalang/questions/default")
 
-    with open(f"stream_default_{language.lower()}.json", "r",
+    with open(f"stream_default_{language.lower()}_{side}.json", "r",
               encoding="utf8") as f:
 
         question_list = json.load(f)
         question_ids_list = []
 
-        # convert json documents to Question objects
-        for i, q in enumerate(question_list):
-            question = Question()
-            for k, v in q.items():
-                setattr(question, k, v)
-                if k == "id":
-                    question_ids_list.append(v)
-            # replace json document with Question object
-            question_list[i] = question
+        # store the question ids in a list
+        for q in question_list:
+            question_ids_list.append(q["id"])
+
+        # for the first question, convert the dictionary into Question object
+        question = Question()
+        for k, v in question_list[0].items():
+            setattr(question, k, v)
+
+        return question_ids_list, question
+
+
+def get_default_questions(language, student_id):
+    """Read and return questions from json files.
+
+    For a language, read questions from a json file and add their ids
+    to the question queues in the student's embedded document.
+    Do this for two separate queues: "front" and "back".
+
+    Randomly pick between the "front" and "back" queues, and return
+    the first question in one of those queues, as well the question side:
+    "front" or "back".
+
+    Argument:
+    language: str
+    student_id: str -- argument for ObjectId() in MongoDB
+
+    Return:
+    Tuple: (Question object, question side)
+    """
+
+    f_question_ids, f_question = _read_question_from_json(language, "front")
+    b_question_ids, b_question = _read_question_from_json(language, "back")
 
     # since we're using default questions, student has never studied
     # this langauge, and so there should be no embedded document
@@ -76,13 +102,19 @@ def get_default_questions(language, student_id):
 
         lang_prog = LanguageProgress(
             language=language,
-            question_queue=question_ids_list
+            f_question_queue=f_question_ids,
+            b_question_queue=b_question_ids
         )
 
-        # add new embedded document to list of all studied languages
+        # add this new embedded document to list of all studied languages
         student.update(push__language_progress=lang_prog)
         student.save()
-        return question_list[0]
+
+        # pick randomly between the front and back question and return
+        if random.choices([0, 1], cum_weights=[40, 100])[0]:
+            return f_question, "front"
+        else:
+            return b_question, "back"
 
 
 def get_queue_question(language, student_id):
@@ -90,8 +122,11 @@ def get_queue_question(language, student_id):
 
     Read question queue in Student document, and use the id to
     retrieve a question from Question collection in db.
+
+    Randomly pick between the "front" and "back" question queues.
+
     Return the question as a Question object, or None if
-    no questions in queue
+    no questions in queue.
 
     Argument:
 
@@ -99,7 +134,7 @@ def get_queue_question(language, student_id):
     student_id = str -- argument for ObjectId() in MongoDB
 
     Return:
-    Question object or None
+    Tuple: (Question object or None, question side or None)
     """
     mongoengine.connect("lalang_db", host="localhost", port=27017)
 
@@ -116,18 +151,40 @@ def get_queue_question(language, student_id):
 
     # in case the list or queue doesn't exist
     try:
-        # check that the list and queue are not empty
-        if language_embed_doc and language_embed_doc[0].question_queue:
+        # check if the embedded document exists and question queues
+        # are not empty
+        if language_embed_doc and language_embed_doc[0].f_question_queue:
             # if there are questions in queue, query and add them to list
-            question_id = language_embed_doc[0].question_queue[0]
-            return Question.objects(id=question_id).first()
+            # pick randomly between the front and back question queues
+            if random.choices([0, 1], cum_weights=[40, 100])[0]:
+                side = "front"
+                question_id = language_embed_doc[0].f_question_queue[0]
+            else:
+                side = "back"
+                question_id = language_embed_doc[0].b_question_queue[0]
+            return Question.objects(id=question_id).first(), side
         else:
-            return None
+            return None, None
     except IndexError:
-        return None
+        return None, None
 
 
-def prep_questions(language, student_id, num_questions_needed):
+def _draw_random_question(questions_iter):
+    """Draw a random question from all questions in the database collection.
+
+    Arguments:
+    questions_iter: iterator of all documents in the Question collection.
+
+    Return:
+    id of the drawn question: str
+    """
+    sample_iter = questions_iter.aggregate({"$sample": {"size": 1}})
+    # aggregate outputs an iterator holding dictionaries
+    # aggregate returns key "_id", so don't use "id"
+    return next(sample_iter)["_id"]
+
+
+def prep_questions(language, side, student_id, num_questions_needed):
     """Pick new questions and save them in db.
 
     Randomly query Question collection for more questions in the database,
@@ -136,7 +193,8 @@ def prep_questions(language, student_id, num_questions_needed):
     Argument:
 
     language: str
-    student_id = str -- argument for ObjectId() in MongoDB
+    side: "front" or "back" - which side of the question card
+    student_id = str or ObjectId() from MongoDB
     num_questions_needed: integer
 
     Precondition:
@@ -145,7 +203,18 @@ def prep_questions(language, student_id, num_questions_needed):
     Return:
     None
     """
+    # set the flags for the queues and stacks, either "f" or "b"
+    s = side[0]
+
+    # set the flags for the queues and stacks from the opposite question side
+    if s == "f":
+        op = "b"
+    else:
+        op = "f"
+
     num_questions_added = 0
+    # force to string if ObjectId passed
+    student_id = str(student_id)
 
     mongoengine.connect("lalang_db", host="localhost", port=27017)
 
@@ -159,18 +228,20 @@ def prep_questions(language, student_id, num_questions_needed):
         language=language)
 
     logging.info("Num of questions in queue at beginning of prep_questions: ")
-    logging.info(len(language_embed_doc[0].question_queue))
+    logging.info(len(getattr(language_embed_doc[0], f"{s}_question_queue")))
 
     # if answered_corr_stack is "big", reduce it, i.e. release questions
     # for review
-    size_corr_stack = len(language_embed_doc[0].answered_corr_stack)
+    size_corr_stack = len(getattr(language_embed_doc[0],
+                                  f"{s}_answered_corr_stack"))
     logging.info(f"size_corr_stack: {size_corr_stack}")
 
     if size_corr_stack > START_REVIEW:
         logging.info("We need to release questions for review")
         questions_to_release = (size_corr_stack - BASE_ANSWERED_CORRECTLY)
         logging.info(f"Number of questions to release: {questions_to_release}")
-        del language_embed_doc[0].answered_corr_stack[:questions_to_release]
+        del getattr(language_embed_doc[0],
+                    f"{s}_answered_corr_stack")[:questions_to_release]
         logging.info("Questions released for review.")
 
     # draw random question from all possible questions
@@ -178,33 +249,106 @@ def prep_questions(language, student_id, num_questions_needed):
     while num_questions_added < num_questions_needed:
         logging.info("In the while loop in prep_questions")
         q_used = False
-        sample_iter = questions_iter.aggregate({"$sample": {"size": 1}})
-        # aggregate outputs an iterator holding dictionaries
-        new_question = next(sample_iter)
+        duplicate_check_passed = False
 
-        # check that this question is not in the queue, or the two stacks
-        # of answered questions
-        # if not, then add it to the queue
-        for q_id in language_embed_doc[0].question_queue:
-            # aggregate returns key "_id", so don't use "id"
-            if new_question["_id"] == q_id:
-                q_used = True
-                break
+        # for side="back", draw from three sources:
+        # 25% of the time from f_answered_wrong_stack,
+        # i.e. the opposite - "front" - side of the question
+        # 25% of the time from b_answered_wrong_stack
+        # 50% of the time from all questions in the Question collection
 
-        if not q_used:
-            for q_id in language_embed_doc[0].answered_wrong_stack:
-                if new_question["_id"] == q_id:
+        # for side="front", draw from four sources:
+        # 20% of the time from b_answered_wrong_stack,
+        # i.e. the opposite - "back" - side of the question
+        # 15% of the time from f_answered_wrong_stack
+        # 50% of the time from all questions in the Question collection
+        # 15% of the time from f_answered_review_stack
+
+        choices = [0, 1, 2, 3]
+
+        if side == "back":
+            weights = [25, 50, 100, 100]
+            draw_bin = random.choices(choices, cum_weights=weights)[0]
+        else:
+            weights = [20, 35, 85, 100]
+            draw_bin = random.choices(choices, cum_weights=weights)[0]
+
+        # if picking from all questions in the Question collection
+        if draw_bin == 2:
+            drawn_id = _draw_random_question(questions_iter)
+
+        # if picking from wrong_stack from the opposite side
+        if draw_bin == 0:
+            # check if the opposite answered_wrong_stack is big enough
+            # to draw from; if so, draw from the first 10 questions
+
+            if (len(getattr(language_embed_doc[0], f"{op}_answered_wrong_stack"))
+                    >= MIN_WRONG_STACK_SIZE_FOR_DRAW):
+                pick = random.choice(range(10))
+                drawn_id = getattr(language_embed_doc[0],
+                                   f"{op}_answered_wrong_stack")[pick]
+            else:
+                # it didn't work, so just draw a random question
+                # from all questions in the collection
+                drawn_id = _draw_random_question(questions_iter)
+
+        # if picking from wrong_stack from the same side
+        if draw_bin == 1:
+            # check if the answered_wrong_stack for the same side is big enough
+            # to draw from; if so, use the first question in the stack
+
+            if (len(getattr(language_embed_doc[0], f"{op}_answered_wrong_stack"))
+                    >= MIN_WRONG_STACK_SIZE_FOR_DRAW):
+                drawn_id = getattr(language_embed_doc[0],
+                                   f"{op}_answered_wrong_stack").pop(0)
+                # we already know that this drawn question is not present
+                # in any relevant queue or stack, so it can be used.
+                # So, set a flag to stop further verification.
+                duplicate_check_passed = True
+            else:
+                # it didn't work, so just draw a random question
+                # from all questions in the collection
+                drawn_id = _draw_random_question(questions_iter)
+
+        # if picking from f_answered_review_stack for "front" sided question
+        if draw_bin == 3:
+            # check if f_answered_review_stack is big enough to draw from;
+            # if so, use the first question in the stack
+
+            if (len(language_embed_doc[0].f_answered_review_stack)
+                    >= MIN_REVIEW_STACK_SIZE_FOR_DRAW):
+                drawn_id = language_embed_doc[0].f_answered_review_stack.pop(0)
+                # we already know that this drawn question is not present
+                # in any relevant queue or stack, so it can be used.
+                # So, set a flag to stop further verification.
+                duplicate_check_passed = True
+            else:
+                # it didn't work, so just draw a random question
+                # from all questions in the collection
+                drawn_id = _draw_random_question(questions_iter)
+
+        # check that the drawn question is not in the queue, or the two stacks
+        # of answered questions; if not, then add it to the queue
+        if not duplicate_check_passed:
+            for q_id in getattr(language_embed_doc[0], f"{s}_question_queue"):
+                if drawn_id == q_id:
+                    q_used = True
+                    break
+
+        if not duplicate_check_passed and not q_used:
+            for q_id in getattr(language_embed_doc[0], f"{s}_answered_wrong_stack"):
+                if drawn_id == q_id:
                     q_used = True
                     break
             if not q_used:
-                for q_id in language_embed_doc[0].answered_corr_stack:
-                    if new_question["_id"] == q_id:
+                for q_id in getattr(language_embed_doc[0], f"{s}_answered_corr_stack"):
+                    if drawn_id == q_id:
                         q_used = True
                         break
 
-        if not q_used:
+        if duplicate_check_passed or not q_used:
             # question not used, so add its id to the Student queue of questions
-            language_embed_doc[0].question_queue.append(new_question["_id"])
+            getattr(language_embed_doc[0], f"{s}_question_queue").append(drawn_id)
             language_embed_doc.save()
             num_questions_added += 1
             logging.info(f"Num of questions added to queue: {num_questions_added}")
@@ -215,41 +359,54 @@ def prep_questions(language, student_id, num_questions_needed):
         language=language)
 
     logging.info("Num of questions in queue at the end of prep_questions: ")
-    logging.info(len(language_embed_doc[0].question_queue))
+    logging.info(len(getattr(language_embed_doc[0], f"{s}_question_queue")))
 
     return None
 
 
-def get_questions_all_lang(supp_lang_list, student_id):
-    """Provide questions to a student for all supported languages.
+def get_question(language, student_id):
+    """Provide a question to a student for a given language.
 
-    For all supported languages, read a question.
-    If student already studied a language, read from question queue in
-    Student document (i.e. the db), and return the first question.
-    If not, read default questions from json file, add them to the db,
-    and return the first question.
+    If the student has never seen any question before, read default questions
+    from json file for all supported languages,
+    add them to the student's question queues in the db,
+    and return a question for the given language.
+
+    If the student has been served a question before, read and return the first
+    question in the question queue (randomly choose between the "front" and
+    "back" question queues).
+
+    For questions that can be asked in two directions - for example
+    many flash cards - there are "front" and "back" sides. There are separate
+    queues for each side.
+
 
     Argument:
 
-    supp_lang_list: list[str] -- supported languages
-    student_id = str -- argument for ObjectId() in MongoDB
+    language: str -- language of the question
+    student_id: MongoDB ObjectId or str (argument for ObjectId())
 
     Return:
-    dictionary{language: Question}
+    tuple: (Question object, question side)
     """
-    questions_all_lang = {}
 
-    for lang in supp_lang_list:
-        question = get_queue_question(lang, student_id)
-        if question:
-            # question in student's queue, so add it to dictionary
-            # of all supported languages
-            questions_all_lang[lang] = question
-            logging.info(f"Just fetched a question from queue for {lang}")
-        else:
-            # no questions in queue, i.e. student has not studied
-            # this language, so use default questions read from json file
-            questions_all_lang[lang] = get_default_questions(lang, student_id)
+    # in case ObjectId is passed
+    student_id = str(student_id)
+
+    question, side = get_queue_question(language, student_id)
+    logging.info(f"Just fetched a question from queue for {language}")
+
+    if not question:
+        # no question in queue, i.e. brand new student; so read default
+        # questions for all supported languages from a json file,
+        # set up the question queues and return a question for
+        # the given language
+        questions_all_lang = {}
+        for lang in SUPPORTED_LANGUAGES:
+            if lang == language:
+                question, side = get_default_questions(lang, student_id)
+            else:
+                get_default_questions(lang, student_id)
             logging.info(f"Just added default questions for {lang}")
 
-    return questions_all_lang
+    return question, side

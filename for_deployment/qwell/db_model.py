@@ -59,9 +59,17 @@ class LanguageProgress(db.EmbeddedDocument):
     language_proficiency = db.DecimalField(min_value=0,
                                            max_value=100, default=0)
     last_studied = db.DateTimeField(default=datetime.datetime.now(tz=pytz.UTC))
-    question_queue = db.ListField(field=db.ObjectIdField())
-    answered_wrong_stack = db.ListField(field=db.ObjectIdField())
-    answered_corr_stack = db.ListField(field=db.ObjectIdField())
+
+    # questions asked from the "front"
+    f_question_queue = db.ListField(field=db.ObjectIdField())
+    f_answered_wrong_stack = db.ListField(field=db.ObjectIdField())
+    f_answered_corr_stack = db.ListField(field=db.ObjectIdField())
+    f_answered_review_stack = db.ListField(field=db.ObjectIdField())
+
+    # questions asked from the "back"
+    b_question_queue = db.ListField(field=db.ObjectIdField())
+    b_answered_wrong_stack = db.ListField(field=db.ObjectIdField())
+    b_answered_corr_stack = db.ListField(field=db.ObjectIdField())
 
 
 @login_manager.user_loader
@@ -127,11 +135,12 @@ class StudentHistory(db.Document):
 
     student_id = db.ObjectIdField()
     question_id = db.ObjectIdField()
+    question_side = db.StringField(choices=("front", "back"))
     language = db.StringField(required=True, max_length=20,
                               choices=SUPPORTED_LANGUAGES)
     answer = db.ListField(field=db.StringField())
-    answer_correct = db.BooleanField(default=False)
-    audio_answer_correct = db.BooleanField(default=False)
+    answer_correct = db.BooleanField()
+    audio_answer_correct = db.BooleanField()
     attempts_count = db.IntField(default=0)
     last_attempted = db.DateTimeField(
         default=datetime.datetime.now(tz=pytz.UTC))

@@ -9,8 +9,7 @@ from flask_login import (login_user, current_user, logout_user, login_required,
                          fresh_login_required)
 from flask_mail import Message
 from lalang import app, bcrypt, mail
-from lalang.helpers.more_questions import (get_questions_all_lang,
-                                           get_queue_question)
+from lalang.helpers.more_questions import get_question
 from lalang.helpers.save_answer import save_answer
 from lalang.helpers.create_student import create_temp_student
 from lalang.constants import (SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE,
@@ -159,11 +158,11 @@ def home():
         curr_lang = current_user.curr_study_lang
         student_id = str(current_user.id)
 
-    questions = get_questions_all_lang(SUPPORTED_LANGUAGES, student_id)
+    question, side = get_question(curr_lang, student_id)
 
-    return render_template('home.html', curr_lang=curr_lang,
+    return render_template("home.html", curr_lang=curr_lang,
                            all_langs=SUPPORTED_LANGUAGES,
-                           question=questions[curr_lang],
+                           question=question, side=side,
                            student_id=student_id)
 
 
@@ -187,35 +186,34 @@ def load_question():
         requested_lang = request.args.get('language')
 
         if current_user.is_anonymous:
+            student_id = DEFAULT_TEMP_STUDENT_ID
             # get the default question for the requested language
-            question = get_queue_question(requested_lang,
-                                          DEFAULT_TEMP_STUDENT_ID)
+            question, side = get_question(requested_lang, student_id)
             # turn the question object into json and return it
             logging.info("language changed for untracked student")
-            return question_obj_to_json(question, request_type=request.method,
-                                        student_id=DEFAULT_TEMP_STUDENT_ID)
 
         if not current_user.is_anonymous:
+            student_id = current_user.id
             # update document for logged-in student
             current_user.curr_study_lang = requested_lang
             current_user.save()
             logging.info("language saved for tracked student")
-            # get id for the next question
-            next_question_id = current_user.language_progress.\
-                filter(language=current_user.
-                       curr_study_lang)[0].question_queue[0]
 
-        # set flag for prompting for sign-up
-        if current_user.temp:
-            prod_signup = False
+            # get the next question and return it
+            question, side = get_question(requested_lang,
+                                          current_user.id)
+
+        return question_obj_to_json(question, question_side=side,
+                                    student_id=student_id, request_type="GET")
 
     if request.method == "POST":
+        question_language = request.form.get('language')
         # user answered a question, so save it
         if current_user.is_anonymous:
             # to save, we need a Student document, so create one and
             # log student in (to save subsequent questions)
             temp_student = create_temp_student()
-            temp_student.curr_study_lang = request.form.get('language')
+            temp_student.curr_study_lang = question_language
             temp_student.save()
             login_user(temp_student)
             logging.info("logged in temp student")
@@ -247,35 +245,20 @@ def load_question():
             logging.info(request.form)
             save_answer(**request.form)
             logging.info("answer saved for logged in student")
+            prod_signup = False
 
-        # need to query in db to get the current state of student,
-        # because it has been updated, but current_user
-        # does not refresh until page reload
-        student = Student.objects(id=current_user.id).first()
-        logging.info(f"student id returned from query: {student.id}")
-        # get id for the next question
-        next_question_id = student.language_progress.\
-            filter(language=current_user.curr_study_lang)[0].question_queue[0]
+        # get the next question in the same language as the answer
+        question, side = get_question(question_language,
+                                      current_user.id)
 
-    next_question = Question.objects(id=next_question_id).first()
+        logging.info(f"Next word: {question.word}")
 
-    logging.info(f"Next word: {next_question.word}")
-
-    # we'll relay this value back to client
-    previous_question_language = request.form.get("language")
-
-    # turn the question object into json and return it
-    if current_user.temp:
-        # for temp student, include student_id, so it can be updated
-        # also, send flag whether to prompt user for sign-up
-        return question_obj_to_json(next_question, request_type=request.method,
-                                    student_id=str(current_user.id),
-                                    prev_q_lang=previous_question_language,
+        # return the question object and other info as json
+        return question_obj_to_json(question, question_side=side,
+                                    student_id=current_user.id,
+                                    request_type="POST",
+                                    prev_q_lang=question_language,
                                     prod_signup=prod_signup)
-
-    return question_obj_to_json(next_question, request_type=request.method,
-                                prev_q_lang=previous_question_language,
-                                student_id=str(current_user.id))
 
 
 @app.route("/translate", methods=["GET", "POST"])

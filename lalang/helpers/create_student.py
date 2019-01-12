@@ -9,7 +9,7 @@ import logging
 sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos")
 
 from lalang.db_model import Student
-from lalang.helpers.more_questions import get_questions_all_lang
+from lalang.helpers.more_questions import get_default_questions
 from lalang.constants import SUPPORTED_LANGUAGES
 
 logging.basicConfig(level=logging.INFO, filename="app.log",
@@ -70,7 +70,8 @@ def create_temp_student():
     logging.info(f"Just created temp student with id: {student.id}")
     logging.info(f"about to add questions to the queue of student {student.id}")
     # add default questions to the queues in Student document
-    get_questions_all_lang(SUPPORTED_LANGUAGES, student.id)
+    for lang in SUPPORTED_LANGUAGES:
+        get_default_questions(lang, student.id)
 
     return student
 

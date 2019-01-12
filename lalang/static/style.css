@@ -70,7 +70,8 @@ a.navbar-brand {
 }
 
 #play_button, #send_answer_btn, #wrong_answer_btn,
-#translate-btn, #translate_text_output {
+#translate-btn, #translate_text_output, #question_front,
+button.answer-front, #play_button_front, #send_answer_btn_front {
     padding: 0.25rem 0.5rem;
 }
 

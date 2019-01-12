@@ -1,13 +1,11 @@
 """Export functions: create_student and create_temp_student."""
 
-import mongoengine
-import sys
 import uuid
+import mongoengine
 from bson import ObjectId
 from qwell.db_model import Student
-from qwell.helpers.more_questions import get_questions_all_lang
+from qwell.helpers.more_questions import get_default_questions
 from qwell.constants import SUPPORTED_LANGUAGES
-
 
 
 def create_student(email, username, first_name, last_name, password, temp):
@@ -60,18 +58,7 @@ def create_temp_student():
                 continue
 
     # add default questions to the queues in Student document
-    get_questions_all_lang(SUPPORTED_LANGUAGES, student.id)
+    for lang in SUPPORTED_LANGUAGES:
+        get_default_questions(lang, student.id)
 
     return student
-
-
-if __name__ == "__main__":
-    # need to comment out from qwell import routes in __init__.py
-    # before running
-    # student_id = create_student("pukas@gmail.com", username="pukas",
-    #                             first_name="Pukas", last_name="Pantos",
-    #                             password="slowko", temp=False)
-    # create_student("denise@gmail.com", username="denisesal",
-    #                first_name="Denise", last_name="Salinas",
-    #                password="palabra", temp=False)
-    print(create_temp_student())
