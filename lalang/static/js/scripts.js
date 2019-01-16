@@ -5,22 +5,7 @@ var enter_pressed = false;
 var signup_btn_timer_id = "";
 var all_answers = [];
 var current_ids = {};
-
-function updateTitlePractise(lang) {
-    const title_elem = document.getElementById("title_practice");
-    if (title_elem !== null) {
-        switch (lang) {
-            case "english":
-                title_elem.innerHTML="Let's Practise English!";
-                break;
-            case "polish":
-                title_elem.innerHTML="Uczmy się polskiego!";
-                break;
-            default:
-                title_elem.innerHTML="¡Practiquemos español!";
-        }
-    }
-}
+var tutorial_flag_log;
 
 function load_answers() {
     // the answers array is wrapped in a string in a hidden form field
@@ -205,7 +190,6 @@ function hide_prod_signup() {
 $(document).ready(function() {
     $("#lang_select").change( function() {
         current_language = $(this).val();
-        updateTitlePractise(current_language);
         console.log("Current language reset to: ");
         console.log(current_language);
         // enable or disable answer input depending if audio was heard for
@@ -309,6 +293,7 @@ function front_initial_submit() {
     $("#send_answer_btn_front").prop("disabled", true);
     $("#answer_front_btns").fadeIn();
     $("#images-outermost-container").css("display", "flex");
+    $("#prompter").text("Click on the word if you need a translation");
 }
 
 //event listener: clicked the Translate button
@@ -322,10 +307,27 @@ $(document).ready(function() {
     });
 });
 
+function translate_front(text) {
+    if ($("#answer_front_btns").css("display") !== "none") {
+      $.post("/translate", {
+          input_text : text,
+          input_language : current_language
+      }, show_front_translation, "json");
+    }
+}
+
 function show_translation(output_text) {
-    console.log("about to provide the translated answer");
     $("#translate_text_output").html(output_text);
     $("#translate_text_output").fadeIn();
+}
+
+function show_front_translation(output_text) {
+  console.log("in show_front_translation()");
+  console.log("backend returned translation: ", output_text);
+  console.log(typeof output_text);
+  $("#question_front").text(output_text);
+  $("#question_front").removeClass("btn-secondary");
+  $("#question_front").addClass("btn-success");
 }
 
 function markAnswer() {
@@ -442,7 +444,7 @@ function showAndSubmitAnswer(answer_info) {
         $("#good_job_msg").addClass("visible");
         setTimeout(function() {
             $("#good_job_msg").removeClass("visible");
-        }, 1000);
+        }, 1500);
         setTimeout(submitAnswer, 2000, answer_info);
     } else {
         console.log("Document has focus? ", document.hasFocus());
@@ -501,7 +503,7 @@ function showAnswer() {
     console.log("about to show wrong answer");
     console.log($("#send_answer_btn"));
     console.log($("#send_answer_btn").css("display"));
-    // $("#send_answer_btn").hide();
+    $("#back-tutorial").hide();
     $("#send_answer_btn").css("display", "none");
     console.log("hid the submit button");
     console.log($("#send_answer_btn"));
@@ -554,6 +556,37 @@ function load_question(new_question)  {
     console.log("New side: ", new_q_side);
     console.log("Previous side: ", prev_q_side);
 
+    console.log("tutorial flag received: ", quest_obj.tutorial);
+    console.log(typeof quest_obj.tutorial);
+    console.log("previous tutorial flag: ", tutorial_flag_log);
+
+    if (quest_obj.tutorial) {
+      console.log("I'm going to show you the prompts");
+      if (new_q_side === "front") {
+        $("#prompter").text("Do you know what this means?");
+      } else {
+        $("#prompter").text("Learn " + quest_obj.language.charAt(0).toUpperCase() + quest_obj.language.substr(1) + " with images!");
+        $("#back-tutorial").show();
+      }
+    }
+
+    if ( ! quest_obj.tutorial ) {
+      // we might have to hide the tutorial messages
+      console.log("I might have to hide the prompts");
+      if (tutorial_flag_log === undefined ||
+          tutorial_flag_log) {
+        $("#prompter").hide();
+        $("#back-tutorial").hide();
+        console.log("the prompts should be hidden");
+      }
+    }
+
+    // store the tutorial flag value so next time we don't have to hide
+    // tutorial messages unless the tutorial flag changes from true to false
+    // (or is still undefined)
+    tutorial_flag_log = quest_obj.tutorial;
+    console.log("set tutorial_flag_log to: ", quest_obj.tutorial);
+
     // making sure that the sign-up prompt is in the right div
     if (new_q_side !== prev_q_side) {
         if (new_q_side === "front") {
@@ -566,6 +599,13 @@ function load_question(new_question)  {
     // prompt temporary user for sign-up after every fifth question answered
     if (quest_obj.prod_signup === true) {
         prompt_signup("#prod_signup");
+    }
+
+    // change the colour of the front question button back to the default
+    // if the user previously used translation on the front-sided question
+    if ($("#question_front").hasClass("btn-success")) {
+      $("#question_front").removeClass("btn-success");
+      $("#question_front").addClass("btn-secondary");
     }
 
     var repeat_question =  ((quest_obj.id === current_ids.question_id) &&
@@ -723,7 +763,7 @@ function load_question(new_question)  {
     enter_pressed=false;
     $("#send_answer_btn").prop("disabled",false);
     $("#user_answer").prop("disabled",false);
-    $("#user_answer").focus();
+    // $("#user_answer").focus();
     console.log("finished loading question and reset to defaults");
 }
 

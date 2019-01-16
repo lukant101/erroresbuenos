@@ -17,6 +17,14 @@ DEFAULT_LANGUAGE = "spanish"
 
 MAXLEN_ANSWERED_WRONG_STACK = 50
 
+# some new questions are drawn from the ?_answered_wrong_stack
+# (? either b for "back" or f for "front") if the stack is big enough
+MIN_WRONG_STACK_SIZE_FOR_DRAW = 30
+
+# for "front" sided questions, a new question can be drawn from
+# f_answered_review_stack, if the stack is big enough
+MIN_REVIEW_STACK_SIZE_FOR_DRAW = 30
+
 # in order not be always at the maximum length, delete extra elements
 # whenever the stack gets filled up
 MAXLEN_SLACK_ANSWERED_WRONG_STACK = 10

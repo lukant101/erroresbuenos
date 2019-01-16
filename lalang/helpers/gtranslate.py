@@ -11,10 +11,19 @@ def google_translate(input_text, *, source_lang, target_lang):
     # The target language
     target = target_lang
 
-    # Translates some text into Russian
+    # handling exceptions - bad translations by Google
+    translations_exceptions_es = {"dirección": "direction"}
+
+    translations_exceptions = {"es": translations_exceptions_es}
+
+    if translations_exceptions.get(source_lang):
+        translation = translations_exceptions.get(source_lang).get(input_text)
+        if translation:
+            return json.dumps(translation)
+
     translation = client.translate(
         input_text,
         target_language=target,
         source_language=source_lang)
 
-    return json.dumps(translation['translatedText'], ensure_ascii=False)
+    return json.dumps(translation["translatedText"], ensure_ascii=False)

@@ -196,7 +196,7 @@ def prep_questions(language, side, student_id, num_questions_needed):
     None
     """
     # set the flags for the queues and stacks, either "f" or "b"
-    s = side
+    s = side[0]
 
     # set the flags for the queues and stacks from the opposite question side
     if s == "f":

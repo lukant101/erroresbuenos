@@ -110,7 +110,7 @@ def save_answer(*, student_id, language,
             return f"failed to update a doc in StudentHistory. Error: {err}"
 
     else:
-         first time the student saw the question, so create a document for it
+        # first time the student saw the question, so create a document for it
         stud_hist = StudentHistory(
             student_id=current_user.id,
             language=language,
@@ -186,7 +186,7 @@ def save_answer(*, student_id, language,
 
     language_embed_doc.save()
 
-     if queue doesn't have enough questions, add more questions
+    # if queue doesn't have enough questions, add more questions
     if len(getattr(language_embed_doc[0], queue)) < MIN_QUESTIONS_IN_QUEUE:
         prep_questions(language, question_side,
                        current_user.id, NUM_QUESTIONS_TO_LOAD)

@@ -75,6 +75,10 @@ button.answer-front, #play_button_front, #send_answer_btn_front {
     padding: 0.25rem 0.5rem;
 }
 
+button.answer-front {
+  width: 2.125rem;
+}
+
 #translate_text_output {
     margin-left: 0.5rem;
 }

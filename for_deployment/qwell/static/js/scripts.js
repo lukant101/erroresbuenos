@@ -5,6 +5,8 @@ var enter_pressed = false;
 var signup_btn_timer_id = "";
 var all_answers = [];
 var current_ids = {};
+// bucket where image and audio files are stored
+const bucket = "https://storage.googleapis.com/my-project-1542060211099.appspot.com/static/";
 
 function updateTitlePractise(lang) {
     const title_elem = document.getElementById("title_practice");
@@ -232,6 +234,13 @@ function submit_front_answer(answer) {
     $("#1_answer_front").prop("disabled",true);
     $("#2_answer_front").prop("disabled",true);
 
+    // change the colour of the front question button back to the default
+    // if the user used translation on the front-sided question
+    if ($("#question_front").hasClass("btn-success")) {
+      $("#question_front").removeClass("btn-success");
+      $("#question_front").addClass("btn-secondary");
+    }
+
     // If student picked "Again", submit "0" as user answer
     // If student picked "Good", submit "1" as user answer
     // If student picked "Easy", submit "2" as user answer
@@ -284,9 +293,22 @@ $(document).ready(function() {
     });
 });
 
+def translate_front(text) {
+    $.post("/translate", {
+        input_text : text,
+        input_language : current_language
+    }, show_front_translation, "json");
+}
+
 function show_translation(output_text) {
     $("#translate_text_output").html(output_text);
     $("#translate_text_output").fadeIn();
+}
+
+function show_front_translation(output_text) {
+    $("#question_front").text(output_text);
+    $("#question_front").removeClass("btn-secondary");
+    $("#question_front").addClass("btn-success");
 }
 
 function markAnswer() {
@@ -443,7 +465,7 @@ function hideAnswer() {
 
 function reload_audio(language, file_name) {
     // at present, only one audio file (in mp3 format) is presented per question
-    $("#audio_src").attr("src", "../static/audio/" + language.toLowerCase() + "/" + file_name + ".mp3");
+    $("#audio_src").attr("src", bucket + "audio/" + language.toLowerCase() + "/" + file_name + ".mp3");
     // reload the audio source in the audio element; jQuery doesn't implement $().load(), so use JavaScript
     document.getElementById('card_audio').load();
 }
@@ -653,7 +675,7 @@ function update_pictures(images, images_count) {
             var width = Math.round(360*img_aspect_ratio).toString();
             var height = "360px";
         }
-        var path_f_name = "../static/pics/" + file_name;
+        var path_f_name = bucket + "pics/" + file_name;
         if (_ext !== "svg")  {
             // removing previous image before resizing
             // otherwise we see old image resized before the new one loads

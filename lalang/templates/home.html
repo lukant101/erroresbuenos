@@ -10,7 +10,7 @@
 
           <div class="d-flex flex-wrap align-items-center">
               <div id="lang_select_div" class="mr-2">
-                  <select id="lang_select" autocomplete="off" onchange="updateTitlePractise()" class='custom-select custom-select-sm shadow-sm'>
+                  <select id="lang_select" autocomplete="off" class='custom-select custom-select-sm shadow-sm'>
                       <option value="{{ curr_lang }}" selected>{{ curr_lang.capitalize() }}</option>
                       {% for lang in all_langs %}
                           {% if lang != curr_lang %}
@@ -28,8 +28,14 @@
               {% endif%}
           </div>
 
-          {% if not current_user.is_authenticated or current_user.temp %}
-            <h3 id="title_practice" class='text-center mt-3 mb-0'></h3>
+          {% if tutorial %}
+            <h5 id="prompter" class='bg-light text-dark text-center rounded px-2 py-2 mt-3 mb-0'>
+              {% if side == "front" %}
+                Do you know what this means?
+              {% else %}
+                Learn {{ curr_lang.capitalize() }} with images!
+              {% endif %}
+            </h5>
           {% endif%}
 
     </div> <!-- column of top row -->
@@ -39,14 +45,16 @@
   <div id="front-top-container" class="row flex-column align-items-center mb-2" {% if side == "back" %} style="display: none;" {% endif %}>
       <div class="mb-2">
           <button id='play_button_front' onclick='playAudioOut()' type='button' class='btn btn-info rounded-circle d-inline mr-2 mb-2 mt-3'><i class="fas fa-volume-up"></i></button>
-          <button id="question_front" type="button" class="btn btn-secondary mr-2 mb-2 mt-3">{{question.word}}</button>
+          <button id="question_front" type="button" class="btn btn-secondary mr-2 mb-2 mt-3" onclick="translate_front(this.innerText)">{{question.word}}</button>
           <button id='send_answer_btn_front' type='button' class='btn btn-info rounded-circle ml-0 mr-1 mb-2 mt-3'><i class="fas fa-arrow-right"></i></button>
       </div>
-      <div id="answer_front_btns" class="mb-2" style="display: none">
-          <p class="mt-2 mb-1">How did you do?</p>
-          <button id="0_answer_front" type="button" class="answer-front btn btn-danger mr-2 mb-2 mt-2" onclick="submit_front_answer('0')"><i class="fas fa-times"></i></button>
-          <button id="1_answer_front" type="button" class="answer-front btn btn-success mr-2 mb-2 mt-2" onclick="submit_front_answer('1')"><i class="fas fa-check"></i></button>
-          <button id="2_answer_front" type="button" class="answer-front btn btn-primary mr-2 mb-2 mt-2" onclick="submit_front_answer('2')"><i class="fas fa-check-double"></i></button>
+      <div id="answer_front_btns" class="mb-2 flex-column align-items-center" style="display: none">
+          <p class="mt-2 mb-1 text-center">How did you do?</p>
+          <div class="text-center" role="group" aria-label="Answer submission for the front of the card">
+            <button id="0_answer_front" type="button" class="answer-front btn btn-danger ml-2 mr-1 mb-2 mt-2" onclick="submit_front_answer('0')"><i class="fas fa-times"></i></button>
+            <button id="1_answer_front" type="button" class="answer-front btn btn-success ml-1 mr-1 mb-2 mt-2" onclick="submit_front_answer('1')"><i class="fas fa-check"></i></button>
+            <button id="2_answer_front" type="button" class="answer-front btn btn-primary ml-1 mr-2 mb-2 mt-2" onclick="submit_front_answer('2')"><i class="fas fa-check-double"></i></button>
+          </div>
       </div>
       {% if side == "front" %}
           <div class="d-flex w-100 justify-content-center"> <!-- prompt sign-up -->
@@ -105,9 +113,12 @@
                 {% else %}
                     {% set hint_display = "inline" %}
                 {% endif %}
+                {% if tutorial %}
+                  <p id="back-tutorial" class='bg-light text-dark rounded px-2 py-2 my-2'>Can you guess what <strong>word</strong> this represents? You are not supposed to know on your first try. You can take a guess, or submit a blank answer.</p>
+                {% endif %}
                 <label class='d-block'>Part of Speech: <span id="part_of_speech_elem" class="font-weight-bold">{{ question.part_of_speech }}</span><div id="hint-div" style="display: {{ hint_display}};"><span class="ml-3">Hint: </span><span id="hint" class="font-weight-bold">{{ question.hint }}</span></div></label>
                     <button id='play_button' onclick='playAudioOut()' type='button' class='btn btn-info rounded-circle d-inline mr-2 mb-2'><i class="fas fa-volume-up"></i></button>
-                    <input type='text' class='custom-control custom-control-inline mr-0 mb-2' name="user_answer" id='user_answer' autofocus>
+                    <input type='text' class='custom-control custom-control-inline mr-0 mb-2' name="user_answer" id='user_answer'>
                     <button id='send_answer_btn' type='button' class='btn btn-info rounded-circle ml-0 mr-1 mb-2'><i class="fas fa-arrow-right"></i></button>
                     <button id="wrong_answer_btn" style="display:none" class="btn btn-danger rounded-circle ml-1 mb-2" type='button'><i class="fas fa-arrow-right"></i></button>
                     <i id="good_job_msg" class="ml-0 text-success far fa-check-circle"></i>
@@ -129,7 +140,6 @@
       </div> <!-- flex-column -->
   </div> <!-- bottom container -->
   <script type="text/javascript">
-      updateTitlePractise(current_language);
       load_answers();
       capture_ids();
       set_height_img_container();

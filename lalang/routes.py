@@ -15,7 +15,8 @@ from lalang.helpers.create_student import create_temp_student
 from lalang.constants import (SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE,
                               DEFAULT_TEMP_STUDENT_ID,
                               SUPPORTED_LANGUAGES_ABBREV, EMAIL_SENDER)
-from lalang.helpers.utils import question_obj_to_json, is_safe_url
+from lalang.helpers.utils import (question_obj_to_json, is_safe_url,
+                                  tutorial_flag)
 from lalang.forms import (StudentRegister,
                           StudentLogin, RequestResetForm, ResetPasswordForm,
                           AccountUpdateForm, PasswordUpdateForm)
@@ -163,7 +164,8 @@ def home():
     return render_template("home.html", curr_lang=curr_lang,
                            all_langs=SUPPORTED_LANGUAGES,
                            question=question, side=side,
-                           student_id=student_id)
+                           student_id=student_id,
+                           tutorial=tutorial_flag())
 
 
 @app.route('/next-question', methods=['GET', "POST"])
@@ -204,7 +206,8 @@ def load_question():
                                           current_user.id)
 
         return question_obj_to_json(question, question_side=side,
-                                    student_id=student_id, request_type="GET")
+                                    student_id=student_id, request_type="GET",
+                                    tutorial=tutorial_flag())
 
     if request.method == "POST":
         question_language = request.form.get('language')
@@ -258,7 +261,8 @@ def load_question():
                                     student_id=current_user.id,
                                     request_type="POST",
                                     prev_q_lang=question_language,
-                                    prod_signup=prod_signup)
+                                    prod_signup=prod_signup,
+                                    tutorial=tutorial_flag())
 
 
 @app.route("/translate", methods=["GET", "POST"])

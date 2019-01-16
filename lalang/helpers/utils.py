@@ -4,6 +4,7 @@ Export:
 question_obj_to_json
 dict_to_question_obj
 is_safe_url
+tutorial_flag
 """
 
 from bson.objectid import ObjectId
@@ -12,6 +13,8 @@ import json
 import copy
 from urllib.parse import urlparse, urljoin
 from flask import request
+from flask_login import current_user
+from lalang.constants import TUTORIAL_CUTOFF
 import logging
 
 sys.path.append("C:\\Users\\Lukasz\\Python\\ErroresBuenos")
@@ -31,7 +34,8 @@ def is_safe_url(target):
 
 
 def question_obj_to_json(question_obj, *, request_type, student_id,
-                         question_side, prev_q_lang=None, prod_signup=False):
+                         question_side, prev_q_lang=None, prod_signup=False,
+                         tutorial):
     """Take Question object and return it in json representation.
 
     Arguments:
@@ -66,6 +70,8 @@ def question_obj_to_json(question_obj, *, request_type, student_id,
     if prev_q_lang:
         q_json["prev_q_lang"] = prev_q_lang
 
+    q_json["tutorial"] = tutorial
+
     q_json["prod_signup"] = prod_signup
     logging.info(f"prod signup inside question_obj_to_json: {json.dumps(prod_signup)}")
 
@@ -90,3 +96,18 @@ def dict_to_student_obj(student_as_dict):
     for k, v in student_as_dict_copy.items():
         setattr(s_obj, k, v)
     return s_obj
+
+
+def tutorial_flag():
+    """Check whether current_user needs to be shown tutorials messages.
+
+    Return:
+    boolean: True if tutorial messages are to be shown.
+    """
+    if current_user.is_anonymous:
+        return True
+
+    if current_user.temp and (current_user.num_questions_answered < TUTORIAL_CUTOFF):
+        return True
+    else:
+        return False

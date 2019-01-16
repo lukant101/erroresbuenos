@@ -58,6 +58,7 @@
 
   <div id="images-outermost-container" class="row flex-grow-1 align-items-start justify-content-center" {% if side == "front" %} style="display: none;" {% endif %}>
       <div id="images-container" class="col d-flex align-items-start justify-content-center flex-wrap" style="margin-bottom: 40vh;">
+          {% set bucket="https://storage.googleapis.com/my-project-1542060211099.appspot.com/static/" %}
           {% for image in question.images %}
             {% set file_name = image[0] %}
             {% set extension = image[1] %}
@@ -71,11 +72,11 @@
             <div id="picture-{{ loop.index }}" class="m-2 align-self-center">
                 <picture>
                       {% if extension != "svg" %}
-                          <source id="img-webp-{{ loop.index }}" type=”image/webp” srcset="{{ url_for('static', filename='pics/' ~ file_name ~ '-480px.webp') }} 1x, {{ url_for('static', filename='pics/' ~ file_name ~ '-960px.webp') }} 2x">
-                          <img id="img-default-{{ loop.index }}" style="width: {{ img_width }};" class='rounded mx-auto m-3 img-fluid' src="{{ url_for('static', filename='pics/' ~ file_name ~ '-480px.' ~ extension) }}" alt='{{ question.word }}' srcset="{{ url_for('static', filename='pics/' ~ file_name ~ '-480px.' ~ extension) }} 1x, {{ url_for('static', filename='pics/' ~ file_name ~ '-960px.' ~ extension) }} 2x">
+                          <source id="img-webp-{{ loop.index }}" type="image/webp" srcset="{{ bucket + 'pics/' + file_name + '-480px.webp' }} 1x, {{ bucket + 'pics/' + file_name + '-960px.webp' }} 2x">
+                          <img id="img-default-{{ loop.index }}" style="width: {{ img_width }};" class='rounded mx-auto m-3 img-fluid' src="{{ bucket + 'pics/' + file_name + '-480px.' + extension }}" alt='{{ question.word }}' srcset="{{ bucket + 'pics/' + file_name + '-480px.' + extension }} 1x, {{ bucket + 'pics/' + file_name + '-960px.' + extension }} 2x">
                       {% else %}
                           <source id="img-webp-{{ loop.index }}">
-                          <img id="img-default-{{ loop.index }}" style="width: {{ img_width }};" class='rounded mx-auto m-3 img-fluid' src="{{ url_for('static', filename='pics/' ~ file_name ~ '.svg') }}" alt="{{ question.word }}">
+                          <img id="img-default-{{ loop.index }}" style="width: {{ img_width }};" class='rounded mx-auto m-3 img-fluid' src="{{ bucket + 'pics/' + file_name + '.svg' }}" alt="{{ question.word }}">
                       {% endif %}
                 </picture>
             </div> <!-- picture -->
@@ -118,7 +119,7 @@
           </form> <!-- answer input -->
 
           <audio id='card_audio'>
-            <source id="audio_src" src="{{ url_for('static', filename='audio/' ~ curr_lang ~ '/' ~ question.audio[0]) ~ '.mp3' }}">
+            <source id="audio_src" src="{{ bucket + 'audio/' + curr_lang + '/' + question.audio[0] + '.mp3' }}">
           </audio>
 
           {% if side == "back" %}
