@@ -44,5 +44,9 @@ START_REVIEW = 400
 # to this number of questions
 BASE_ANSWERED_CORRECTLY = 100
 
+# show tutorial messages for temp students with less than these many
+# questions answered
+TUTORIAL_CUTOFF = 10
+
 # adddress of the email account from which password reset emails are sent.
 EMAIL_SENDER = "password@qwell.ca"

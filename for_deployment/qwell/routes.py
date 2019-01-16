@@ -11,12 +11,13 @@ from qwell.helpers.more_questions import get_question
 from qwell.helpers.save_answer import save_answer
 from qwell.helpers.create_student import create_temp_student
 from qwell.constants import (SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE,
-                              DEFAULT_TEMP_STUDENT_ID,
-                              SUPPORTED_LANGUAGES_ABBREV, EMAIL_SENDER)
-from qwell.helpers.utils import question_obj_to_json, is_safe_url
+                             DEFAULT_TEMP_STUDENT_ID,
+                             SUPPORTED_LANGUAGES_ABBREV, EMAIL_SENDER)
+from qwell.helpers.utils import (question_obj_to_json, is_safe_url,
+                                 tutorial_flag)
 from qwell.forms import (StudentRegister,
-                          StudentLogin, RequestResetForm, ResetPasswordForm,
-                          AccountUpdateForm, PasswordUpdateForm)
+                         StudentLogin, RequestResetForm, ResetPasswordForm,
+                         AccountUpdateForm, PasswordUpdateForm)
 from qwell.db_model import Student, Question
 from qwell.helpers.gtranslate import google_translate
 from qwell.helpers.send_reset_email import send_reset_email
@@ -147,7 +148,8 @@ def home():
     return render_template("home.html", curr_lang=curr_lang,
                            all_langs=SUPPORTED_LANGUAGES,
                            question=question, side=side,
-                           student_id=student_id)
+                           student_id=student_id,
+                           tutorial=tutorial_flag())
 
 
 @app.route('/next-question', methods=['GET', "POST"])
@@ -184,7 +186,8 @@ def load_question():
                                           current_user.id)
 
         return question_obj_to_json(question, question_side=side,
-                                    student_id=student_id, request_type="GET")
+                                    student_id=student_id, request_type="GET",
+                                    tutorial=tutorial_flag())
 
     if request.method == "POST":
         question_language = request.form.get('language')
@@ -226,7 +229,8 @@ def load_question():
                                     student_id=current_user.id,
                                     request_type="POST",
                                     prev_q_lang=question_language,
-                                    prod_signup=prod_signup)
+                                    prod_signup=prod_signup,
+                                    tutorial=tutorial_flag())
 
 
 @app.route("/translate", methods=["GET", "POST"])
